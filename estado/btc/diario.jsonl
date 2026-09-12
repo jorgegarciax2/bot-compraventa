@@ -1,0 +1,1 @@
+{"ts": 1789255194.591694, "tipo": "nacimiento", "capital": 1000.0, "divisa": "EUR", "simbolo": "BTC-EUR", "estrategia": "tendencia_vol(rapida=20, lenta=100, ventana_vol=48, vol_objetivo=0.012)", "umbral_ruina": 100.0}

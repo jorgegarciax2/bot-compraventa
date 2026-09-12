@@ -1,0 +1,34 @@
+[Unit]
+Description=Panel del bot de compraventa
+Documentation=file:/opt/bot/README.md
+After=network-online.target
+Wants=network-online.target
+
+# Sin contraseña el panel se niega a arrancar. Que no entre en bucle infinito:
+# cinco intentos y se rinde, dejando el motivo claro en el registro.
+StartLimitIntervalSec=60
+StartLimitBurst=5
+
+[Service]
+Type=simple
+User=bot
+Group=bot
+WorkingDirectory=/opt/bot
+Environment=PYTHONUNBUFFERED=1
+Environment=TZ=Europe/Madrid
+ExecStart=/opt/bot/.venv/bin/python /opt/bot/web/servidor.py \
+          --host 127.0.0.1 --puerto 8765 --sin-navegador
+Restart=always
+RestartSec=5
+
+# Los agentes son procesos independientes del panel: al reiniciar el panel no
+# deben morir con él. Por eso se mata sólo el proceso principal, no el grupo.
+KillMode=process
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target

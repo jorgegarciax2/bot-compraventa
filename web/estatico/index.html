@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bot de compraventa</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+<link rel="stylesheet" href="/estatico/estilos.css">
+</head>
+<body>
+<header class="cabecera">
+  <div class="marca">
+    <span class="logo">bot</span>
+    <nav class="pestanas">
+      <button data-vista="vivo" aria-pressed="true">En vivo</button>
+      <button data-vista="lab" aria-pressed="false">Laboratorio</button>
+    </nav>
+  </div>
+  <div class="avisos">
+    <span class="chip chip-seguro" title="Nadie manda órdenes a ningún bróker: la ejecución es simulada, con comisiones y deslizamiento.">dinero ficticio</span>
+    <span class="chip" id="chip-python">python —</span>
+  </div>
+</header>
+
+<!-- ============================================================ EN VIVO -->
+<main class="disposicion" id="vista-vivo">
+  <aside class="panel">
+    <section class="bloque">
+      <h2>Agentes</h2>
+      <div id="lista-agentes" class="lista-agentes"></div>
+      <button class="btn btn-primario" id="b-nuevo" style="margin-top:10px">Nuevo agente</button>
+    </section>
+
+    <form class="bloque oculto" id="form-nuevo">
+      <h2>Lanzar un agente</h2>
+      <label class="campo">Nombre
+        <input id="v-nombre" value="btc-1000" maxlength="40">
+      </label>
+      <div class="rejilla2">
+        <label>Capital <input type="number" id="v-capital" value="1000" min="50" step="50"></label>
+        <label>Divisa <input id="v-divisa" value="EUR" maxlength="5"></label>
+      </div>
+
+      <label class="campo" style="margin-top:10px">Fuente de precios
+        <select id="v-fuente"></select>
+      </label>
+      <p class="nota" id="v-nota-fuente"></p>
+
+      <div class="rejilla2" style="margin-top:10px">
+        <label>Símbolo <input id="v-simbolo" value="BTCEUR"></label>
+        <label>Vela <select id="v-intervalo"></select></label>
+      </div>
+      <p class="nota" id="v-nota-simbolo"></p>
+
+      <label class="campo" style="margin-top:10px">Estrategia
+        <select id="v-estrategia"></select>
+      </label>
+      <p class="nota" id="v-nota-estrategia"></p>
+
+      <details class="detalles">
+        <summary>Riesgo y costes</summary>
+        <div class="rejilla2">
+          <label>Muere si baja a <input type="number" id="v-ruina" value="0.10" step="0.05" min="0" max="0.9"></label>
+          <label>Máx. drawdown <input type="number" id="v-maxdd" value="0.50" step="0.05" min="0.05" max="1"></label>
+          <label>Stop-loss <input type="number" id="v-stop" value="0.15" step="0.01" min="0.01" max="0.99"></label>
+          <label>Trailing stop <input type="number" id="v-trailing" value="0.25" step="0.01" min="0.01" max="0.99"></label>
+          <label>Máx. exposición <input type="number" id="v-exposicion" value="0.95" step="0.05" min="0.05" max="1"></label>
+          <label>Banda rebalanceo <input type="number" id="v-banda" value="0.10" step="0.01" min="0" max="0.5"></label>
+          <label>Comisión (bps) <input type="number" id="v-comision" value="10" step="1" min="0"></label>
+          <label>Slippage (bps) <input type="number" id="v-slippage" value="5" step="1" min="0"></label>
+          <label>Coste de vida anual <input type="number" id="v-costevida" value="0.02" step="0.01" min="0" max="0.5"></label>
+          <label>Mínimo por orden <input type="number" id="v-minimo" value="10" step="1" min="1"></label>
+        </div>
+        <p class="nota">Las fracciones van de 0 a 1: 0,10 es el 10 %. Los stops y el
+        límite de exposición mandan por encima de la estrategia.</p>
+      </details>
+
+      <div class="rejilla2 oculto" id="v-ensayo">
+        <label>Velas del ensayo <input type="number" id="v-velas" value="3000" step="500" min="300"></label>
+        <label>Segundos por vela <input type="number" id="v-paso" value="0.4" step="0.1" min="0.1"></label>
+      </div>
+
+      <label class="interruptor" id="v-caja-reencarnar">
+        <input type="checkbox" id="v-reencarnar">
+        <span>Empezar de cero <em>borra el estado anterior y la lápida</em></span>
+      </label>
+
+      <div class="acciones" style="margin-top:12px">
+        <button class="btn btn-primario" type="submit">Arrancar</button>
+        <button class="btn btn-suave" type="button" id="b-cancelar-nuevo">Cancelar</button>
+      </div>
+      <p class="nota" id="v-error"></p>
+    </form>
+
+    <p class="pie">El agente respira una vez por vela: valora la cartera, decide qué
+    fracción quiere invertida, ejecuta, paga por existir y comprueba si sigue vivo.
+    Muere solo si se arruina, y la muerte es definitiva.</p>
+  </aside>
+
+  <div class="contenido">
+    <section class="tarjeta vacio" id="vivo-vacio">
+      <h2>Todavía no hay ningún agente</h2>
+      <p>Un agente nace con un capital ficticio, analiza el mercado vela a vela y
+      compra y vende por su cuenta. No manda órdenes a ningún sitio: la ejecución
+      es simulada, pero paga comisión y deslizamiento como si fueran reales.</p>
+      <p><b>Para verlo funcionar ahora mismo</b>, crea uno con fuente
+      <em>ensayo</em>: usa un mercado generado que avanza varias velas por segundo,
+      así ves compras y ventas en un minuto. Con <em>Binance</em> opera sobre precios
+      reales y late una vez por vela — con velas de 15 minutos, cuatro veces por hora.</p>
+    </section>
+
+    <section class="tarjeta oculto" id="cab-agente">
+      <div class="tarjeta-cab">
+        <h2 id="titulo-agente">—</h2>
+        <div class="acciones-fila">
+          <button class="btn btn-suave" id="b-parar">Pausar</button>
+          <button class="btn btn-suave" id="b-continuar">Continuar</button>
+          <button class="btn btn-suave" id="b-cero">Empezar de cero</button>
+          <button class="btn btn-suave peligro" id="b-borrar">Borrar</button>
+        </div>
+      </div>
+      <p class="linea-estado" id="linea-estado"></p>
+    </section>
+
+    <section class="kpis oculto" id="kpis"></section>
+
+    <section class="tarjeta oculto" id="caja-curva">
+      <div class="tarjeta-cab"><h2>Patrimonio</h2><span class="apunte" id="apunte-curva"></span></div>
+      <div id="curva-vivo" class="grafico"></div>
+    </section>
+
+    <section class="tarjeta oculto" id="caja-dias">
+      <div class="tarjeta-cab"><h2>Día a día</h2></div>
+      <div class="tabla-envoltura"><table class="tabla" id="tabla-dias"></table></div>
+    </section>
+
+    <section class="tarjeta oculto" id="caja-ops-vivo">
+      <div class="tarjeta-cab"><h2>Operaciones <span class="apunte" id="apunte-ops"></span></h2></div>
+      <div class="tabla-envoltura alta"><table class="tabla" id="tabla-ops-vivo"></table></div>
+    </section>
+
+    <section class="tarjeta oculto" id="caja-diario">
+      <div class="tarjeta-cab"><h2>Diario de a bordo</h2></div>
+      <pre class="consola" id="diario"></pre>
+    </section>
+  </div>
+</main>
+
+<!-- ========================================================= LABORATORIO -->
+<main class="disposicion oculto" id="vista-lab">
+  <aside class="panel">
+    <section class="bloque">
+      <h2>Mercado</h2>
+      <div class="segmentado" id="mercados"></div>
+      <p class="nota" id="nota-mercado"></p>
+    </section>
+
+    <section class="bloque">
+      <h2>Símbolos <span class="apunte" id="cuenta-simbolos"></span></h2>
+      <div class="simbolos" id="simbolos"></div>
+      <div class="fila-mini">
+        <button class="enlace" data-todos="1" type="button">todos</button>
+        <button class="enlace" data-todos="0" type="button">ninguno</button>
+      </div>
+    </section>
+
+    <section class="bloque">
+      <h2>Estrategia</h2>
+      <select id="estrategia"></select>
+      <p class="nota" id="desc-estrategia"></p>
+      <div class="rejilla2 oculto" id="params-medias">
+        <label>Media rápida <input type="number" id="rapida" value="20" min="2" step="1"></label>
+        <label>Media lenta <input type="number" id="lenta" value="50" min="3" step="1"></label>
+      </div>
+    </section>
+
+    <section class="bloque">
+      <h2>Parámetros</h2>
+      <label class="campo">Capital inicial <input type="number" id="capital" step="100" min="1"></label>
+      <div class="rejilla2">
+        <label>Desde <input type="date" id="desde"></label>
+        <label>Hasta <input type="date" id="hasta"></label>
+      </div>
+      <label class="interruptor">
+        <input type="checkbox" id="sin-costes">
+        <span>Sin costes <em>(sólo diagnóstico: mide cuánto se lleva la fricción)</em></span>
+      </label>
+      <label class="interruptor">
+        <input type="checkbox" id="rebalanceo-exacto">
+        <span>Rebalanceo exacto <em>(ignora la banda muerta; sangra comisiones)</em></span>
+      </label>
+    </section>
+
+    <section class="bloque acciones">
+      <button class="btn btn-primario" id="b-backtest">Ejecutar backtest</button>
+      <button class="btn" id="b-comparar">Comparar todas las estrategias</button>
+      <div class="separador"><span>datos</span></div>
+      <button class="btn btn-suave" id="b-ingest">Descargar histórico</button>
+      <button class="btn btn-suave" id="b-validate">Validar calidad</button>
+      <button class="btn btn-suave" id="b-info">Ver almacén</button>
+    </section>
+
+    <p class="pie">Aquí no opera nadie: se mide sobre el pasado. Sirve para decidir
+    qué estrategia merece que le dejes dinero, aunque sea ficticio.</p>
+  </aside>
+
+  <div class="contenido">
+    <section class="tarjeta consola-caja">
+      <div class="tarjeta-cab">
+        <h2>Consola <span class="estado" id="estado-tarea"></span></h2>
+        <button class="enlace" id="b-limpiar" type="button">limpiar</button>
+      </div>
+      <pre class="consola" id="consola">Elige mercado y estrategia, y ejecuta un backtest.
+Si el almacén está vacío para ese mercado, pulsa antes «Descargar histórico».</pre>
+    </section>
+
+    <section class="tarjeta oculto" id="caja-grafico">
+      <div class="tarjeta-cab">
+        <h2>Curva de patrimonio</h2>
+        <div class="controles">
+          <label class="interruptor mini"><input type="checkbox" id="escala-log"><span>escala log</span></label>
+          <label class="interruptor mini"><input type="checkbox" id="normalizar"><span>base 100</span></label>
+        </div>
+      </div>
+      <div id="leyenda" class="leyenda"></div>
+      <div id="grafico" class="grafico"></div>
+      <div id="grafico-dd" class="grafico grafico-dd"></div>
+    </section>
+
+    <section class="tarjeta oculto" id="caja-metricas">
+      <div class="tarjeta-cab"><h2>Métricas</h2></div>
+      <div class="tabla-envoltura"><table class="tabla" id="tabla-metricas"></table></div>
+      <p class="nota">El retorno total es la métrica menos informativa: lo que decide
+      si una estrategia es operable es el drawdown y la consistencia.</p>
+    </section>
+
+    <section class="tarjeta oculto" id="caja-datos">
+      <div class="tarjeta-cab"><h2 id="titulo-datos">Datos</h2></div>
+      <div class="tabla-envoltura"><table class="tabla" id="tabla-datos"></table></div>
+    </section>
+
+    <section class="tarjeta oculto" id="caja-ops">
+      <div class="tarjeta-cab">
+        <h2>Operaciones <span class="apunte" id="cuenta-ops"></span></h2>
+        <select id="ops-estrategia" class="mini-select"></select>
+      </div>
+      <div class="tabla-envoltura alta"><table class="tabla" id="tabla-ops"></table></div>
+    </section>
+  </div>
+</main>
+
+<script src="/estatico/app.js"></script>
+<script src="/estatico/vivo.js"></script>
+</body>
+</html>

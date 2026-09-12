@@ -1,0 +1,59 @@
+{
+  "config": {
+    "capital": 1000.0,
+    "divisa": "EUR",
+    "simbolo": "BTC-EUR",
+    "intervalo": "1h",
+    "coste_vida_anual": 0.02,
+    "estrategia": "tendencia_vol",
+    "params_estrategia": {},
+    "reglas_vida": {
+      "umbral_ruina": 0.0,
+      "ruina_relativa": 0.1,
+      "max_drawdown": 0.5,
+      "equity_minimo_operable": 10.0,
+      "edad_maxima_ticks": null
+    },
+    "reglas_riesgo": {
+      "max_exposicion": 0.95,
+      "stop_loss": 0.15,
+      "trailing_stop": 0.25,
+      "banda_rebalanceo": 0.1,
+      "max_ops_por_dia": null
+    }
+  },
+  "cartera": {
+    "divisa": "EUR",
+    "caja": 999.9931506849316,
+    "capital_inicial": 1000.0,
+    "posiciones": {
+      "BTC-EUR": {
+        "simbolo": "BTC-EUR",
+        "cantidad": 0.0,
+        "precio_medio": 0.0,
+        "maximo_favorable": 0.0
+      }
+    },
+    "pnl_realizado": 0.0,
+    "comisiones_pagadas": 0.0,
+    "coste_vida_pagado": 0.00684931506849315,
+    "operaciones": 0
+  },
+  "vitales": {
+    "vivo": true,
+    "ticks": 3,
+    "equity": 999.9931506849316,
+    "equity_maximo": 1000.0,
+    "drawdown": 6.849315068446771e-06,
+    "causa_muerte": null,
+    "detalle_muerte": null,
+    "ts_muerte": null
+  },
+  "curva_equity": [
+    999.9977168949772,
+    999.9954337899544,
+    999.9931506849316
+  ],
+  "operaciones": [],
+  "guardado": 1789255195.0741692
+}

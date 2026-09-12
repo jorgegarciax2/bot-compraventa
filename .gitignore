@@ -1,0 +1,14 @@
+# La contraseña del panel local (hash + secreto de sesión). Nunca al repositorio.
+panel.json
+
+# Entorno de Python y datos que se regeneran
+.venv/
+tbot/data/
+
+# Estado del panel LOCAL. El del bot de GitHub Actions vive en estado/ y ése SÍ
+# se guarda: es lo que le permite continuar donde lo dejó en la ejecución siguiente.
+ejecuciones/
+
+__pycache__/
+*.pyc
+.DS_Store

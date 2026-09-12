@@ -1,0 +1,3 @@
+# Ninguna dependencia obligatoria: el agente funciona con la librería estándar.
+# Opcional, sólo si conectas el broker real:
+# ccxt>=4.0

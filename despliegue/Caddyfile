@@ -1,0 +1,18 @@
+# Sustituye el dominio por el tuyo de DuckDNS.
+# Caddy pide y renueva el certificado de Let's Encrypt solo, sin tocar nada.
+TU-DOMINIO.duckdns.org {
+	encode zstd gzip
+	reverse_proxy 127.0.0.1:8765
+
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Frame-Options "DENY"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "no-referrer"
+	}
+
+	log {
+		output file /var/log/caddy/bot.log
+		format console
+	}
+}

@@ -1,0 +1,62 @@
+name: latido
+
+# El bot no es un proceso que viva: es una tarea que despierta, da un latido y
+# se vuelve a dormir. El estado viaja en el propio repositorio.
+on:
+  schedule:
+    # Minuto 11 para no coincidir con el pico de las horas en punto, que es
+    # cuando GitHub más retrasa las tareas programadas.
+    - cron: '11 * * * *'
+  workflow_dispatch:        # botón «Run workflow» para forzar un latido
+
+permissions:
+  contents: write           # para guardar el estado y el tablero
+
+# Dos latidos a la vez corromperían el estado. Nunca en paralelo, y sin
+# cancelar el que ya esté en marcha.
+concurrency:
+  group: latido
+  cancel-in-progress: false
+
+jobs:
+  latir:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Europe/Madrid     # el «día a día» debe cuadrar con tu día, no con UTC
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      # El agente no tiene dependencias: Python puro. No hay nada que instalar.
+
+      - name: Latido
+        id: latido
+        run: python github/latido.py | tee /tmp/latido.txt
+
+      - name: Generar el tablero
+        run: python github/tablero.py
+
+      - name: Guardar estado y tablero
+        run: |
+          git config user.name  "bot de compraventa"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add estado docs
+          if git diff --quiet --cached; then
+            echo "Nada que guardar."
+            exit 0
+          fi
+          git commit -m "latido $(date '+%Y-%m-%d %H:%M')"
+          # Si alguien tocó el repositorio mientras tanto, reintegramos antes de subir.
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+          git push
+
+      - name: Resumen
+        if: always()
+        run: |
+          echo '## Latido' >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          cat /tmp/latido.txt >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || echo "(sin salida)" >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"

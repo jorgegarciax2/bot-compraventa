@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="refresh" content="600">
+<title>Bot · BTC-EUR</title>
+<style>
+:root{color-scheme:dark;--f:#0d1117;--f2:#141b24;--f3:#1b2430;--b:#263241;--b2:#334354;
+--t:#e6edf3;--t2:#9aa8b8;--t3:#6b7a8c;--verde:#2fbf87;--rojo:#e5606b;--ambar:#f2a33c;
+--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+@media (prefers-color-scheme:light){:root{color-scheme:light;--f:#f6f7f9;--f2:#fff;--f3:#eef1f5;
+--b:#dde3ea;--b2:#c7d1dc;--t:#16202b;--t2:#5a6876;--t3:#8494a4;--verde:#1a8f63;--rojo:#c8383f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--f);color:var(--t);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.envuelve{max-width:1000px;margin:0 auto;padding:20px;display:flex;flex-direction:column;gap:16px}
+h1{font:600 20px/1.2 var(--mono);margin:0;letter-spacing:-.02em}
+h2{font-size:15px;margin:0 0 8px}
+h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--t2);margin:0 0 12px}
+.tarjeta{background:var(--f2);border:1px solid var(--b);border-radius:10px;padding:14px 16px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.kpi{background:var(--f2);border:1px solid var(--b);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:3px}
+.kpi-t{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--t3)}
+.kpi-v{font:600 21px/1.25 var(--mono);letter-spacing:-.02em}
+.kpi-v.pos{color:var(--verde)} .kpi-v.neg{color:var(--rojo)}
+.kpi-s{font-size:11.5px;color:var(--t3)}
+.linea{margin:0 0 6px;color:var(--t2)}
+.nota{color:var(--t3);font-size:12px;margin:0}
+.insignia{font:11px var(--mono);padding:2px 8px;border-radius:999px;border:1px solid var(--b2);margin-right:6px}
+.insignia.vivo{color:var(--verde)} .insignia.muerto{color:var(--rojo)} .insignia.pausado{color:var(--t3)}
+.envoltura{overflow-x:auto;border:1px solid var(--b);border-radius:8px;max-height:420px;overflow-y:auto}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{padding:7px 11px;text-align:left;white-space:nowrap;border-bottom:1px solid var(--b)}
+th{position:sticky;top:0;background:var(--f3);color:var(--t2);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.num{text-align:right;font-family:var(--mono)}
+.pos{color:var(--verde)} .neg{color:var(--rojo)} .apagado{color:var(--t3)}
+.malla{stroke:var(--b)} .base{stroke:var(--t3);stroke-dasharray:4 4}
+.eje{fill:var(--t3);font:10px var(--mono)}
+.diario{margin:0;padding:12px;background:var(--f);border:1px solid var(--b);border-radius:8px;
+font:11.5px/1.7 var(--mono);max-height:300px;overflow:auto;color:var(--t2);white-space:pre-wrap}
+.l-error{color:var(--rojo)} .l-warning{color:var(--ambar)} .l-hito{color:var(--t)}
+footer{color:var(--t3);font-size:11.5px;line-height:1.6;border-top:1px solid var(--b);padding-top:14px}
+</style></head><body><div class="envuelve">
+<header><h1>bot de compraventa</h1>
+<p class="nota">Dinero ficticio. Ninguna orden llega a ningún bróker.</p></header>
+
+<section class="tarjeta cabecera-agente">
+  <h2>BTC-EUR · tendencia_vol · vela 1h</h2>
+  <p class="linea"><span class="insignia vivo">● en marcha</span> late una vez por hora.</p>
+  <p class="nota">3 latidos · último 13/09/2026 01:19</p>
+</section>
+
+<section class="kpis"><div class="kpi"><span class="kpi-t">Patrimonio</span><span class="kpi-v neg">999,99 EUR</span><span class="kpi-s">empezó con 1 000,00</span></div><div class="kpi"><span class="kpi-t">Resultado total</span><span class="kpi-v neg">-0,01 EUR</span><span class="kpi-s">0.00 % desde el inicio</span></div><div class="kpi"><span class="kpi-t">Hoy</span><span class="kpi-v apagado">0,00 EUR</span><span class="kpi-s">0.00 % · 3 latidos</span></div><div class="kpi"><span class="kpi-t">Posición</span><span class="kpi-v ">fuera</span><span class="kpi-s">todo en caja</span></div><div class="kpi"><span class="kpi-t">Caja</span><span class="kpi-v ">999,99 EUR</span><span class="kpi-s">comisiones 0,00 · coste de vida 0,01</span></div><div class="kpi"><span class="kpi-t">Caída desde máximo</span><span class="kpi-v apagado">0.00 %</span><span class="kpi-s">muere al 50 %</span></div></section>
+
+<section class="tarjeta"><h3>Patrimonio</h3><svg viewBox="0 0 900 280" width="100%" role="img" aria-label="Curva de patrimonio"><line class="malla" x1="70" x2="884" y1="254.0" y2="254.0"/><text class="eje" x="62" y="257.5" text-anchor="end">999,9926</text><line class="malla" x1="70" x2="884" y1="194.0" y2="194.0"/><text class="eje" x="62" y="197.5" text-anchor="end">999,9946</text><line class="malla" x1="70" x2="884" y1="134.0" y2="134.0"/><text class="eje" x="62" y="137.5" text-anchor="end">999,9966</text><line class="malla" x1="70" x2="884" y1="74.0" y2="74.0"/><text class="eje" x="62" y="77.5" text-anchor="end">999,9986</text><line class="malla" x1="70" x2="884" y1="14.0" y2="14.0"/><text class="eje" x="62" y="17.5" text-anchor="end">1 000,0005</text><text class="eje" x="70.0" y="273" text-anchor="start">13/09 01:19</text><text class="eje" x="232.8" y="273" text-anchor="middle">13/09 01:19</text><text class="eje" x="395.6" y="273" text-anchor="middle">13/09 01:19</text><text class="eje" x="558.4" y="273" text-anchor="middle">13/09 01:19</text><text class="eje" x="721.2" y="273" text-anchor="middle">13/09 01:19</text><text class="eje" x="884.0" y="273" text-anchor="end">13/09 01:19</text><line class="base" x1="70" x2="884" y1="30.6" y2="30.6"/><path d="M70.0 99.5L580.6 168.5L884.0 237.4" fill="none" stroke="var(--rojo)" stroke-width="1.8" stroke-linejoin="round"/></svg></section>
+
+<section class="tarjeta"><h3>Día a día</h3>
+<div class="envoltura"><table>
+<thead><tr><th>día</th><th class="num">cierre</th><th class="num">resultado</th><th class="num">%</th><th class="num">mínimo</th><th class="num">máximo</th><th class="num">latidos</th></tr></thead>
+<tbody><tr><td>2026-09-13</td><td class="num">999,99</td><td class="num apagado">0,00</td><td class="num apagado">0.00 %</td><td class="num apagado">999,99</td><td class="num apagado">1 000,00</td><td class="num apagado">3</td></tr></tbody></table></div></section>
+
+<section class="tarjeta"><h3>Operaciones</h3>
+<div class="envoltura"><table>
+<thead><tr><th>fecha</th><th>lado</th><th class="num">cantidad</th><th class="num">precio</th><th class="num">comisión</th><th class="num">realizado</th><th>motivo</th></tr></thead>
+<tbody><tr><td colspan="7" class="apagado">Todavía no ha operado.</td></tr></tbody></table></div></section>
+
+<section class="tarjeta"><h3>Diario de a bordo</h3><pre class="diario"><div class="">13/09 01:19  ● nace con 1 000,00 EUR sobre BTC-EUR — tendencia_vol(rapida=20, lenta=100, ventana_vol=48, vol_objetivo=0.012)</div></pre></section>
+
+<footer>Generado el 13/09/2026 01:21 por GitHub Actions. La página se recarga sola cada 10 minutos.<br>
+Ninguna de estas estrategias tiene ventaja demostrada, y un backtest bueno no predice nada.</footer>
+</div></body></html>

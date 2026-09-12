@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Mantiene el cazador de máquinas en marcha aunque cierres sesión o reinicies.
+  Es opcional: sin esto, el cazador vive sólo mientras dure la ventana donde lo
+  lanzaste.
+
+    cp despliegue/com.jorge.cazador-oracle.plist ~/Library/LaunchAgents/
+    launchctl load  ~/Library/LaunchAgents/com.jorge.cazador-oracle.plist
+
+  Para pararlo del todo:
+
+    launchctl unload ~/Library/LaunchAgents/com.jorge.cazador-oracle.plist
+    rm ~/Library/LaunchAgents/com.jorge.cazador-oracle.plist
+
+  El propio script se planta solo en cuanto consigue la máquina, así que esto
+  no queda dando vueltas para siempre.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.jorge.cazador-oracle</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>/Users/jorgegarciagarcia/.local/share/oci-sdk/venv/bin/python</string>
+    <string>/Users/jorgegarciagarcia/Documents/Bot compraventa/despliegue/cazar-maquina.py</string>
+    <string>--intervalo</string>
+    <string>300</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>/Users/jorgegarciagarcia/Documents/Bot compraventa</string>
+
+  <key>RunAtLoad</key>
+  <true/>
+  <!-- Si el Mac se suspende y la red se cae, launchd lo reanima. Pero cuando el
+       script termina bien (máquina conseguida) no tiene sentido relanzarlo. -->
+  <key>KeepAlive</key>
+  <dict>
+    <key>SuccessfulExit</key>
+    <false/>
+  </dict>
+
+  <key>StandardOutPath</key>
+  <string>/Users/jorgegarciagarcia/.oci/cazador.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/jorgegarciagarcia/.oci/cazador.log</string>
+</dict>
+</plist>

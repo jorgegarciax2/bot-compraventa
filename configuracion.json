@@ -1,0 +1,31 @@
+{
+  "_comentario": "Configuración del bot que corre en GitHub Actions. Cambia algo aquí, haz commit, y el siguiente latido lo usa. Esto sustituye a los botones del panel local.",
+
+  "nombre": "btc",
+  "simbolo": "BTC-EUR",
+  "intervalo": "1h",
+  "fuente": "yahoo",
+  "capital": 1000.0,
+  "divisa": "EUR",
+  "estrategia": "tendencia_vol",
+  "params_estrategia": {},
+
+  "_vida": "cuándo muere el agente",
+  "ruina_relativa": 0.10,
+  "max_drawdown": 0.50,
+  "coste_vida_anual": 0.02,
+
+  "_riesgo": "topes que mandan por encima de la estrategia",
+  "max_exposicion": 0.95,
+  "stop_loss": 0.15,
+  "trailing_stop": 0.25,
+  "banda_rebalanceo": 0.10,
+
+  "_costes": "lo que se paga en cada operación",
+  "comision_bps": 10.0,
+  "slippage_bps": 5.0,
+  "minimo_operacion": 10.0,
+
+  "_pausa": "ponlo en true para que el bot deje de operar sin borrar nada",
+  "pausado": false
+}

@@ -1,0 +1,55 @@
+# Configuración del sistema. Los secretos NUNCA van aquí: van en .env
+paths:
+  data_root: "data"
+
+universo:
+  crypto:
+    exchange: "binance"
+    timeframe: "1d"
+    simbolos:
+      - "BTC/USDT"
+      - "ETH/USDT"
+      - "SOL/USDT"
+      - "BNB/USDT"
+      - "XRP/USDT"
+    desde: "2018-01-01"
+  synthetic:
+    timeframe: "1d"
+    simbolos: ["SYN-A/USD", "SYN-B/USD", "SYN-C/USD"]
+    desde: "2019-01-01"
+  equity:
+    fuente: "alpaca"
+    timeframe: "1d"
+    simbolos:
+      - "SPY"
+      - "QQQ"
+      - "AAPL"
+      - "MSFT"
+      - "NVDA"
+    desde: "2018-01-01"
+
+costes:
+  synthetic:
+    comision_bps: 10.0
+    slippage_bps: 5.0
+    spread_bps: 2.0
+  crypto:
+    comision_bps: 10.0     # 0.10% taker en Binance sin descuentos
+    slippage_bps: 5.0
+    spread_bps: 2.0
+  equity:
+    comision_bps: 0.0      # Alpaca sin comisiones en acciones US
+    slippage_bps: 3.0
+    spread_bps: 2.0
+
+backtest:
+  capital_inicial: 10000.0
+  # La ejecución ocurre SIEMPRE en la apertura de la barra siguiente a la señal
+  ejecucion: "next_open"
+  # No se reajusta una posición si la desviación es menor que esto (fracción del
+  # patrimonio). Evita pagar comisiones por ajustes sin relevancia.
+  banda_rebalanceo: 0.05
+
+calidad:
+  max_gap_ratio: 0.02        # hasta 2% de velas ausentes es tolerable
+  max_retorno_barra: 0.50    # un 50% en una vela diaria es sospechoso
