@@ -202,6 +202,46 @@ class Estructura(Estrategia):
         return tamano
 
 
+class TendenciaVolumen(Estrategia):
+    """Tendencia confirmada por volumen. Pensada para acciones.
+
+    La diferencia con `tendencia_vol` es una sola pregunta añadida: ¿hay dinero
+    detrás del movimiento? Una subida con el volumen secándose es una subida
+    en la que cada vez participa menos gente, y suele terminar mal. El OBV
+    (volumen acumulado con signo) responde a eso.
+
+    En cripto el volumen es menos fiable —mercados fragmentados, operativa
+    artificial—, pero en acciones lo publica el propio mercado.
+    """
+    nombre = "tendencia_volumen"
+
+    def __init__(self, rapida: int = 20, lenta: int = 100, ventana_vol: int = 48,
+                 vol_objetivo: float = 0.012, ventana_obv: int = 20,
+                 sin_volumen: float = 0.5, **kw) -> None:
+        super().__init__(rapida=rapida, lenta=lenta, ventana_vol=ventana_vol,
+                         vol_objetivo=vol_objetivo, ventana_obv=ventana_obv,
+                         sin_volumen=sin_volumen, **kw)
+        self.velas_minimas = max(lenta, ventana_vol, ventana_obv) + 2
+
+    def objetivo(self, ctx: Contexto):
+        c = ctx.cierres
+        r, l = ind.ema(c, self.rapida), ind.ema(c, self.lenta)
+        if r is None or l is None or r <= l:
+            return 0.0
+        vol = ind.volatilidad(c, self.ventana_vol)
+        if not vol:
+            return 0.0
+        tamano = max(0.0, min(1.0, self.vol_objetivo / vol))
+
+        volumenes = [v.volumen for v in ctx.velas]
+        if not any(volumenes):
+            return tamano                     # sin datos de volumen, no penaliza
+        acompana = ind.obv_acompana(c, volumenes, self.ventana_obv)
+        if acompana is False:
+            return tamano * self.sin_volumen  # sube el precio pero no el dinero
+        return tamano
+
+
 class Azar(Estrategia):
     """Control negativo: decide a cara o cruz. Sirve para dos cosas.
 
@@ -222,7 +262,7 @@ class Azar(Estrategia):
 CATALOGO = {
     c.nombre: c for c in (
         ComprarYAguantar, CruceMedias, RupturaCanal, ReversionMedia,
-        TendenciaConVolatilidad, Estructura, Azar,
+        TendenciaConVolatilidad, TendenciaVolumen, Estructura, Azar,
     )
 }
 

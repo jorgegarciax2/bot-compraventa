@@ -156,6 +156,49 @@ sí**, porque encoge lo que la estrategia es capaz de ver.
 Yahoo no sirve velas de 4h, así que se piden de 1h y se agrupan
 (`remuestrear_desde` en la configuración).
 
+### La pestaña de acciones
+
+Segundo agente, con su propio capital y su propio historial. En acciones hay
+mucho más que mirar que en cripto, y se mira todo lo que se puede conseguir
+gratis y sin claves:
+
+| qué | de dónde | qué papel juega |
+|---|---|---|
+| Precio y **volumen** | Yahoo Finance | La señal: tendencia, niveles, OBV |
+| **Fundamentales** | **SEC EDGAR** — cuentas oficiales auditadas | Filtro: si suspende, no se opera |
+| **Noticias** | RSS de Yahoo | Freno: con revuelo no abre, pero sí cierra |
+
+**Por qué EDGAR y no los ratios de Yahoo.** Yahoo cerró su endpoint de ratios.
+EDGAR es lo que la empresa presenta al regulador: auditado, estructurado y sin
+intermediario. Dos límites: sólo cubre EE. UU., y **cambia cada trimestre** —
+sirve para decidir *qué* operar, nunca *cuándo*.
+
+**Qué NO hace con las noticias.** No interpreta si un titular es bueno o malo.
+Hacerlo bien requiere un modelo de lenguaje, y aquí no hay ninguno sin clave de
+pago; contar palabras «positivas» daría una cifra con aspecto de análisis y
+valor de moneda al aire. Lo único que mide es el **repunte de cobertura** — y ni
+eso puede hacerlo el primer día: el baremo lo construye el propio bot latido a
+latido, porque el RSS sólo devuelve veinte titulares recientes y calcular la
+«media» con ellos daría revuelo siempre.
+
+**Qué estrategia opera las acciones, y por qué otra distinta.** `estructura`
+—soportes, resistencias, HCH y ADX—, que fracasó en cripto pero es la mejor de
+las activas en acciones. Validación sobre 80 pruebas de 10 años y 8 valores:
+
+| estrategia | mediana | PEOR | bate B&H | muertes |
+|---|---|---|---|---|
+| comprar_y_aguantar | **+8,9 %** | **−50,6 %** | — | **3** |
+| cruce_medias | +1,9 % | −34,7 % | 19/80 | 0 |
+| **estructura** | +1,3 % | **−18,2 %** | **27/80** | 0 |
+| tendencia_volumen | +0,6 % | −25,9 % | 18/80 | 0 |
+| azar | −9,5 % | −31,3 % | 9/80 | 0 |
+
+Conviene leerla bien: **en acciones las estrategias no ganan más, pierden
+menos**. Comprar y aguantar da más rentabilidad de mediana y a cambio te lleva a
+un −50,6 % y mató al agente tres veces. Si lo que buscas es máxima rentabilidad
+y aguantas la caída, comprar y aguantar es difícil de batir en bolsa
+estadounidense. El bot cambia rentabilidad por supervivencia.
+
 ### Peajes de esta vía, dichos por adelantado
 
 **Yahoo en vez de Binance.** Los ejecutores de GitHub están en EE. UU. y Binance

@@ -26,7 +26,12 @@ from agente.core.diario import Diario                              # noqa: E402
 from agente.core.motor import Agente, Config, cargar_estado        # noqa: E402
 from agente.core.riesgo import ReglasRiesgo                        # noqa: E402
 from agente.core.vida import ReglasVida, escribir_lapida, leer_lapida  # noqa: E402
+from agente.core import fundamentales as fun                       # noqa: E402
+from agente.core import noticias as news                           # noqa: E402
 from agente.estrategias.catalogo import crear                      # noqa: E402
+from agente.estrategias.filtros import ConFiltroExterno            # noqa: E402
+
+CACHE = RAIZ / "estado" / "_cache"
 
 
 def avisar_a_actions(latio: bool) -> None:
@@ -36,6 +41,51 @@ def avisar_a_actions(latio: bool) -> None:
     if destino:
         with open(destino, "a", encoding="utf-8") as f:
             f.write(f"latio={'true' if latio else 'false'}\n")
+
+
+def contexto_externo(c: dict, destino: Path, precio: float) -> dict:
+    """Lo que no se ve en el precio: las cuentas de la empresa y el ruido.
+
+    Ninguno de los dos es una señal de compra. Las cuentas dicen si el valor
+    merece operarse siquiera; el ruido, si conviene esperar a que se aclare.
+    Y los dos fallan hacia el lado seguro: si la fuente no responde, no vetan.
+    """
+    fuera = {"calidad_ok": True, "permitir_abrir": True, "motivos": []}
+
+    if c.get("fundamentales"):
+        try:
+            m = fun.metricas(c["simbolo"], CACHE, precio=precio)
+            ok, motivos = fun.calidad(m)
+            fuera["fundamentales"] = m
+            fuera["calidad_ok"] = ok
+            fuera["motivos"] += motivos
+            print(f"Cuentas: {'OK' if ok else 'NO'} — {', '.join(motivos)}")
+        except Exception as e:
+            print(f"No he podido leer la SEC ({type(e).__name__}); no veto por eso.")
+
+    if c.get("noticias"):
+        try:
+            titulares = news.titulares(c["simbolo"], 25)
+            pulso = news.pulso(titulares, 24)
+            historial = json.loads((destino / "pulso.json").read_text(encoding="utf-8")) \
+                if (destino / "pulso.json").exists() else []
+            rep = news.repunte(pulso, historial)
+            historial = (historial + [pulso])[-200:]
+            (destino / "pulso.json").write_text(json.dumps(historial), encoding="utf-8")
+            fuera["titulares"] = titulares[:12]
+            fuera["repunte"] = rep
+            if rep and rep["hay_revuelo"]:
+                fuera["permitir_abrir"] = False
+                fuera["motivos"].append(f"revuelo de noticias ({rep['razon']}x)")
+                print(f"Revuelo: {pulso} titulares frente a {rep['normal']} habituales "
+                      f"({rep['razon']}x). No abro posiciones nuevas.")
+            else:
+                print(f"Noticias: {pulso} en 24 h"
+                      + (f" (normal {rep['normal']})" if rep else " (aún sin baremo)"))
+        except Exception as e:
+            print(f"No he podido leer las noticias ({type(e).__name__}); sigo igual.")
+
+    return fuera
 
 
 def leer_marca(ruta: Path):
@@ -61,72 +111,56 @@ def construir(c: dict) -> Config:
     )
 
 
-def main() -> int:
-    ap = argparse.ArgumentParser(description="Un latido del agente")
-    ap.add_argument("--config", default=str(RAIZ / "configuracion.json"))
-    a = ap.parse_args()
-
-    c = json.loads(Path(a.config).read_text(encoding="utf-8"))
-    destino = RAIZ / "estado" / c.get("nombre", "btc")
+def latir(c: dict) -> bool:
+    """Un latido de UN agente. Devuelve si de verdad ha latido."""
+    nombre = c.get("nombre", "agente")
+    destino = RAIZ / "estado" / nombre
     destino.mkdir(parents=True, exist_ok=True)
+    print(f"\n=== {nombre} · {c['simbolo']} {c.get('intervalo','1d')} "
+          f"· {c.get('estrategia')} ===")
 
     lapida = leer_lapida(destino / "LAPIDA.json")
     if lapida:
         v = lapida["vitales"]
-        avisar_a_actions(False)
-        print(f"El agente está muerto (causa: {v['causa_muerte']}). {v.get('detalle_muerte','')}")
-        print("La muerte es definitiva. Para empezar otro, borra la carpeta "
-              f"{destino.relative_to(RAIZ)} y cambia el nombre en la configuración.")
-        return 0                      # no es un fallo: es su final
-
+        print(f"Muerto (causa: {v['causa_muerte']}). {v.get('detalle_muerte','')}")
+        return False
     if c.get("pausado"):
-        avisar_a_actions(False)
-        print("Pausado por configuración (pausado: true). No opero.")
-        return 0
+        print("Pausado por configuración.")
+        return False
 
     cfg = construir(c)
-    estrategia = crear(cfg.estrategia, **cfg.params_estrategia)
+    base = crear(cfg.estrategia, **cfg.params_estrategia)
 
-    # --- datos -----------------------------------------------------------
     fuente = fuente_por_nombre(c.get("fuente", "yahoo"))
-    # Yahoo no sirve velas de 4h y en Actions no se puede usar Binance (bloquea
-    # las IP de EE. UU.), así que se piden más cortas y se agrupan.
     origen = c.get("remuestrear_desde")
     if origen and origen != cfg.intervalo:
         fuente = Remuestreada(fuente, origen)
-        print(f"Remuestreando de {origen} a {cfg.intervalo}")
-    necesarias = max(300, estrategia.velas_minimas + 5)
-    velas = fuente.historico(cfg.simbolo, cfg.intervalo, necesarias)
-    if len(velas) < estrategia.velas_minimas:
-        avisar_a_actions(False)
-        print(f"Sólo {len(velas)} velas y la estrategia necesita "
-              f"{estrategia.velas_minimas}. No opero todavía.")
-        return 0
-    print(f"{len(velas)} velas de {cfg.simbolo} ({cfg.intervalo}) · "
-          f"último cierre {velas[-1].cierre:,.2f} {cfg.divisa}")
+    velas = fuente.historico(cfg.simbolo, cfg.intervalo, max(300, base.velas_minimas + 5))
+    if len(velas) < base.velas_minimas:
+        print(f"Sólo {len(velas)} velas y hacen falta {base.velas_minimas}.")
+        return False
+    print(f"{len(velas)} velas · último cierre {velas[-1].cierre:,.2f} {cfg.divisa}")
 
-    # --- ¿hay vela nueva? -------------------------------------------------
-    # El cron es sólo un vigilante: puede correr cada hora o cada diez minutos,
-    # pero el agente late UNA vez por vela. Así la frecuencia con la que miramos
-    # deja de afectar a cuánto opera, que es lo que de verdad cuesta dinero.
     marca = destino / "ultima_vela.json"
-    ultima = (leer_marca(marca) or {}).get("ts")
-    if ultima == velas[-1].ts and not c.get("forzar_latido"):
+    if (leer_marca(marca) or {}).get("ts") == velas[-1].ts and not c.get("forzar_latido"):
         from datetime import datetime, timezone
-        cierre = datetime.fromtimestamp(velas[-1].ts, timezone.utc)
-        print(f"Sin vela nueva (la actual abrió a las {cierre:%H:%M} UTC). "
-              f"No late: esperando a que cierre.")
-        avisar_a_actions(False)
-        return 0
+        abre = datetime.fromtimestamp(velas[-1].ts, timezone.utc)
+        print(f"Sin vela nueva (la actual abrió a las {abre:%H:%M} UTC). No late.")
+        return False
 
-    # --- estado previo ----------------------------------------------------
+    externo = contexto_externo(c, destino, velas[-1].cierre)
+    estrategia = ConFiltroExterno(base, externo["calidad_ok"],
+                                  externo["permitir_abrir"],
+                                  ", ".join(externo["motivos"]))
+    (destino / "externo.json").write_text(
+        json.dumps(externo, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
+
     previo = cargar_estado(destino / "estado.json")
     cartera = vitales = None
     curva, ops = [], []
     if previo:
         cartera, vitales, _, curva, ops = previo
-        print(f"Reanudo: {vitales.ticks} latidos, patrimonio "
-              f"{vitales.equity:.2f} {cfg.divisa}")
+        print(f"Reanudo: {vitales.ticks} latidos, {vitales.equity:.2f} {cfg.divisa}")
     else:
         print(f"Nace con {cfg.capital:.2f} {cfg.divisa}")
 
@@ -134,45 +168,63 @@ def main() -> int:
         comision_bps=float(c.get("comision_bps", 10)),
         deslizamiento_bps=float(c.get("slippage_bps", 5)),
         minimo_operacion=float(c.get("minimo_operacion", 10))))
-
     diario = Diario(destino / "diario.jsonl", eco=True)
     ag = Agente(cfg, estrategia, broker, cartera=cartera, diario=diario, vitales=vitales)
     if previo:
         ag.curva_equity, ag.operaciones = curva, ops
-        # Cada ejecución es un proceso nuevo, así que el agente cree que acaba de
-        # nacer y lo anota otra vez. Nació una sola vez, hace horas o días.
         ag._nacido = True
 
-    # --- el latido --------------------------------------------------------
     antes = len(ag.operaciones)
     v = ag.tick(velas)
     ag.guardar(destino / "estado.json")
 
-    # La curva del agente son números sin fecha. Aquí sí sabemos cuándo ha
-    # pasado cada cosa, así que se apunta aparte: de esto sale el gráfico.
     pos = ag.cartera.posicion(cfg.simbolo)
     with (destino / "serie.jsonl").open("a", encoding="utf-8") as f:
         f.write(json.dumps({
-            "ts": time.time(), "tick": v.ticks,
-            "equity": round(v.equity, 6), "caja": round(ag.cartera.caja, 6),
-            "cantidad": pos.cantidad, "precio": velas[-1].cierre,
-            "drawdown": round(v.drawdown, 6),
+            "ts": time.time(), "tick": v.ticks, "equity": round(v.equity, 6),
+            "caja": round(ag.cartera.caja, 6), "cantidad": pos.cantidad,
+            "precio": velas[-1].cierre, "drawdown": round(v.drawdown, 6),
         }) + "\n")
 
     nuevas = len(ag.operaciones) - antes
-    print(f"Latido {v.ticks} · patrimonio {v.equity:,.2f} {cfg.divisa} "
-          f"· caída {v.drawdown:.2%} · exposición "
-          f"{ag.cartera.expuesto({cfg.simbolo: velas[-1].cierre}):.0%}"
+    print(f"Latido {v.ticks} · {v.equity:,.2f} {cfg.divisa} · caída {v.drawdown:.2%}"
+          f" · exposición {ag.cartera.expuesto({cfg.simbolo: velas[-1].cierre}):.0%}"
           + (f" · {nuevas} operación(es)" if nuevas else ""))
 
     if not ag.vivo:
-        r = ag.resumen()
-        escribir_lapida(destino / "LAPIDA.json", v, r)
-        print(f"\nMUERTE: {v.causa_muerte} — {v.detalle_muerte}")
-    avisar_a_actions(True)
-    marca.write_text(json.dumps({"ts": velas[-1].ts,
-                                 "intervalo": cfg.intervalo}), encoding="utf-8")
+        escribir_lapida(destino / "LAPIDA.json", v, ag.resumen())
+        print(f"MUERTE: {v.causa_muerte} — {v.detalle_muerte}")
+    marca.write_text(json.dumps({"ts": velas[-1].ts, "intervalo": cfg.intervalo}),
+                     encoding="utf-8")
     diario.cerrar()
+    return True
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description="Un latido de cada agente")
+    ap.add_argument("--config", default=str(RAIZ / "configuracion.json"))
+    ap.add_argument("--solo", help="latir sólo este agente, por nombre")
+    a = ap.parse_args()
+
+    cfg = json.loads(Path(a.config).read_text(encoding="utf-8"))
+    agentes = cfg.get("agentes") or [cfg]      # admite el formato antiguo de un agente
+    if a.solo:
+        agentes = [x for x in agentes if x.get("nombre") == a.solo]
+        if not agentes:
+            print(f"No hay ningún agente llamado «{a.solo}».", file=sys.stderr)
+            return 1
+
+    algo = False
+    for c in agentes:
+        try:
+            algo = latir(c) or algo
+        except Exception as e:
+            # Que un agente falle no debe dejar a los demás sin latir.
+            print(f"ERROR en {c.get('nombre')}: {type(e).__name__}: {e}", file=sys.stderr)
+
+    avisar_a_actions(algo)
+    if not algo:
+        print("\nNingún agente ha latido en esta pasada.")
     return 0
 
 

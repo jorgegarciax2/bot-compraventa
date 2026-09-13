@@ -147,3 +147,44 @@ def adx(maximos: Sequence[float], minimos: Sequence[float],
     if len(dxs) < n:
         return None
     return sum(dxs[-n:]) / n
+
+
+# ------------------------------------------------------------------- volumen
+def volumen_relativo(volumenes: Sequence[float], n: int = 20) -> Optional[float]:
+    """Volumen de la última vela frente a su media reciente.
+
+    Por encima de 1,5 hay algo pasando. Una ruptura de nivel sin volumen que la
+    acompañe es sospechosa: significa que casi nadie está de acuerdo.
+    """
+    if len(volumenes) < n + 1:
+        return None
+    media = sum(volumenes[-(n + 1):-1]) / n
+    return (volumenes[-1] / media) if media > 0 else None
+
+
+def obv(cierres: Sequence[float], volumenes: Sequence[float]) -> Optional[List[float]]:
+    """On-Balance Volume: suma el volumen de las velas al alza y resta el de las
+    bajistas. Si el precio sube pero el OBV no, la subida no tiene detrás
+    dinero que la sostenga."""
+    if len(cierres) < 2 or len(volumenes) != len(cierres):
+        return None
+    serie = [0.0]
+    for i in range(1, len(cierres)):
+        if cierres[i] > cierres[i - 1]:
+            serie.append(serie[-1] + volumenes[i])
+        elif cierres[i] < cierres[i - 1]:
+            serie.append(serie[-1] - volumenes[i])
+        else:
+            serie.append(serie[-1])
+    return serie
+
+
+def obv_acompana(cierres: Sequence[float], volumenes: Sequence[float],
+                 n: int = 20) -> Optional[bool]:
+    """¿El volumen confirma el movimiento del precio en las últimas n velas?"""
+    serie = obv(cierres, volumenes)
+    if serie is None or len(serie) < n + 1 or len(cierres) < n + 1:
+        return None
+    subio_precio = cierres[-1] > cierres[-1 - n]
+    subio_obv = serie[-1] > serie[-1 - n]
+    return subio_precio == subio_obv

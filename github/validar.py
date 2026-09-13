@@ -53,6 +53,7 @@ def main() -> int:
     ap.add_argument("--ventanas", type=int, default=6)
     ap.add_argument("--dias", type=int, default=90, help="días por ventana")
     ap.add_argument("--activos", nargs="+", default=ACTIVOS)
+    ap.add_argument("--fuente", default="binance", choices=["binance", "yahoo"])
     a = ap.parse_args()
 
     por_ventana = a.dias * POR_DIA[a.intervalo]
@@ -60,7 +61,7 @@ def main() -> int:
     calentamiento = 150
     total = a.ventanas * por_ventana + calentamiento
 
-    f = fuente_por_nombre("binance")
+    f = fuente_por_nombre(a.fuente)
     print(f"Validación · {a.intervalo} · {a.ventanas} ventanas de {a.dias} días "
           f"· {len(a.activos)} activos · 1.000 EUR por prueba\n")
 

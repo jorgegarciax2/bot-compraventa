@@ -93,7 +93,10 @@ class Yahoo(FuenteDatos):
     """Acciones, ETFs e índices. Símbolos tipo AAPL, SPY, IWDA.AS, SAN.MC."""
     nombre = "yahoo"
     BASE = "https://query1.finance.yahoo.com/v8/finance/chart"
-    _RANGO = {"1d": "2y", "1h": "60d", "5m": "30d", "1m": "7d"}
+    # Dos años de velas diarias sólo cubren un régimen de mercado. Para validar
+    # una estrategia hacen falta también los años malos.
+    _RANGO = {"1d": "10y", "1wk": "10y", "1h": "60d", "30m": "60d",
+              "15m": "60d", "5m": "30d", "1m": "7d"}
 
     def historico(self, simbolo: str, intervalo: str = "1d",
                   limite: int = 500) -> List[Vela]:

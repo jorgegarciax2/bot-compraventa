@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="refresh" content="600">
+<title>Bot · MSFT</title>
+<style>
+:root{color-scheme:dark;--f:#0d1117;--f2:#141b24;--f3:#1b2430;--b:#263241;--b2:#334354;
+--t:#e6edf3;--t2:#9aa8b8;--t3:#6b7a8c;--verde:#2fbf87;--rojo:#e5606b;--ambar:#f2a33c;
+--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+@media (prefers-color-scheme:light){:root{color-scheme:light;--f:#f6f7f9;--f2:#fff;--f3:#eef1f5;
+--b:#dde3ea;--b2:#c7d1dc;--t:#16202b;--t2:#5a6876;--t3:#8494a4;--verde:#1a8f63;--rojo:#c8383f}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--f);color:var(--t);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.envuelve{max-width:1000px;margin:0 auto;padding:20px;display:flex;flex-direction:column;gap:16px}
+h1{font:600 20px/1.2 var(--mono);margin:0;letter-spacing:-.02em}
+h2{font-size:15px;margin:0 0 8px}
+h3{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--t2);margin:0 0 12px}
+.tarjeta{background:var(--f2);border:1px solid var(--b);border-radius:10px;padding:14px 16px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.kpi{background:var(--f2);border:1px solid var(--b);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:3px}
+.kpi-t{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--t3)}
+.kpi-v{font:600 21px/1.25 var(--mono);letter-spacing:-.02em}
+.kpi-v.pos{color:var(--verde)} .kpi-v.neg{color:var(--rojo)}
+.kpi-s{font-size:11.5px;color:var(--t3)}
+.linea{margin:0 0 6px;color:var(--t2)}
+.nota{color:var(--t3);font-size:12px;margin:0}
+.insignia{font:11px var(--mono);padding:2px 8px;border-radius:999px;border:1px solid var(--b2);margin-right:6px}
+.insignia.vivo{color:var(--verde)} .insignia.muerto{color:var(--rojo)} .insignia.pausado{color:var(--t3)}
+.envoltura{overflow-x:auto;border:1px solid var(--b);border-radius:8px;max-height:420px;overflow-y:auto}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th,td{padding:7px 11px;text-align:left;white-space:nowrap;border-bottom:1px solid var(--b)}
+th{position:sticky;top:0;background:var(--f3);color:var(--t2);font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.num{text-align:right;font-family:var(--mono)}
+.pos{color:var(--verde)} .neg{color:var(--rojo)} .apagado{color:var(--t3)}
+.malla{stroke:var(--b)} .base{stroke:var(--t3);stroke-dasharray:4 4}
+.eje{fill:var(--t3);font:10px var(--mono)}
+.diario{margin:0;padding:12px;background:var(--f);border:1px solid var(--b);border-radius:8px;
+font:11.5px/1.7 var(--mono);max-height:300px;overflow:auto;color:var(--t2);white-space:pre-wrap}
+.l-error{color:var(--rojo)} .l-warning{color:var(--ambar)} .l-hito{color:var(--t)}
+footer{color:var(--t3);font-size:11.5px;line-height:1.6;border-top:1px solid var(--b);padding-top:14px}
+.pestanas{display:flex;gap:4px;background:var(--f3);padding:4px;border-radius:10px;
+border:1px solid var(--b);flex-wrap:wrap}
+.pestana{padding:8px 16px;border-radius:7px;color:var(--t2);text-decoration:none;
+font-size:13.5px;white-space:nowrap}
+.pestana:hover{color:var(--t);background:var(--f2)}
+.pestana.activa{background:#4c9aff;color:#fff;font-weight:600}
+.datos{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.dato{background:var(--f3);border:1px solid var(--b);border-radius:8px;padding:9px 11px;
+display:flex;flex-direction:column;gap:2px}
+.dato-t{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--t3)}
+.dato-v{font:600 15px/1.3 var(--mono)}
+.insignia.ok{color:var(--verde)} .insignia.falla{color:var(--rojo)}
+.titulares{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
+.titulares li{font-size:13px;line-height:1.45}
+.titulares a{color:var(--t2);text-decoration:none}
+.titulares a:hover{color:#4c9aff;text-decoration:underline}
+h3 .insignia{margin-left:8px;text-transform:none;letter-spacing:0}
+</style></head><body><div class="envuelve">
+<header><h1>bot de compraventa</h1>
+<p class="nota">Dinero ficticio. Ninguna orden llega a ningún bróker.</p></header>
+<nav class="pestanas"><a class="pestana" href="btc4h.html">Cripto · BTC-EUR</a><a class="pestana activa" href="msft.html">Acciones · MSFT</a></nav>
+<section class="tarjeta cabecera-agente">
+  <h2>MSFT · estructura · vela 1d</h2>
+  <p class="linea"><span class="insignia vivo">● en marcha</span> late una vez por vela de 1d; se comprueba cada 30 minutos.</p>
+  <p class="nota">1 latidos · último 13/09/2026 02:45</p>
+</section>
+
+<section class="kpis"><div class="kpi"><span class="kpi-t">Patrimonio</span><span class="kpi-v neg">999,29 USD</span><span class="kpi-s">empezó con 1 000,00</span></div><div class="kpi"><span class="kpi-t">Resultado total</span><span class="kpi-v neg">-0,71 USD</span><span class="kpi-s">-0.07 % desde el inicio</span></div><div class="kpi"><span class="kpi-t">Hoy</span><span class="kpi-v apagado">0,00 USD</span><span class="kpi-s">0.00 % · 1 latidos</span></div><div class="kpi"><span class="kpi-t">Posición</span><span class="kpi-v ">44 % invertido</span><span class="kpi-s">0,885692 MSFT · medio 495,88</span></div><div class="kpi"><span class="kpi-t">Caja</span><span class="kpi-v ">560,31 USD</span><span class="kpi-s">comisiones 0,44 · coste de vida 0,05</span></div><div class="kpi"><span class="kpi-t">Caída desde máximo</span><span class="kpi-v neg">0.07 %</span><span class="kpi-s">muere al 50 %</span></div></section>
+
+<section class="tarjeta"><h3>Patrimonio</h3><p class="nota">Aún no hay suficientes latidos para dibujar la curva.</p></section>
+
+<section class="tarjeta"><h3>Fundamentales
+      <span class="insignia ok">cuentas sanas</span></h3>
+      <p class="nota">MICROSOFT CORPORATION · ejercicio 2026-06-30
+      · fuente: SEC EDGAR. cuentas sanas</p>
+      <div class="datos"><div class="dato"><span class="dato-t">Ingresos</span><span class="dato-v">331.8 B$</span></div><div class="dato"><span class="dato-t">Crecimiento</span><span class="dato-v">17.8 %</span></div><div class="dato"><span class="dato-t">Margen neto</span><span class="dato-v">40.3 %</span></div><div class="dato"><span class="dato-t">ROE</span><span class="dato-v">30.2 %</span></div><div class="dato"><span class="dato-t">Deuda / patrimonio</span><span class="dato-v">0.7</span></div><div class="dato"><span class="dato-t">BPA</span><span class="dato-v">18.00 $</span></div><div class="dato"><span class="dato-t">PER</span><span class="dato-v">27.5</span></div></div>
+      <p class="nota">Las cuentas cambian cada trimestre: sirven para decidir
+      <em>qué</em> operar, no <em>cuándo</em>. Si suspenden, el bot cierra y no vuelve a entrar.</p>
+    </section>
+<section class="tarjeta"><h3>Noticias <span class="insignia">sin baremo todavía</span></h3>
+      <ul class="titulares"><li><a href="https://247wallst.com/investing/2026/09/12/anthropics-prisoners-dilemma-dario-amodei-hits-the-brakes-on-ai-while-begging-everyone-else-to-do-the-same/?.tsrc=rss" target="_blank" rel="noopener">Anthropic’s Prisoner’s Dilemma: Dario Amodei Hits the Brakes on AI While Begging Everyone Else to Do the Same</a></li><li><a href="https://finance.yahoo.com/technology/ai/articles/jim-cramer-wondered-whether-microsoft-105632101.html?.tsrc=rss" target="_blank" rel="noopener">Jim Cramer Wondered Whether Microsoft Corporation (NASDAQ:MSFT) Isn’t “That” Dependent On AI</a></li><li><a href="https://www.fool.com/investing/2026/09/11/microsoft-stock-is-flat-for-2026-is-a-rally-coming/?.tsrc=rss" target="_blank" rel="noopener">Microsoft Stock Is Flat So Far in 2026. Is a Rally Coming to End the Year?</a></li><li><a href="https://www.fool.com/investing/2026/09/11/apple-microsoft-and-nvidia-top-the-list-of-largest/?.tsrc=rss" target="_blank" rel="noopener">Apple, Microsoft, and Nvidia Top the List of Largest Companies by Market Cap. Here&#x27;s the One I&#x27;m Buying Now.</a></li><li><a href="https://stocktwits.com/news-articles/markets/equity/s-and-p-500-dow-break-past-four-day-loss-to-end-higher-as-investors-eye-fed-meeting-next-week-dell-hpe-el-wmt-in-focus/cZtXyR4RBbK?.tsrc=rss" target="_blank" rel="noopener">S&amp;P 500, Dow Break Past Four-Day Loss To End Higher As Investors Eye Fed Meeting Next Week — DELL, HPE, EL, WMT In Focus</a></li><li><a href="https://finance.yahoo.com/technology/ai/articles/microsoft-gains-signing-10-enforceable-211130848.html?.tsrc=rss" target="_blank" rel="noopener">Microsoft Gains After Signing 10 Enforceable School-AI Guardrails</a></li><li><a href="https://finance.yahoo.com/technology/ai/articles/openai-rethinks-next-big-move-211052878.html?.tsrc=rss" target="_blank" rel="noopener">OpenAI Rethinks Its Next Big Move</a></li><li><a href="https://finance.yahoo.com/technology/articles/microsoft-plans-triple-data-center-211016595.html?.tsrc=rss" target="_blank" rel="noopener">Microsoft Plans to Triple Its Data Center Footprint</a></li><li><a href="https://finance.yahoo.com/technology/articles/jim-cramer-praises-microsoft-msft-205636631.html?.tsrc=rss" target="_blank" rel="noopener">Jim Cramer Praises Microsoft (MSFT) for Its Permian Power Plan with Chevron (CVX)</a></li><li><a href="https://www.fool.com/investing/2026/09/12/nvidia-vs-amd-elon-musk-picked-a-side-on-the-space/?.tsrc=rss" target="_blank" rel="noopener">Nvidia vs. AMD: Elon Musk Picked a Side on the SpaceX Earnings Call</a></li></ul>
+      <p class="nota">El bot <b>no interpreta</b> si un titular es bueno o malo: eso
+      necesitaría un modelo de lenguaje que aquí no hay, y contar palabras
+      «positivas» daría una cifra con pinta de análisis y valor de moneda al aire.
+      Lo único que mide es el <b>repunte</b> de cobertura, y cuando lo detecta deja
+      de abrir posiciones — pero sigue pudiendo cerrar.</p>
+    </section>
+
+<section class="tarjeta"><h3>Día a día</h3>
+<div class="envoltura"><table>
+<thead><tr><th>día</th><th class="num">cierre</th><th class="num">resultado</th><th class="num">%</th><th class="num">mínimo</th><th class="num">máximo</th><th class="num">latidos</th></tr></thead>
+<tbody><tr><td>2026-09-13</td><td class="num">999,29</td><td class="num apagado">0,00</td><td class="num apagado">0.00 %</td><td class="num apagado">999,29</td><td class="num apagado">999,29</td><td class="num apagado">1</td></tr></tbody></table></div></section>
+
+<section class="tarjeta"><h3>Operaciones</h3>
+<div class="envoltura"><table>
+<thead><tr><th>fecha</th><th>lado</th><th class="num">cantidad</th><th class="num">precio</th><th class="num">comisión</th><th class="num">realizado</th><th>motivo</th></tr></thead>
+<tbody><tr><td>11/09 15:30</td><td class="pos">compra</td><td class="num">0,885692</td><td class="num">495,88</td><td class="num apagado">0,4392</td><td class="num apagado">—</td><td class="apagado">subir exposición 0%→44%</td></tr></tbody></table></div></section>
+
+<section class="tarjeta"><h3>Diario de a bordo</h3><pre class="diario"><div class="">13/09 02:45  ● nace con 1 000,00 USD sobre MSFT — estructura(rapida=20, lenta=100, adx_minimo=20.0, k_pivote=5, tolerancia=0.015, toques_minimos=2, ventana=400, ventana_vol=48, vol_objetivo=0.012, margen_nivel=0.01, freno_resistencia=1.0) + filtro externo</div><div class="l-hito">11/09 15:30  ▲ compra 0,885692 @ 495,8778 · subir exposición 0%→44%</div></pre></section>
+
+<footer>Generado el 13/09/2026 02:47 por GitHub Actions. La página se recarga sola cada 10 minutos.<br>
+Ninguna de estas estrategias tiene ventaja demostrada, y un backtest bueno no predice nada.</footer>
+</div></body></html>

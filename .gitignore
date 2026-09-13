@@ -9,6 +9,10 @@ tbot/data/
 # se guarda: es lo que le permite continuar donde lo dejó en la ejecución siguiente.
 ejecuciones/
 
+# La caché de la SEC pesa megas y caduca sola: se vuelve a pedir en cada
+# ejecución en vez de engordar el repositorio para siempre.
+estado/_cache/
+
 __pycache__/
 *.pyc
 .DS_Store

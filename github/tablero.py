@@ -145,28 +145,91 @@ LEGIBLE = {
 }
 
 
-def main() -> int:
-    conf = leer_json(RAIZ / "configuracion.json") or {}
-    nombre = conf.get("nombre", "btc")
-    dst = RAIZ / "estado" / nombre
+def barra(agentes: list, actual: str) -> str:
+    if len(agentes) < 2:
+        return ""
+    enlaces = []
+    for a in agentes:
+        n = a.get("nombre", "?")
+        etiqueta = {"cripto": "Cripto", "accion": "Acciones"}.get(a.get("tipo"), n)
+        clase = " activa" if n == actual else ""
+        enlaces.append(f'<a class="pestana{clase}" href="{html.escape(n)}.html">'
+                       f'{html.escape(etiqueta)} · {html.escape(a.get("simbolo","")) }</a>')
+    return f'<nav class="pestanas">{"".join(enlaces)}</nav>'
 
+
+def tarjeta_fundamentales(ext: dict) -> str:
+    """Las cuentas oficiales. No son una señal de compra: son un filtro de si el
+    valor merece operarse."""
+    m = (ext or {}).get("fundamentales")
+    if not m:
+        return ""
+    def num(v, suf="", d=1):
+        return "—" if v is None else f"{v:,.{d}f}{suf}".replace(",", " ")
+    def pc(v, d=1):
+        return "—" if v is None else f"{v*100:,.{d}f} %".replace(",", " ")
+    filas = [
+        ("Ingresos", num((m["ingresos"] or 0) / 1e9, " B$") if m["ingresos"] else "—"),
+        ("Crecimiento", pc(m["crecimiento_ingresos"])),
+        ("Margen neto", pc(m["margen_neto"])),
+        ("ROE", pc(m["roe"])),
+        ("Deuda / patrimonio", num(m["deuda_sobre_patrimonio"])),
+        ("BPA", num(m["bpa"], " $", 2)),
+        ("PER", num(m["per"])),
+    ]
+    celdas = "".join(f'<div class="dato"><span class="dato-t">{k}</span>'
+                     f'<span class="dato-v">{html.escape(v)}</span></div>' for k, v in filas)
+    veredicto = "cuentas sanas" if ext.get("calidad_ok") else "no apta"
+    clase = "ok" if ext.get("calidad_ok") else "falla"
+    motivos = ", ".join(ext.get("motivos") or [])
+    return f'''<section class="tarjeta"><h3>Fundamentales
+      <span class="insignia {clase}">{veredicto}</span></h3>
+      <p class="nota">{html.escape(m.get("empresa") or "")} · ejercicio {m.get("ejercicio")}
+      · fuente: SEC EDGAR. {html.escape(motivos)}</p>
+      <div class="datos">{celdas}</div>
+      <p class="nota">Las cuentas cambian cada trimestre: sirven para decidir
+      <em>qué</em> operar, no <em>cuándo</em>. Si suspenden, el bot cierra y no vuelve a entrar.</p>
+    </section>'''
+
+
+def tarjeta_noticias(ext: dict) -> str:
+    t = (ext or {}).get("titulares")
+    if not t:
+        return ""
+    rep = ext.get("repunte")
+    if rep:
+        aviso = (f'<span class="insignia falla">revuelo {rep["razon"]}x</span>'
+                 if rep["hay_revuelo"] else
+                 f'<span class="insignia ok">{rep["actual"]} hoy · {rep["normal"]} habitual</span>')
+    else:
+        aviso = '<span class="insignia">sin baremo todavía</span>'
+    filas = "".join(
+        f'<li><a href="{html.escape(n.get("enlace") or "#")}" target="_blank" rel="noopener">'
+        f'{html.escape((n.get("titular") or "")[:120])}</a></li>' for n in t[:10])
+    return f'''<section class="tarjeta"><h3>Noticias {aviso}</h3>
+      <ul class="titulares">{filas}</ul>
+      <p class="nota">El bot <b>no interpreta</b> si un titular es bueno o malo: eso
+      necesitaría un modelo de lenguaje que aquí no hay, y contar palabras
+      «positivas» daría una cifra con pinta de análisis y valor de moneda al aire.
+      Lo único que mide es el <b>repunte</b> de cobertura, y cuando lo detecta deja
+      de abrir posiciones — pero sigue pudiendo cerrar.</p>
+    </section>'''
+
+
+def pagina(c: dict, agentes: list) -> str:
+    """El cuerpo HTML del tablero de UN agente."""
+    nombre = c.get("nombre", "agente")
+    dst = RAIZ / "estado" / nombre
     est = leer_json(dst / "estado.json")
     lap = leer_json(dst / "LAPIDA.json")
+    ext = leer_json(dst / "externo.json") or {}
     serie = leer_jsonl(dst / "serie.jsonl")
     eventos = leer_jsonl(dst / "diario.jsonl", 60)
-
-    salida = RAIZ / "docs"
-    salida.mkdir(exist_ok=True)
+    nav = barra(agentes, nombre)
 
     if not est:
-        (salida / "index.html").write_text(PLANTILLA.format(
-            titulo="Bot de compraventa", cuerpo=
-            '<section class="tarjeta"><h2>Todavía sin latidos</h2>'
-            '<p class="nota">El bot aún no ha operado. El primer latido llega '
-            'en la próxima hora en punto.</p></section>',
-            pie=time.strftime("%d/%m/%Y %H:%M")), encoding="utf-8")
-        print("Tablero generado (sin estado todavía).")
-        return 0
+        return nav + ('<section class="tarjeta"><h2>Todavía sin latidos</h2>'
+                      '<p class="nota">Este agente aún no ha operado.</p></section>')
 
     cart, vit, cfg = est["cartera"], est["vitales"], est.get("config", {})
     simbolo = cfg.get("simbolo", "?")
@@ -188,13 +251,19 @@ def main() -> int:
     if muerto:
         causa = vit.get("causa_muerte") or (lap or {}).get("vitales", {}).get("causa_muerte")
         detalle = vit.get("detalle_muerte") or (lap or {}).get("vitales", {}).get("detalle_muerte", "")
-        insignia = f'<span class="insignia muerto">† muerto</span> causa: <b>{html.escape(str(causa))}</b>. {html.escape(str(detalle))}'
-    elif conf.get("pausado"):
-        insignia = '<span class="insignia pausado">‖ pausado</span> no opera hasta que quites «pausado» de la configuración.'
+        insignia = (f'<span class="insignia muerto">† muerto</span> causa: '
+                    f'<b>{html.escape(str(causa))}</b>. {html.escape(str(detalle))}')
+    elif c.get("pausado"):
+        insignia = '<span class="insignia pausado">‖ pausado</span> no opera.'
     else:
         iv = html.escape(str(cfg.get("intervalo", "?")))
-        insignia = (f'<span class="insignia vivo">● en marcha</span> late una vez '
-                    f'por vela de {iv}; se comprueba cada 30 minutos si ya ha cerrado.')
+        extra = ""
+        if not ext.get("calidad_ok", True):
+            extra = " <b>Vetado por sus cuentas</b>, el bot no entra."
+        elif not ext.get("permitir_abrir", True):
+            extra = " Hay revuelo de noticias: no abre posiciones nuevas."
+        insignia = (f'<span class="insignia vivo">● en marcha</span> late una vez por '
+                    f'vela de {iv}; se comprueba cada 30 minutos.{extra}')
 
     ultimo = serie[-1]["ts"] if serie else None
     kpis = [
@@ -208,15 +277,16 @@ def main() -> int:
          f"{eur(cantidad,6)} {simbolo} · medio {eur(pos.get('precio_medio'),2)}"
          if cantidad > 1e-12 else "todo en caja", ""),
         ("Caja", f"{eur(caja)} {divisa}",
-         f"comisiones {eur(cart.get('comisiones_pagadas'))} · coste de vida {eur(cart.get('coste_vida_pagado'))}", ""),
+         f"comisiones {eur(cart.get('comisiones_pagadas'))} · coste de vida "
+         f"{eur(cart.get('coste_vida_pagado'))}", ""),
         ("Caída desde máximo", pct(vit.get("drawdown")),
-         f"muere al {pct(cfg.get('reglas_vida',{}).get('max_drawdown',0.5),0)}", 
+         f"muere al {pct(cfg.get('reglas_vida',{}).get('max_drawdown',0.5),0)}",
          "neg" if float(vit.get("drawdown") or 0) > 0.0001 else "apagado"),
     ]
     html_kpis = "".join(
         f'<div class="kpi"><span class="kpi-t">{t}</span>'
-        f'<span class="kpi-v {c}">{html.escape(v)}</span>'
-        f'<span class="kpi-s">{html.escape(s)}</span></div>' for t, v, s, c in kpis)
+        f'<span class="kpi-v {cl}">{html.escape(v)}</span>'
+        f'<span class="kpi-s">{html.escape(sb)}</span></div>' for t, v, sb, cl in kpis)
 
     filas_dias = "".join(
         f'<tr><td>{d["dia"]}</td><td class="num">{eur(d["cierre"])}</td>'
@@ -225,7 +295,7 @@ def main() -> int:
         f'<td class="num apagado">{eur(d["min"])}</td>'
         f'<td class="num apagado">{eur(d["max"])}</td>'
         f'<td class="num apagado">{d["latidos"]}</td></tr>'
-        for d in reversed(dias)) or '<tr><td colspan="7" class="apagado">Sin días completos todavía.</td></tr>'
+        for d in reversed(dias)) or '<tr><td colspan="7" class="apagado">Sin días completos.</td></tr>'
 
     ops = (est.get("operaciones") or [])[-60:]
     filas_ops = "".join(
@@ -242,11 +312,14 @@ def main() -> int:
     lineas = []
     for e in eventos:
         fn = LEGIBLE.get(e.get("tipo"))
-        cls = {"muerte": "l-error", "rechazo": "l-warning", "operacion": "l-hito"}.get(e.get("tipo"), "")
+        cls = {"muerte": "l-error", "rechazo": "l-warning",
+               "operacion": "l-hito"}.get(e.get("tipo"), "")
         txt = fn(e) if fn else str(e.get("tipo"))
-        lineas.append(f'<div class="{cls}">{time.strftime("%d/%m %H:%M", time.localtime(e.get("ts",0)))}  {html.escape(txt)}</div>')
+        lineas.append(f'<div class="{cls}">'
+                      f'{time.strftime("%d/%m %H:%M", time.localtime(e.get("ts",0)))}  '
+                      f'{html.escape(txt)}</div>')
 
-    cuerpo = f'''
+    return f'''{nav}
 <section class="tarjeta cabecera-agente">
   <h2>{html.escape(simbolo)} · {html.escape(str(cfg.get("estrategia","")))} · vela {html.escape(str(cfg.get("intervalo","")))}</h2>
   <p class="linea">{insignia}</p>
@@ -256,6 +329,9 @@ def main() -> int:
 <section class="kpis">{html_kpis}</section>
 
 <section class="tarjeta"><h3>Patrimonio</h3>{svg_curva(serie, capital)}</section>
+
+{tarjeta_fundamentales(ext)}
+{tarjeta_noticias(ext)}
 
 <section class="tarjeta"><h3>Día a día</h3>
 <div class="envoltura"><table>
@@ -270,10 +346,24 @@ def main() -> int:
 <section class="tarjeta"><h3>Diario de a bordo</h3><pre class="diario">{"".join(lineas)}</pre></section>
 '''
 
-    (salida / "index.html").write_text(PLANTILLA.format(
-        titulo=f"Bot · {simbolo}", cuerpo=cuerpo,
-        pie=time.strftime("%d/%m/%Y %H:%M")), encoding="utf-8")
-    print(f"Tablero generado: docs/index.html ({vit.get('ticks',0)} latidos)")
+
+def main() -> int:
+    conf = leer_json(RAIZ / "configuracion.json") or {}
+    agentes = conf.get("agentes") or [conf]
+    salida = RAIZ / "docs"
+    salida.mkdir(exist_ok=True)
+    pie = time.strftime("%d/%m/%Y %H:%M")
+
+    for i, c in enumerate(agentes):
+        nombre = c.get("nombre", "agente")
+        cuerpo = pagina(c, agentes)
+        titulo = f"Bot · {c.get('simbolo','?')}"
+        doc = PLANTILLA.format(titulo=titulo, cuerpo=cuerpo, pie=pie)
+        (salida / f"{nombre}.html").write_text(doc, encoding="utf-8")
+        if i == 0:
+            (salida / "index.html").write_text(doc, encoding="utf-8")
+        print(f"  docs/{nombre}.html")
+    print(f"Tablero generado: {len(agentes)} agente(s)")
     return 0
 
 
@@ -317,6 +407,23 @@ th{{position:sticky;top:0;background:var(--f3);color:var(--t2);font-size:11px;te
 font:11.5px/1.7 var(--mono);max-height:300px;overflow:auto;color:var(--t2);white-space:pre-wrap}}
 .l-error{{color:var(--rojo)}} .l-warning{{color:var(--ambar)}} .l-hito{{color:var(--t)}}
 footer{{color:var(--t3);font-size:11.5px;line-height:1.6;border-top:1px solid var(--b);padding-top:14px}}
+.pestanas{{display:flex;gap:4px;background:var(--f3);padding:4px;border-radius:10px;
+border:1px solid var(--b);flex-wrap:wrap}}
+.pestana{{padding:8px 16px;border-radius:7px;color:var(--t2);text-decoration:none;
+font-size:13.5px;white-space:nowrap}}
+.pestana:hover{{color:var(--t);background:var(--f2)}}
+.pestana.activa{{background:#4c9aff;color:#fff;font-weight:600}}
+.datos{{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}}
+.dato{{background:var(--f3);border:1px solid var(--b);border-radius:8px;padding:9px 11px;
+display:flex;flex-direction:column;gap:2px}}
+.dato-t{{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--t3)}}
+.dato-v{{font:600 15px/1.3 var(--mono)}}
+.insignia.ok{{color:var(--verde)}} .insignia.falla{{color:var(--rojo)}}
+.titulares{{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px}}
+.titulares li{{font-size:13px;line-height:1.45}}
+.titulares a{{color:var(--t2);text-decoration:none}}
+.titulares a:hover{{color:#4c9aff;text-decoration:underline}}
+h3 .insignia{{margin-left:8px;text-transform:none;letter-spacing:0}}
 </style></head><body><div class="envuelve">
 <header><h1>bot de compraventa</h1>
 <p class="nota">Dinero ficticio. Ninguna orden llega a ningún bróker.</p></header>
