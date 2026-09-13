@@ -89,6 +89,56 @@ Cada agente deja su rastro completo en `ejecuciones/<nombre>/`:
 Los agentes son procesos aparte: **siguen operando aunque cierres el navegador o
 pares el panel**. Para pararlos de verdad, usa «Pausar» en la página.
 
+## El bot en la nube, gratis (GitHub Actions)
+
+Corriendo ya en <https://jorgegarciax2.github.io/bot-compraventa/>
+
+No hay servidor. Una tarea programada despierta cada hora, da **un latido**,
+guarda el estado en el propio repositorio y regenera el tablero. El motor y las
+reglas son exactamente los mismos que en el panel local: lo único que cambia es
+quién lleva el reloj.
+
+```
+github/latido.py               un latido: carga estado, opera, lo guarda
+github/tablero.py              genera docs/index.html (SVG en Python, sin JS)
+.github/workflows/latido.yml   el cron: minuto 11 de cada hora
+configuracion.json             los mandos, ya que aquí no hay botones
+estado/btc/                    el rastro del bot, versionado en git
+```
+
+### Cómo se maneja
+
+No hay botones: se edita [configuracion.json](configuracion.json), se hace commit
+y el siguiente latido lo usa.
+
+| Quiero… | Cambio |
+|---|---|
+| Que deje de operar sin perder nada | `"pausado": true` |
+| Otra estrategia | `"estrategia": "cruce_medias"` |
+| Otro activo | `"simbolo": "ETH-EUR"` |
+| Empezar un agente nuevo | borra `estado/btc/` y cambia `"nombre"` |
+
+Para forzar un latido sin esperar a la hora: pestaña **Actions → latido → Run
+workflow**.
+
+### Peajes de esta vía, dichos por adelantado
+
+**Yahoo en vez de Binance.** Los ejecutores de GitHub están en EE. UU. y Binance
+responde HTTP 451 a esas IP. Yahoo sirve `BTC-EUR` igual de bien y sin claves.
+
+**El reloj de GitHub no es puntual.** Las tareas programadas se retrasan cuando
+hay cola, a veces media hora. Con velas de una hora da igual, pero no esperes
+precisión de reloj suizo.
+
+**El repositorio es público.** Es lo que hace que Pages sea gratis. No hay
+contraseñas ni claves dentro — está auditado — pero cualquiera puede ver cómo le
+va al bot.
+
+**Se apaga solo a los 60 días de inactividad.** GitHub desactiva las tareas
+programadas si el repositorio no recibe actividad humana en dos meses, y los
+commits del propio bot no cuentan. Si un día ves que dejó de latir, es esto:
+se reactiva con un botón en la pestaña Actions.
+
 ## Ponerlo en un servidor 24/7
 
 Para que el bot siga operando con el portátil apagado, hay una guía completa en
