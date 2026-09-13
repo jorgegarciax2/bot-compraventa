@@ -71,6 +71,9 @@ def main() -> int:
     ap.add_argument("--posiciones", type=int, nargs="+", default=[3, 5, 8])
     ap.add_argument("--estrategia", default="estructura")
     ap.add_argument("--capital", type=float, default=1000.0)
+    ap.add_argument("--desplazar", type=int, default=0,
+                    help="sesiones a retroceder: permite medir en OTRO periodo "
+                         "y comprobar si el resultado se repite o fue suerte")
     a = ap.parse_args()
 
     y = fuente_por_nombre("yahoo")
@@ -78,7 +81,9 @@ def main() -> int:
     datos = {}
     for s in UNIVERSO:
         try:
-            v = y.historico(s, "1d", a.dias + 200)
+            v = y.historico(s, "1d", a.dias + 200 + a.desplazar)
+            if a.desplazar:
+                v = v[:-a.desplazar]
             if len(v) >= a.dias + 150:
                 datos[s] = v[-(a.dias + 150):]
         except Exception:
