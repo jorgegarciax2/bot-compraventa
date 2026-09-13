@@ -204,3 +204,56 @@ def guardar_csv(velas: Iterable[Vela], ruta: str | Path) -> Path:
         for v in velas:
             w.writerow([v.ts, v.apertura, v.maximo, v.minimo, v.cierre, v.volumen])
     return ruta
+
+
+# ------------------------------------------------------------- remuestreo
+SEGUNDOS_INTERVALO = {"1m": 60, "5m": 300, "15m": 900, "30m": 1800,
+                      "1h": 3600, "2h": 7200, "4h": 14400, "6h": 21600,
+                      "12h": 43200, "1d": 86400}
+
+
+def remuestrear(velas: List[Vela], segundos: int) -> List[Vela]:
+    """Agrupa velas cortas en otras más largas, alineadas al reloj UTC.
+
+    Existe por una limitación concreta: Yahoo no sirve velas de 4 horas, y en
+    GitHub Actions no se puede usar Binance porque bloquea las IP de EE. UU.
+    Así que se piden de 1 hora y se agrupan de cuatro en cuatro.
+
+    La última vela puede estar a medio formar. Es lo correcto: su cierre es el
+    precio actual, que es justo lo que hace falta para valorar la cartera.
+    """
+    if not velas:
+        return []
+    cubos = {}
+    orden = []
+    for v in velas:
+        k = v.ts - (v.ts % segundos)
+        c = cubos.get(k)
+        if c is None:
+            cubos[k] = [v.apertura, v.maximo, v.minimo, v.cierre, v.volumen]
+            orden.append(k)
+        else:
+            c[1] = max(c[1], v.maximo)
+            c[2] = min(c[2], v.minimo)
+            c[3] = v.cierre
+            c[4] += v.volumen
+    return [Vela(k, *cubos[k]) for k in orden]
+
+
+class Remuestreada(FuenteDatos):
+    """Envuelve otra fuente y le cambia el tamaño de vela."""
+    nombre = "remuestreada"
+
+    def __init__(self, base: FuenteDatos, origen: str = "1h") -> None:
+        self.base = base
+        self.origen = origen
+
+    def historico(self, simbolo: str, intervalo: str = "4h",
+                  limite: int = 500) -> List[Vela]:
+        destino = SEGUNDOS_INTERVALO.get(intervalo)
+        origen = SEGUNDOS_INTERVALO.get(self.origen)
+        if not destino or not origen or destino < origen:
+            raise ValueError(f"No puedo remuestrear de {self.origen} a {intervalo}")
+        factor = max(1, destino // origen)
+        crudas = self.base.historico(simbolo, self.origen, limite * factor + factor)
+        return remuestrear(crudas, destino)[-limite:]

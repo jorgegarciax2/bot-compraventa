@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -20,12 +21,28 @@ RAIZ = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RAIZ / "agente-cartera"))
 
 from agente.core.broker import BrokerPapel, CostesMercado          # noqa: E402
-from agente.core.datos import fuente_por_nombre                    # noqa: E402
+from agente.core.datos import Remuestreada, fuente_por_nombre      # noqa: E402
 from agente.core.diario import Diario                              # noqa: E402
 from agente.core.motor import Agente, Config, cargar_estado        # noqa: E402
 from agente.core.riesgo import ReglasRiesgo                        # noqa: E402
 from agente.core.vida import ReglasVida, escribir_lapida, leer_lapida  # noqa: E402
 from agente.estrategias.catalogo import crear                      # noqa: E402
+
+
+def avisar_a_actions(latio: bool) -> None:
+    """Le dice al flujo si ha pasado algo. Sin esto regeneraría el tablero y
+    haría un commit cada vez que el cron despierta, aunque no hubiera latido."""
+    destino = os.environ.get("GITHUB_OUTPUT")
+    if destino:
+        with open(destino, "a", encoding="utf-8") as f:
+            f.write(f"latio={'true' if latio else 'false'}\n")
+
+
+def leer_marca(ruta: Path):
+    try:
+        return json.loads(ruta.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
 
 
 def construir(c: dict) -> Config:
@@ -56,12 +73,14 @@ def main() -> int:
     lapida = leer_lapida(destino / "LAPIDA.json")
     if lapida:
         v = lapida["vitales"]
+        avisar_a_actions(False)
         print(f"El agente está muerto (causa: {v['causa_muerte']}). {v.get('detalle_muerte','')}")
         print("La muerte es definitiva. Para empezar otro, borra la carpeta "
               f"{destino.relative_to(RAIZ)} y cambia el nombre en la configuración.")
         return 0                      # no es un fallo: es su final
 
     if c.get("pausado"):
+        avisar_a_actions(False)
         print("Pausado por configuración (pausado: true). No opero.")
         return 0
 
@@ -70,14 +89,35 @@ def main() -> int:
 
     # --- datos -----------------------------------------------------------
     fuente = fuente_por_nombre(c.get("fuente", "yahoo"))
+    # Yahoo no sirve velas de 4h y en Actions no se puede usar Binance (bloquea
+    # las IP de EE. UU.), así que se piden más cortas y se agrupan.
+    origen = c.get("remuestrear_desde")
+    if origen and origen != cfg.intervalo:
+        fuente = Remuestreada(fuente, origen)
+        print(f"Remuestreando de {origen} a {cfg.intervalo}")
     necesarias = max(300, estrategia.velas_minimas + 5)
     velas = fuente.historico(cfg.simbolo, cfg.intervalo, necesarias)
     if len(velas) < estrategia.velas_minimas:
+        avisar_a_actions(False)
         print(f"Sólo {len(velas)} velas y la estrategia necesita "
               f"{estrategia.velas_minimas}. No opero todavía.")
         return 0
     print(f"{len(velas)} velas de {cfg.simbolo} ({cfg.intervalo}) · "
           f"último cierre {velas[-1].cierre:,.2f} {cfg.divisa}")
+
+    # --- ¿hay vela nueva? -------------------------------------------------
+    # El cron es sólo un vigilante: puede correr cada hora o cada diez minutos,
+    # pero el agente late UNA vez por vela. Así la frecuencia con la que miramos
+    # deja de afectar a cuánto opera, que es lo que de verdad cuesta dinero.
+    marca = destino / "ultima_vela.json"
+    ultima = (leer_marca(marca) or {}).get("ts")
+    if ultima == velas[-1].ts and not c.get("forzar_latido"):
+        from datetime import datetime, timezone
+        cierre = datetime.fromtimestamp(velas[-1].ts, timezone.utc)
+        print(f"Sin vela nueva (la actual abrió a las {cierre:%H:%M} UTC). "
+              f"No late: esperando a que cierre.")
+        avisar_a_actions(False)
+        return 0
 
     # --- estado previo ----------------------------------------------------
     previo = cargar_estado(destino / "estado.json")
@@ -129,6 +169,9 @@ def main() -> int:
         r = ag.resumen()
         escribir_lapida(destino / "LAPIDA.json", v, r)
         print(f"\nMUERTE: {v.causa_muerte} — {v.detalle_muerte}")
+    avisar_a_actions(True)
+    marca.write_text(json.dumps({"ts": velas[-1].ts,
+                                 "intervalo": cfg.intervalo}), encoding="utf-8")
     diario.cerrar()
     return 0
 

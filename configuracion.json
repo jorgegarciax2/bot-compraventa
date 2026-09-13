@@ -1,31 +1,29 @@
 {
-  "_comentario": "Configuración del bot que corre en GitHub Actions. Cambia algo aquí, haz commit, y el siguiente latido lo usa. Esto sustituye a los botones del panel local.",
-
-  "nombre": "btc",
+  "_comentario": "Configuración del bot. Cambia algo aquí, haz commit, y el siguiente latido lo usa. Esto sustituye a los botones del panel local.",
+  "nombre": "btc4h",
   "simbolo": "BTC-EUR",
-  "intervalo": "1h",
+  "intervalo": "4h",
   "fuente": "yahoo",
   "capital": 1000.0,
   "divisa": "EUR",
   "estrategia": "tendencia_vol",
   "params_estrategia": {},
-
   "_vida": "cuándo muere el agente",
-  "ruina_relativa": 0.10,
-  "max_drawdown": 0.50,
+  "ruina_relativa": 0.1,
+  "max_drawdown": 0.5,
   "coste_vida_anual": 0.02,
-
   "_riesgo": "topes que mandan por encima de la estrategia",
   "max_exposicion": 0.95,
   "stop_loss": 0.15,
   "trailing_stop": 0.25,
-  "banda_rebalanceo": 0.10,
-
+  "banda_rebalanceo": 0.1,
   "_costes": "lo que se paga en cada operación",
   "comision_bps": 10.0,
   "slippage_bps": 5.0,
   "minimo_operacion": 10.0,
-
   "_pausa": "ponlo en true para que el bot deje de operar sin borrar nada",
-  "pausado": false
+  "pausado": false,
+  "remuestrear_desde": "1h",
+  "_remuestreo": "Yahoo no sirve velas de 4h; se piden de 1h y se agrupan. El cron corre cada hora pero el agente sólo late cuando cierra una vela de 4h.",
+  "_estrategia": "tendencia_vol en velas de 4h: la única configuración con ventaja consistente en la validación (30 pruebas, mediana +4,2%, batió a comprar y aguantar en 22 de 30). estructura quedó en -1,7%."
 }

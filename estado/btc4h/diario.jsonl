@@ -1,0 +1,2 @@
+{"ts": 1789259516.9009762, "tipo": "nacimiento", "capital": 1000.0, "divisa": "EUR", "simbolo": "BTC-EUR", "estrategia": "tendencia_vol(rapida=20, lenta=100, ventana_vol=48, vol_objetivo=0.012)", "umbral_ruina": 100.0}
+{"ts": 1789257600, "tipo": "operacion", "simbolo": "BTC-EUR", "lado": "compra", "cantidad": 0.014253606830665979, "precio": 66683.1217734375, "comision": 0.950475, "motivo": "subir exposición 0%→95%", "realizado": null}

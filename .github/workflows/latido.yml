@@ -4,9 +4,10 @@ name: latido
 # se vuelve a dormir. El estado viaja en el propio repositorio.
 on:
   schedule:
-    # Minuto 11 para no coincidir con el pico de las horas en punto, que es
-    # cuando GitHub más retrasa las tareas programadas.
-    - cron: '11 * * * *'
+    # Se sondea cada media hora, pero el agente sólo late cuando cierra una
+    # vela de 4h: el ritmo del cron no afecta a cuánto opera. Minutos 11 y 41
+    # para esquivar el pico de las horas en punto, cuando GitHub más retrasa.
+    - cron: '11,41 * * * *'
   workflow_dispatch:        # botón «Run workflow» para forzar un latido
 
 permissions:
@@ -37,9 +38,11 @@ jobs:
         run: python github/latido.py | tee /tmp/latido.txt
 
       - name: Generar el tablero
+        if: steps.latido.outputs.latio == 'true'
         run: python github/tablero.py
 
       - name: Guardar estado y tablero
+        if: steps.latido.outputs.latio == 'true'
         run: |
           git config user.name  "bot de compraventa"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

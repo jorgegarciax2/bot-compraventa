@@ -121,6 +121,41 @@ y el siguiente latido lo usa.
 Para forzar un latido sin esperar a la hora: pestaña **Actions → latido → Run
 workflow**.
 
+### Qué está operando, y por qué ése
+
+`tendencia_vol` sobre **velas de 4 horas**. No es un capricho: es lo único que
+sobrevivió a la validación por ventanas (`python github/validar.py`), que mide
+cada estrategia en 30 pruebas independientes — 5 activos × 6 ventanas de 90 días:
+
+| estrategia | mediana | peor | positiva | bate B&H |
+|---|---|---|---|---|
+| **tendencia_vol** | **+4,2 %** | −24,3 % | 17/30 | **22/30** |
+| cruce_medias | +0,4 % | −36,0 % | 15/30 | 21/30 |
+| ruptura_canal | +0,1 % | −20,2 % | 15/30 | 16/30 |
+| reversion_media | −0,9 % | **−6,5 %** | 13/30 | 19/30 |
+| estructura | −1,7 % | −24,1 % | 13/30 | 19/30 |
+| comprar_y_aguantar | −3,0 % | −38,0 % | 11/30 | — |
+| azar | −44,3 % | −50,1 % | 0/30 | 2/30 |
+
+La columna que decide es **peor**, no mejor: es lo que te puede pasar. Y el
+`azar` está ahí como control: si una estrategia no lo bate con holgura, es ruido.
+
+Dos avisos sobre esos números. Treinta pruebas sobre cinco criptomonedas **no
+son treinta muestras independientes**: se mueven todas juntas, así que la
+muestra efectiva es bastante menor. Y una mediana de +4,2 % por ventana de 90
+días convive con una peor ventana de −24,3 %.
+
+### El cron es un vigilante, no un metrónomo
+
+Sondea cada 30 minutos pero el agente **late una vez por vela**. Esto importa
+porque se midió: manteniendo la ventana de análisis igual en tiempo real y
+multiplicando por doce las lecturas del mercado, el número de operaciones no se
+movió (65 → 61 → 63). Mirar más a menudo no hace operar más; **acortar la vela
+sí**, porque encoge lo que la estrategia es capaz de ver.
+
+Yahoo no sirve velas de 4h, así que se piden de 1h y se agrupan
+(`remuestrear_desde` en la configuración).
+
 ### Peajes de esta vía, dichos por adelantado
 
 **Yahoo en vez de Binance.** Los ejecutores de GitHub están en EE. UU. y Binance
