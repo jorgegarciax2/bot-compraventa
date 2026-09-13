@@ -83,3 +83,67 @@ def atr(maximos: Sequence[float], minimos: Sequence[float],
                  abs(minimos[i] - cierres[i - 1]))
         trs.append(tr)
     return sum(trs) / len(trs)
+
+
+# --------------------------------------------------- fuerza y giro de tendencia
+def macd(cierres: Sequence[float], rapida: int = 12, lenta: int = 26,
+         senal: int = 9) -> Optional[tuple]:
+    """Devuelve (macd, señal, histograma). El histograma es lo que se mira."""
+    if len(cierres) < lenta + senal:
+        return None
+    linea = []
+    for i in range(lenta, len(cierres) + 1):
+        r, l = ema(cierres[:i], rapida), ema(cierres[:i], lenta)
+        if r is None or l is None:
+            return None
+        linea.append(r - l)
+    if len(linea) < senal:
+        return None
+    s = ema(linea, senal)
+    if s is None:
+        return None
+    return linea[-1], s, linea[-1] - s
+
+
+def adx(maximos: Sequence[float], minimos: Sequence[float],
+        cierres: Sequence[float], n: int = 14) -> Optional[float]:
+    """Fuerza de la tendencia, sin decir en qué dirección.
+
+    Por debajo de 20 el mercado está lateral y las rupturas son casi todas
+    falsas; por encima de 25 hay tendencia de verdad. Es el filtro que evita
+    operar estructura en un mercado que no va a ninguna parte.
+    """
+    if len(cierres) < 2 * n + 1:
+        return None
+    dm_mas, dm_menos, trs = [], [], []
+    for i in range(1, len(cierres)):
+        subida = maximos[i] - maximos[i - 1]
+        bajada = minimos[i - 1] - minimos[i]
+        dm_mas.append(subida if (subida > bajada and subida > 0) else 0.0)
+        dm_menos.append(bajada if (bajada > subida and bajada > 0) else 0.0)
+        trs.append(max(maximos[i] - minimos[i],
+                       abs(maximos[i] - cierres[i - 1]),
+                       abs(minimos[i] - cierres[i - 1])))
+
+    def suavizar(v):
+        s = sum(v[:n])
+        fuera = [s]
+        for x in v[n:]:
+            s = s - s / n + x
+            fuera.append(s)
+        return fuera
+
+    if len(trs) < n:
+        return None
+    str_, sm, sme = suavizar(trs), suavizar(dm_mas), suavizar(dm_menos)
+    dxs = []
+    for tr, m, me in zip(str_, sm, sme):
+        if tr <= 0:
+            continue
+        di_mas, di_menos = 100 * m / tr, 100 * me / tr
+        total = di_mas + di_menos
+        if total > 0:
+            dxs.append(100 * abs(di_mas - di_menos) / total)
+    if len(dxs) < n:
+        return None
+    return sum(dxs[-n:]) / n
