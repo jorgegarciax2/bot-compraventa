@@ -1,0 +1,6 @@
+{"ts": 1789312023.670764, "tipo": "nacimiento", "capital": 1000.0, "divisa": "USD", "cartera": true, "max_posiciones": 5, "estrategia": "estructura", "umbral_ruina": 100.0}
+{"ts": 1789133400, "tipo": "operacion", "simbolo": "HPQ", "lado": "compra", "cantidad": 1.95179588214289, "precio": 35.497739542007444, "comision": 0.06928434186347097, "motivo": "subir exposición 0%→7%", "realizado": null}
+{"ts": 1789133400, "tipo": "operacion", "simbolo": "CVX", "lado": "compra", "cantidad": 0.7008052148031804, "precio": 214.16702755737305, "comision": 0.15008936975110349, "motivo": "subir exposición 0%→15%", "realizado": null}
+{"ts": 1789133400, "tipo": "operacion", "simbolo": "COP", "lado": "compra", "cantidad": 0.9071104635525075, "precio": 137.41868110656736, "comision": 0.12465392351935252, "motivo": "subir exposición 0%→12%", "realizado": null}
+{"ts": 1789133400, "tipo": "operacion", "simbolo": "CRM", "lado": "compra", "cantidad": 0.21551524066326336, "precio": 247.84386122131346, "comision": 0.05341412939802382, "motivo": "subir exposición 0%→5%", "realizado": null}
+{"ts": 1789133400, "tipo": "operacion", "simbolo": "TGT", "lado": "compra", "cantidad": 0.7788841810530273, "precio": 155.9079168319702, "comision": 0.1214342101213526, "motivo": "subir exposición 0%→12%", "realizado": null}

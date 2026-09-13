@@ -24,6 +24,7 @@ from agente.core.broker import BrokerPapel, CostesMercado          # noqa: E402
 from agente.core.datos import Remuestreada, fuente_por_nombre      # noqa: E402
 from agente.core.diario import Diario                              # noqa: E402
 from agente.core.motor import Agente, Config, cargar_estado        # noqa: E402
+from agente.core.multi import AgenteCartera, cargar_cartera        # noqa: E402
 from agente.core.riesgo import ReglasRiesgo                        # noqa: E402
 from agente.core.vida import ReglasVida, escribir_lapida, leer_lapida  # noqa: E402
 from agente.core import fundamentales as fun                       # noqa: E402
@@ -200,6 +201,116 @@ def latir(c: dict) -> bool:
     return True
 
 
+def latir_cartera(c: dict) -> bool:
+    """Un latido de un agente que lleva varios valores a la vez.
+
+    Los candidatos salen del explorador, que rastrea el mercado una vez al día.
+    Si todavía no ha corrido, no se inventa nada: se espera.
+    """
+    nombre = c.get("nombre", "cartera")
+    destino = RAIZ / "estado" / nombre
+    destino.mkdir(parents=True, exist_ok=True)
+    max_pos = int(c.get("max_posiciones", 5))
+    print(f"\n=== {nombre} · cartera de {max_pos} · {c.get('estrategia')} ===")
+
+    if leer_lapida(destino / "LAPIDA.json"):
+        print("Muerto. La muerte es definitiva.")
+        return False
+    if c.get("pausado"):
+        print("Pausado por configuración.")
+        return False
+
+    rastreo = leer_marca(RAIZ / "estado" / "_explorador" / "oportunidades.json")
+    if not rastreo:
+        print("El explorador aún no ha rastreado el mercado. No opero a ciegas.")
+        return False
+    candidatos = [o["ticker"] for o in (rastreo.get("oportunidades") or [])][
+        :int(c.get("mirar", 15))]
+
+    previo = cargar_cartera(destino / "estado.json")
+    cartera = vitales = None
+    curva, ops = [], []
+    if previo:
+        cartera, vitales, _, curva, ops, max_pos = previo
+        abiertas = [s for s, p in cartera.posiciones.items() if p.cantidad > 1e-12]
+        print(f"Reanudo: {vitales.ticks} latidos, {vitales.equity:.2f} "
+              f"{cartera.divisa}, {len(abiertas)} posición(es)")
+    else:
+        abiertas = []
+        print(f"Nace con {float(c['capital']):.2f} {c.get('divisa','USD')}")
+
+    # Hace falta el precio de lo que se tiene y de lo que se podría comprar.
+    simbolos = list(dict.fromkeys(abiertas + candidatos))
+    if not simbolos:
+        print("Sin candidatos ni posiciones. Nada que hacer.")
+        return False
+    print(f"Mirando {len(simbolos)} valores ({len(abiertas)} en cartera, "
+          f"{len(candidatos)} candidatos del rastreo)")
+
+    fuente = fuente_por_nombre(c.get("fuente", "yahoo"))
+    velas, fallos = {}, []
+    for s in simbolos:
+        try:
+            v = fuente.historico(s, c.get("intervalo", "1d"), 400)
+            if v:
+                velas[s] = v
+        except Exception:
+            fallos.append(s)
+        time.sleep(0.1)
+    if fallos:
+        print(f"Sin datos de: {', '.join(fallos)}")
+    if not velas:
+        print("Ningún precio disponible. No opero.")
+        return False
+
+    # Un latido por vela, igual que los demás: la referencia es el candidato
+    # con la vela más reciente.
+    ultima = max(v[-1].ts for v in velas.values())
+    marca = destino / "ultima_vela.json"
+    if (leer_marca(marca) or {}).get("ts") == ultima and not c.get("forzar_latido"):
+        print("Sin vela nueva. No late.")
+        return False
+
+    cfg = construir({**c, "simbolo": "CARTERA"})
+    broker = BrokerPapel(CostesMercado(
+        comision_bps=float(c.get("comision_bps", 10)),
+        deslizamiento_bps=float(c.get("slippage_bps", 5)),
+        minimo_operacion=float(c.get("minimo_operacion", 10))))
+    diario = Diario(destino / "diario.jsonl", eco=True)
+    ag = AgenteCartera(cfg, lambda: crear(cfg.estrategia, **cfg.params_estrategia),
+                       broker, cartera=cartera, diario=diario, vitales=vitales,
+                       max_posiciones=max_pos)
+    if previo:
+        ag.curva_equity, ag.operaciones = curva, ops
+        ag._nacido = True
+
+    antes = len(ag.operaciones)
+    v = ag.tick(velas, [s for s in candidatos if s in velas])
+    ag.guardar(destino / "estado.json")
+
+    abiertas = {s: p for s, p in ag.cartera.posiciones.items() if p.abierta}
+    with (destino / "serie.jsonl").open("a", encoding="utf-8") as f:
+        f.write(json.dumps({
+            "ts": time.time(), "tick": v.ticks, "equity": round(v.equity, 6),
+            "caja": round(ag.cartera.caja, 6), "posiciones": len(abiertas),
+            "drawdown": round(v.drawdown, 6),
+            "valores": {s: round(p.cantidad, 8) for s, p in abiertas.items()},
+            "precios": {s: round(velas[s][-1].cierre, 6) for s in abiertas if s in velas},
+        }) + "\n")
+
+    nuevas = len(ag.operaciones) - antes
+    print(f"Latido {v.ticks} · {v.equity:,.2f} {cfg.divisa} · caída {v.drawdown:.2%}"
+          f" · {len(abiertas)} posición(es): {', '.join(abiertas) or '—'}"
+          + (f" · {nuevas} operación(es)" if nuevas else ""))
+
+    if not ag.vivo:
+        escribir_lapida(destino / "LAPIDA.json", v, ag.resumen())
+        print(f"MUERTE: {v.causa_muerte} — {v.detalle_muerte}")
+    marca.write_text(json.dumps({"ts": ultima}), encoding="utf-8")
+    diario.cerrar()
+    return True
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Un latido de cada agente")
     ap.add_argument("--config", default=str(RAIZ / "configuracion.json"))
@@ -217,7 +328,8 @@ def main() -> int:
     algo = False
     for c in agentes:
         try:
-            algo = latir(c) or algo
+            hecho = latir_cartera(c) if c.get("tipo") == "cartera" else latir(c)
+            algo = hecho or algo
         except Exception as e:
             # Que un agente falle no debe dejar a los demás sin latir.
             print(f"ERROR en {c.get('nombre')}: {type(e).__name__}: {e}", file=sys.stderr)

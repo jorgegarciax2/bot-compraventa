@@ -149,10 +149,15 @@ def barra(agentes: list, actual: str) -> str:
     enlaces = []
     for a in agentes:
         n = a.get("nombre", "?")
-        etiqueta = {"cripto": "Cripto", "accion": "Acciones"}.get(a.get("tipo"), n)
+        tipo = a.get("tipo")
+        if tipo == "cartera":
+            etiqueta = f'Acciones · cartera de {a.get("max_posiciones", "?")}'
+        else:
+            etiqueta = ({"cripto": "Cripto", "accion": "Acciones"}.get(tipo, n)
+                        + (f' · {a.get("simbolo")}' if a.get("simbolo") else ""))
         clase = " activa" if n == actual else ""
         enlaces.append(f'<a class="pestana{clase}" href="{html.escape(n)}.html">'
-                       f'{html.escape(etiqueta)} · {html.escape(a.get("simbolo","")) }</a>')
+                       f'{html.escape(etiqueta)}</a>')
     return f'<nav class="pestanas">{"".join(enlaces)}</nav>'
 
 
@@ -214,6 +219,36 @@ def tarjeta_noticias(ext: dict) -> str:
     </section>'''
 
 
+def tarjeta_posiciones(cart: dict, serie: list, equity: float, divisa: str) -> str:
+    """Qué hay dentro de la cartera ahora mismo."""
+    posiciones = {s: p for s, p in (cart.get("posiciones") or {}).items()
+                  if (p.get("cantidad") or 0) > 1e-12}
+    precios = (serie[-1].get("precios") or {}) if serie else {}
+    filas = []
+    for sim, p in sorted(posiciones.items(),
+                         key=lambda x: -((precios.get(x[0]) or 0) * x[1]["cantidad"])):
+        precio = precios.get(sim)
+        valor = (precio or 0) * p["cantidad"]
+        medio = p.get("precio_medio") or 0
+        vari = ((precio / medio - 1) if (precio and medio) else None)
+        filas.append(
+            f'<tr><td><b>{html.escape(sim)}</b></td>'
+            f'<td class="num">{eur(p["cantidad"], 6)}</td>'
+            f'<td class="num">{eur(medio, 2)}</td>'
+            f'<td class="num">{eur(precio, 2) if precio else "—"}</td>'
+            f'<td class="num {clase(vari or 0)}">{pct(vari) if vari is not None else "—"}</td>'
+            f'<td class="num">{eur(valor)} {html.escape(divisa)}</td>'
+            f'<td class="num apagado">{pct(valor/equity if equity else 0, 0)}</td></tr>')
+    if not filas:
+        filas = ['<tr><td colspan="7" class="apagado">Sin posiciones: todo en caja.</td></tr>']
+    return f'''<section class="tarjeta"><h3>Posiciones</h3>
+    <div class="envoltura"><table>
+    <thead><tr><th>valor</th><th class="num">cantidad</th><th class="num">precio medio</th>
+    <th class="num">precio</th><th class="num">variación</th><th class="num">valor</th>
+    <th class="num">peso</th></tr></thead>
+    <tbody>{"".join(filas)}</tbody></table></div></section>'''
+
+
 def pagina(c: dict, agentes: list) -> str:
     """El cuerpo HTML del tablero de UN agente."""
     nombre = c.get("nombre", "agente")
@@ -230,6 +265,7 @@ def pagina(c: dict, agentes: list) -> str:
                       '<p class="nota">Este agente aún no ha operado.</p></section>')
 
     cart, vit, cfg = est["cartera"], est["vitales"], est.get("config", {})
+    es_cartera = c.get("tipo") == "cartera" or "max_posiciones" in est
     simbolo = cfg.get("simbolo", "?")
     divisa = cart.get("divisa", "EUR")
     capital = float(cart.get("capital_inicial") or 0)
@@ -237,6 +273,9 @@ def pagina(c: dict, agentes: list) -> str:
     caja = float(cart.get("caja") or 0)
     pos = (cart.get("posiciones") or {}).get(simbolo, {}) or {}
     cantidad = float(pos.get("cantidad") or 0)
+    nombres_abiertas = [s2 for s2, p2 in (cart.get("posiciones") or {}).items()
+                        if (p2.get("cantidad") or 0) > 1e-12]
+    abiertas_n = len(nombres_abiertas)
     valor_pos = max(0.0, equity - caja)
     exposicion = (valor_pos / equity) if equity > 0 else 0.0
     pnl = equity - capital
@@ -271,9 +310,13 @@ def pagina(c: dict, agentes: list) -> str:
         ("Hoy", f"{firmado(hoy_d['pnl'])} {divisa}" if hoy_d else "—",
          f"{pct(hoy_d['pnl_pct'])} · {hoy_d['latidos']} latidos" if hoy_d else "sin latidos hoy",
          clase(hoy_d["pnl"]) if hoy_d else "apagado"),
-        ("Posición", f"{exposicion*100:.0f} % invertido" if cantidad > 1e-12 else "fuera",
-         f"{eur(cantidad,6)} {simbolo} · medio {eur(pos.get('precio_medio'),2)}"
-         if cantidad > 1e-12 else "todo en caja", ""),
+        ("Posiciones" if es_cartera else "Posición",
+         (f"{abiertas_n} de {est.get('max_posiciones', '?')}" if es_cartera
+          else (f"{exposicion*100:.0f} % invertido" if cantidad > 1e-12 else "fuera")),
+         (f"{exposicion*100:.0f} % invertido · {', '.join(nombres_abiertas) or 'todo en caja'}"
+          if es_cartera else
+          (f"{eur(cantidad,6)} {simbolo} · medio {eur(pos.get('precio_medio'),2)}"
+           if cantidad > 1e-12 else "todo en caja")), ""),
         ("Caja", f"{eur(caja)} {divisa}",
          f"comisiones {eur(cart.get('comisiones_pagadas'))} · coste de vida "
          f"{eur(cart.get('coste_vida_pagado'))}", ""),
@@ -296,16 +339,19 @@ def pagina(c: dict, agentes: list) -> str:
         for d in reversed(dias)) or '<tr><td colspan="7" class="apagado">Sin días completos.</td></tr>'
 
     ops = (est.get("operaciones") or [])[-60:]
+    # En una cartera hay que decir de QUÉ valor es cada operación.
+    col_valor = "<th>valor</th>" if es_cartera else ""
     filas_ops = "".join(
         f'<tr><td>{time.strftime("%d/%m %H:%M", time.localtime(o.get("ts",0)))}</td>'
-        f'<td class="{"pos" if o.get("lado")=="compra" else "neg"}">{o.get("lado")}</td>'
-        f'<td class="num">{eur(o.get("cantidad"),6)}</td>'
-        f'<td class="num">{eur(o.get("precio"),2)}</td>'
-        f'<td class="num apagado">{eur(o.get("comision"),4)}</td>'
-        f'<td class="num {clase(o.get("realizado") or 0) if o.get("realizado") is not None else "apagado"}">'
-        f'{firmado(o["realizado"]) if o.get("realizado") is not None else "—"}</td>'
-        f'<td class="apagado">{html.escape(str(o.get("motivo","")))}</td></tr>'
-        for o in reversed(ops)) or '<tr><td colspan="7" class="apagado">Todavía no ha operado.</td></tr>'
+        + (f'<td><b>{html.escape(str(o.get("simbolo","")))}</b></td>' if es_cartera else "")
+        + f'<td class="{"pos" if o.get("lado")=="compra" else "neg"}">{o.get("lado")}</td>'
+        + f'<td class="num">{eur(o.get("cantidad"),6)}</td>'
+        + f'<td class="num">{eur(o.get("precio"),2)}</td>'
+        + f'<td class="num apagado">{eur(o.get("comision"),4)}</td>'
+        + f'<td class="num {clase(o.get("realizado") or 0) if o.get("realizado") is not None else "apagado"}">'
+        + f'{firmado(o["realizado"]) if o.get("realizado") is not None else "—"}</td>'
+        + f'<td class="apagado">{html.escape(str(o.get("motivo","")))}</td></tr>'
+        for o in reversed(ops)) or f'<tr><td colspan="{8 if es_cartera else 7}" class="apagado">Todavía no ha operado.</td></tr>'
 
     lineas = []
     for e in eventos:
@@ -319,7 +365,7 @@ def pagina(c: dict, agentes: list) -> str:
 
     return f'''{nav}
 <section class="tarjeta cabecera-agente">
-  <h2>{html.escape(simbolo)} · {html.escape(str(cfg.get("estrategia","")))} · vela {html.escape(str(cfg.get("intervalo","")))}</h2>
+  <h2>{html.escape("Cartera de " + str(est.get("max_posiciones", "?")) + " valores" if es_cartera else simbolo)} · {html.escape(str(cfg.get("estrategia","")))} · vela {html.escape(str(cfg.get("intervalo","")))}</h2>
   <p class="linea">{insignia}</p>
   <p class="nota">{vit.get("ticks",0)} latidos · último {time.strftime("%d/%m/%Y %H:%M", time.localtime(ultimo)) if ultimo else "—"}</p>
 </section>
@@ -328,6 +374,7 @@ def pagina(c: dict, agentes: list) -> str:
 
 <section class="tarjeta"><h3>Patrimonio</h3>{svg_curva(serie, capital)}</section>
 
+{tarjeta_posiciones(cart, serie, equity, cart.get("divisa","USD")) if es_cartera else ""}
 {tarjeta_fundamentales(ext)}
 {tarjeta_noticias(ext)}
 
@@ -338,7 +385,7 @@ def pagina(c: dict, agentes: list) -> str:
 
 <section class="tarjeta"><h3>Operaciones</h3>
 <div class="envoltura"><table>
-<thead><tr><th>fecha</th><th>lado</th><th class="num">cantidad</th><th class="num">precio</th><th class="num">comisión</th><th class="num">realizado</th><th>motivo</th></tr></thead>
+<thead><tr><th>fecha</th>{col_valor}<th>lado</th><th class="num">cantidad</th><th class="num">precio</th><th class="num">comisión</th><th class="num">realizado</th><th>motivo</th></tr></thead>
 <tbody>{filas_ops}</tbody></table></div></section>
 
 <section class="tarjeta"><h3>Diario de a bordo</h3><pre class="diario">{"".join(lineas)}</pre></section>

@@ -1,2 +1,0 @@
-{"ts": 1789260341.9964979, "tipo": "nacimiento", "capital": 1000.0, "divisa": "USD", "simbolo": "MSFT", "estrategia": "estructura(rapida=20, lenta=100, adx_minimo=20.0, k_pivote=5, tolerancia=0.015, toques_minimos=2, ventana=400, ventana_vol=48, vol_objetivo=0.012, margen_nivel=0.01, freno_resistencia=1.0) + filtro externo", "umbral_ruina": 100.0}
-{"ts": 1789133400, "tipo": "operacion", "simbolo": "MSFT", "lado": "compra", "cantidad": 0.8856924967339085, "precio": 495.87781988525387, "comision": 0.43919526436913786, "motivo": "subir exposición 0%→44%", "realizado": null}

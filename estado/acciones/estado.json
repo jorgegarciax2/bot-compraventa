@@ -1,0 +1,133 @@
+{
+  "config": {
+    "capital": 1000.0,
+    "divisa": "USD",
+    "simbolo": "CARTERA",
+    "intervalo": "1d",
+    "coste_vida_anual": 0.02,
+    "estrategia": "estructura",
+    "params_estrategia": {},
+    "reglas_vida": {
+      "umbral_ruina": 0.0,
+      "ruina_relativa": 0.1,
+      "max_drawdown": 0.5,
+      "equity_minimo_operable": 10.0,
+      "edad_maxima_ticks": null
+    },
+    "reglas_riesgo": {
+      "max_exposicion": 0.95,
+      "stop_loss": 0.15,
+      "trailing_stop": 0.25,
+      "banda_rebalanceo": 0.1,
+      "max_ops_por_dia": null
+    }
+  },
+  "cartera": {
+    "divisa": "USD",
+    "caja": 480.55035485149534,
+    "capital_inicial": 1000.0,
+    "posiciones": {
+      "HPQ": {
+        "simbolo": "HPQ",
+        "cantidad": 1.95179588214289,
+        "precio_medio": 35.497739542007444,
+        "maximo_favorable": 35.497739542007444
+      },
+      "CVX": {
+        "simbolo": "CVX",
+        "cantidad": 0.7008052148031804,
+        "precio_medio": 214.16702755737305,
+        "maximo_favorable": 214.16702755737305
+      },
+      "COP": {
+        "simbolo": "COP",
+        "cantidad": 0.9071104635525075,
+        "precio_medio": 137.41868110656736,
+        "maximo_favorable": 137.41868110656736
+      },
+      "CRM": {
+        "simbolo": "CRM",
+        "cantidad": 0.21551524066326336,
+        "precio_medio": 247.84386122131346,
+        "maximo_favorable": 247.84386122131346
+      },
+      "TGT": {
+        "simbolo": "TGT",
+        "cantidad": 0.7788841810530273,
+        "precio_medio": 155.9079168319702,
+        "maximo_favorable": 155.9079168319702
+      }
+    },
+    "pnl_realizado": 0.0,
+    "comisiones_pagadas": 0.5188759746533034,
+    "coste_vida_pagado": 0.0547945205479452,
+    "operaciones": 5
+  },
+  "vitales": {
+    "vivo": true,
+    "ticks": 1,
+    "equity": 999.1670211716387,
+    "equity_maximo": 1000.0,
+    "drawdown": 0.0008329788283613082,
+    "causa_muerte": null,
+    "detalle_muerte": null,
+    "ts_muerte": null
+  },
+  "max_posiciones": 5,
+  "curva_equity": [
+    999.1670211716387
+  ],
+  "operaciones": [
+    {
+      "ts": 1789133400,
+      "simbolo": "HPQ",
+      "lado": "compra",
+      "cantidad": 1.95179588214289,
+      "precio": 35.497739542007444,
+      "comision": 0.06928434186347097,
+      "motivo": "subir exposición 0%→7%",
+      "realizado": null
+    },
+    {
+      "ts": 1789133400,
+      "simbolo": "CVX",
+      "lado": "compra",
+      "cantidad": 0.7008052148031804,
+      "precio": 214.16702755737305,
+      "comision": 0.15008936975110349,
+      "motivo": "subir exposición 0%→15%",
+      "realizado": null
+    },
+    {
+      "ts": 1789133400,
+      "simbolo": "COP",
+      "lado": "compra",
+      "cantidad": 0.9071104635525075,
+      "precio": 137.41868110656736,
+      "comision": 0.12465392351935252,
+      "motivo": "subir exposición 0%→12%",
+      "realizado": null
+    },
+    {
+      "ts": 1789133400,
+      "simbolo": "CRM",
+      "lado": "compra",
+      "cantidad": 0.21551524066326336,
+      "precio": 247.84386122131346,
+      "comision": 0.05341412939802382,
+      "motivo": "subir exposición 0%→5%",
+      "realizado": null
+    },
+    {
+      "ts": 1789133400,
+      "simbolo": "TGT",
+      "lado": "compra",
+      "cantidad": 0.7788841810530273,
+      "precio": 155.9079168319702,
+      "comision": 0.1214342101213526,
+      "motivo": "subir exposición 0%→12%",
+      "realizado": null
+    }
+  ],
+  "guardado": 1789312023.689518
+}

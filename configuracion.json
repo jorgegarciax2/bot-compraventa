@@ -1,6 +1,6 @@
 {
   "_comentario": "Los mandos del bot. Cambia algo aquí, haz commit, y el siguiente latido lo usa. Cada entrada de «agentes» es un bot independiente con su propio capital y su propio historial.",
-  "_estrategias": "Elegidas por la validación (github/validar.py), no por gusto. Cripto 4h: tendencia_vol (mediana +4,2%, bate a comprar y aguantar en 22 de 30). Acciones 1d: estructura (la mejor de las activas en 80 pruebas de 10 años: peor caso -18,2% frente al -50,6% de comprar y aguantar, y cero muertes).",
+  "_estrategias": "Elegidas por validación, no por gusto. Cripto 4h: tendencia_vol (30 pruebas, mediana +4,2%, bate a comprar y aguantar en 22 de 30). Acciones: cartera de 5 con estructura. A 8 años y 30 valores, +53% frente al -3,7% de operar sólo MSFT y el -47% de sólo INTC, que además murió. Comprar y aguantar la cesta entera da más (+128%) pero con casi el doble de caída (36,4% frente a 20,4%).",
   "_pausa": "pausado: true detiene a ese agente sin borrar nada.",
   "agentes": [
     {
@@ -40,15 +40,15 @@
       "slippage_bps": 5.0,
       "minimo_operacion": 10.0,
       "pausado": false,
-      "nombre": "msft",
-      "tipo": "accion",
-      "simbolo": "MSFT",
+      "nombre": "acciones",
       "intervalo": "1d",
       "fuente": "yahoo",
       "estrategia": "estructura",
       "params_estrategia": {},
-      "fundamentales": true,
-      "noticias": true
+      "tipo": "cartera",
+      "max_posiciones": 5,
+      "mirar": 15
     }
-  ]
+  ],
+  "_cartera": "max_posiciones: cuántos valores a la vez. mirar: cuántos candidatos del explorador se consideran. Se vende cuando el valor pierde su tendencia, no cuando lo adelantan en el ranking."
 }
