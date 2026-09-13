@@ -16,7 +16,9 @@ permissions:
 # Dos latidos a la vez corromperían el estado. Nunca en paralelo, y sin
 # cancelar el que ya esté en marcha.
 concurrency:
-  group: latido
+  # Mismo grupo que el explorador: los dos hacen commit en el repositorio y
+  # pisarse sería corromper el estado.
+  group: repositorio
   cancel-in-progress: false
 
 jobs:

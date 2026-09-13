@@ -146,8 +146,6 @@ LEGIBLE = {
 
 
 def barra(agentes: list, actual: str) -> str:
-    if len(agentes) < 2:
-        return ""
     enlaces = []
     for a in agentes:
         n = a.get("nombre", "?")
@@ -347,6 +345,76 @@ def pagina(c: dict, agentes: list) -> str:
 '''
 
 
+def pagina_oportunidades(agentes: list) -> str:
+    """El rastreo de todo el mercado. Un filtro y una ordenación, no una apuesta."""
+    d = leer_json(RAIZ / "estado" / "_explorador" / "oportunidades.json")
+    nav = barra(agentes, "oportunidades")
+    if not d:
+        return nav + ('<section class="tarjeta"><h2>Sin rastreo todavía</h2>'
+                      '<p class="nota">El explorador aún no ha corrido. Lo hace una vez '
+                      'al día, cuando cierra la sesión de bolsa.</p></section>')
+
+    o = d.get("oportunidades") or []
+    embudo = [("empresas en la SEC", d.get("universo")),
+              (f"ingresos > {d.get('criterio',{}).get('minimo_ingresos',0)/1e9:.0f} B$", d.get("grandes")),
+              ("cuentas sanas", d.get("aptas")),
+              ("con precio analizado", d.get("analizadas")),
+              ("en tendencia (oportunidades)", len(o))]
+    pasos = "".join(f'<div class="dato"><span class="dato-t">{html.escape(k)}</span>'
+                    f'<span class="dato-v">{v:,}</span></div>'.replace(",", " ")
+                    for k, v in embudo if v is not None)
+
+    filas = []
+    for n, e in enumerate(o, 1):
+        pc = lambda v: "—" if v is None else f"{v*100:.1f} %"
+        nm = lambda v, d2=1: "—" if v is None else f"{v:,.{d2}f}".replace(",", " ")
+        dist_r = ("—" if not e.get("resistencia") else
+                  f"{(e['resistencia']/e['precio']-1)*100:+.1f} %")
+        filas.append(
+            f'<tr><td class="num apagado">{n}</td>'
+            f'<td><b>{html.escape(e["ticker"])}</b></td>'
+            f'<td class="apagado">{html.escape((e.get("empresa") or "")[:30])}</td>'
+            f'<td class="num">{nm(e.get("precio"), 2)}</td>'
+            f'<td class="num pos">{nm(e.get("impulso"), 2)}</td>'
+            f'<td class="num">{nm(e.get("adx"), 0)}</td>'
+            f'<td class="num">{nm(e.get("rsi"), 0)}</td>'
+            f'<td class="num">{pc(e.get("margen_neto"))}</td>'
+            f'<td class="num">{pc(e.get("crecimiento_ingresos"))}</td>'
+            f'<td class="num">{pc(e.get("roe"))}</td>'
+            f'<td class="num apagado">{nm(e.get("deuda_sobre_patrimonio"))}</td>'
+            f'<td class="num apagado">{nm(e.get("volumen_relativo"), 2)}x</td>'
+            f'<td class="num apagado">{dist_r}</td></tr>')
+
+    gen = time.strftime("%d/%m/%Y %H:%M", time.localtime(d.get("generado", 0)))
+    return f'''{nav}
+<section class="tarjeta">
+  <h2>Rastreo del mercado estadounidense</h2>
+  <p class="nota">Ejercicio {d.get("ejercicio")} · generado el {gen}. Las cuentas salen
+  de la SEC en cuatro peticiones; los precios, de Yahoo, una por empresa.</p>
+  <div class="datos" style="margin-top:12px">{pasos}</div>
+</section>
+
+<section class="tarjeta"><h3>Oportunidades</h3>
+<div class="envoltura"><table>
+<thead><tr><th class="num">#</th><th>valor</th><th>empresa</th><th class="num">precio</th>
+<th class="num">impulso</th><th class="num">ADX</th><th class="num">RSI</th>
+<th class="num">margen</th><th class="num">crec.</th><th class="num">ROE</th>
+<th class="num">D/P</th><th class="num">vol.</th><th class="num">a resist.</th></tr></thead>
+<tbody>{"".join(filas) or '<tr><td colspan="13" class="apagado">Ninguna pasa los filtros hoy.</td></tr>'}</tbody>
+</table></div>
+<p class="nota"><b>Esto no es una predicción ni una recomendación.</b> Es un filtro
+—fuera quien pierde dinero, quien está muy endeudado y quien no está en tendencia—
+y una ordenación por «impulso»: cuánto se ha despegado el precio de su media larga,
+medido en volatilidades, para que una empresa tranquila y una nerviosa sean
+comparables. Nadie ha demostrado que ese orden anticipe nada. Sirve para no mirar
+cuatro mil empresas a mano.</p>
+<p class="nota">Las cuentas son del último ejercicio cerrado, así que pueden tener
+meses. Un rastreo así tampoco corrige el sesgo del superviviente: sólo aparecen
+las empresas que siguen cotizando hoy.</p>
+</section>
+'''
+
+
 def main() -> int:
     conf = leer_json(RAIZ / "configuracion.json") or {}
     agentes = conf.get("agentes") or [conf]
@@ -363,7 +431,12 @@ def main() -> int:
         if i == 0:
             (salida / "index.html").write_text(doc, encoding="utf-8")
         print(f"  docs/{nombre}.html")
-    print(f"Tablero generado: {len(agentes)} agente(s)")
+
+    (salida / "oportunidades.html").write_text(
+        PLANTILLA.format(titulo="Bot · oportunidades",
+                         cuerpo=pagina_oportunidades(agentes), pie=pie), encoding="utf-8")
+    print("  docs/oportunidades.html")
+    print(f"Tablero generado: {len(agentes)} agente(s) + rastreo")
     return 0
 
 

@@ -194,3 +194,88 @@ def calidad(m: Optional[dict]) -> tuple:
     if m["crecimiento_ingresos"] is not None and m["crecimiento_ingresos"] < -0.10:
         motivos.append(f"ingresos {m['crecimiento_ingresos']:+.1%}")
     return (not motivos), (motivos or ["cuentas sanas"])
+
+
+# ------------------------------------------------- el mercado entero, de golpe
+FRAMES = "https://data.sec.gov/api/xbrl/frames/us-gaap/{}/{}/{}.json"
+
+
+def _frame(concepto: str, periodo: str, unidad: str = "USD") -> Dict[int, dict]:
+    """Un concepto contable para TODAS las empresas, en una sola petición.
+
+    Es la diferencia entre analizar una empresa y analizar el mercado: bajar
+    las cuentas completas de 2.500 empresas serían gigabytes; esto son unos
+    cientos de kilobytes y dos segundos.
+    """
+    try:
+        d = _pedir(FRAMES.format(concepto, unidad, periodo))
+    except Exception:
+        return {}
+    return {x["cik"]: x for x in d.get("data", []) if x.get("val") is not None}
+
+
+def _fusionar(conceptos: List[str], periodo: str, unidad: str = "USD") -> Dict[int, dict]:
+    """Mezcla varios conceptos equivalentes. Las empresas no usan la misma
+    etiqueta para «ingresos», así que hay que probar todas y quedarse con la
+    primera que cada una haya rellenado."""
+    fuera: Dict[int, dict] = {}
+    for c in conceptos:
+        for cik, x in _frame(c, periodo, unidad).items():
+            fuera.setdefault(cik, x)
+    return fuera
+
+
+def mapa_tickers(carpeta: Optional[Path] = None) -> Dict[int, str]:
+    """CIK -> ticker, para todas las cotizadas."""
+    ruta = _cache(carpeta, "tickers_sec.json")
+    tabla = None
+    if ruta and ruta.exists() and time.time() - ruta.stat().st_mtime < 30 * 86400:
+        try:
+            tabla = json.loads(ruta.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            tabla = None
+    if tabla is None:
+        tabla = _pedir("https://www.sec.gov/files/company_tickers.json")
+        if ruta:
+            ruta.write_text(json.dumps(tabla), encoding="utf-8")
+    fuera: Dict[int, str] = {}
+    for fila in tabla.values():
+        fuera.setdefault(int(fila["cik_str"]), fila["ticker"].upper())
+    return fuera
+
+
+def universo(anio: int, carpeta: Optional[Path] = None) -> List[dict]:
+    """Las cuentas de todo el mercado estadounidense para un ejercicio.
+
+    Devuelve una lista de empresas con ingresos, beneficio, margen, ROE y
+    endeudamiento. Sin precios: eso es otra fuente y otra velocidad.
+    """
+    ing = _fusionar(INGRESOS, f"CY{anio}")
+    ing_prev = _fusionar(INGRESOS, f"CY{anio - 1}")
+    ben = _fusionar(BENEFICIO, f"CY{anio}")
+    act = _fusionar(["Assets"], f"CY{anio}Q4I")
+    pas = _fusionar(["Liabilities"], f"CY{anio}Q4I")
+    pat = _fusionar(["StockholdersEquity"], f"CY{anio}Q4I")
+    tickers = mapa_tickers(carpeta)
+
+    fuera = []
+    for cik, fila in ing.items():
+        t = tickers.get(cik)
+        if not t:
+            continue                       # sin ticker no se puede operar
+        ingresos = fila["val"]
+        beneficio = ben.get(cik, {}).get("val")
+        patrimonio = pat.get(cik, {}).get("val")
+        pasivos = pas.get(cik, {}).get("val")
+        previo = ing_prev.get(cik, {}).get("val")
+        fuera.append({
+            "cik": cik, "ticker": t, "empresa": fila.get("entityName"),
+            "ingresos": ingresos, "beneficio": beneficio,
+            "activos": act.get(cik, {}).get("val"),
+            "patrimonio": patrimonio,
+            "crecimiento_ingresos": (ingresos / previo - 1) if previo else None,
+            "margen_neto": (beneficio / ingresos) if (beneficio is not None and ingresos > 0) else None,
+            "roe": (beneficio / patrimonio) if (beneficio is not None and patrimonio and patrimonio > 0) else None,
+            "deuda_sobre_patrimonio": (pasivos / patrimonio) if (pasivos and patrimonio and patrimonio > 0) else None,
+        })
+    return fuera
