@@ -192,7 +192,9 @@ def main() -> int:
     elif conf.get("pausado"):
         insignia = '<span class="insignia pausado">‖ pausado</span> no opera hasta que quites «pausado» de la configuración.'
     else:
-        insignia = '<span class="insignia vivo">● en marcha</span> late una vez por hora.'
+        iv = html.escape(str(cfg.get("intervalo", "?")))
+        insignia = (f'<span class="insignia vivo">● en marcha</span> late una vez '
+                    f'por vela de {iv}; se comprueba cada 30 minutos si ya ha cerrado.')
 
     ultimo = serie[-1]["ts"] if serie else None
     kpis = [
