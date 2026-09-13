@@ -217,19 +217,16 @@ programadas si el repositorio no recibe actividad humana en dos meses, y los
 commits del propio bot no cuentan. Si un día ves que dejó de latir, es esto:
 se reactiva con un botón en la pestaña Actions.
 
-## Ponerlo en un servidor 24/7
+## Si algún día tienes una máquina propia
 
-Para que el bot siga operando con el portátil apagado, hay una guía completa en
-[DESPLIEGUE.md](DESPLIEGUE.md): máquina gratuita de Oracle Cloud en una región
-europea, HTTPS automático y panel con contraseña. Resumen:
+El bot ya opera 24/7 en GitHub Actions, así que esto es opcional. Pero una
+Raspberry Pi o un portátil viejo darían lo que Actions no puede: **Binance** en
+vez de Yahoo (los ejecutores de GitHub son de EE. UU. y Binance los bloquea),
+el panel con botones y el laboratorio de backtests.
 
-```bash
-python web/clave.py                                    # elegir contraseña
-./despliegue/subir.sh bot                              # subir e instalar
-```
-
-El panel **se niega a escuchar fuera de este equipo si no hay contraseña**: en
-local sigue funcionando sin nada, pero no se puede publicar por accidente.
+Está todo preparado en [DESPLIEGUE.md](DESPLIEGUE.md) y funciona en cualquier
+Ubuntu. Se intentó con la capa gratuita de Oracle Cloud y se descartó: **no
+tiene máquinas libres** — 133 intentos sin un solo hueco.
 
 ## Lo que esto NO hace
 
