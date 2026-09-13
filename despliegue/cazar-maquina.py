@@ -195,6 +195,18 @@ def main() -> int:
                 print(f"[{ahora()}] #{intento} {forma}: {e.status} {e.code} "
                       f"— {e.message}", flush=True)
 
+        except Exception as e:
+            # Un corte de red no es un fallo del plan: es martes. Este proceso
+            # está pensado para durar días, así que cualquier cosa que no sea
+            # una respuesta de Oracle se trata como un tropiezo y se reintenta.
+            # (Antes esto mataba al cazador: ConnectionResetError no es
+            # ServiceError, y se escapaba por el hueco entre los dos except.)
+            castigo = min(ESPERA_MAXIMA, max(a.intervalo, castigo * 2))
+            siguiente = time.time() + castigo
+            print(f"[{ahora()}] #{intento} {forma}: red o SDK "
+                  f"({type(e).__name__}) · reintento en {castigo/60:.0f} min",
+                  flush=True)
+
         if a.max_horas and (time.time() - inicio) > a.max_horas * 3600:
             print(f"\n[{ahora()}] Alcanzadas {a.max_horas} h sin suerte. Lo dejo.")
             return 2
