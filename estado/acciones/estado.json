@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 480.44076581039945,
+    "caja": 480.3859712898515,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -49,7 +49,7 @@
         "simbolo": "CRM",
         "cantidad": 0.21551524066326336,
         "precio_medio": 247.84386122131346,
-        "maximo_favorable": 258.8699951171875
+        "maximo_favorable": 259.42999267578125
       },
       "TGT": {
         "simbolo": "TGT",
@@ -60,15 +60,15 @@
     },
     "pnl_realizado": 0.0,
     "comisiones_pagadas": 0.5188759746533034,
-    "coste_vida_pagado": 0.1643835616438356,
+    "coste_vida_pagado": 0.2191780821917808,
     "operaciones": 5
   },
   "vitales": {
     "vivo": true,
-    "ticks": 3,
-    "equity": 999.0574321305428,
+    "ticks": 4,
+    "equity": 998.9707290910835,
     "equity_maximo": 1001.0861499995667,
-    "drawdown": 0.002026516767837383,
+    "drawdown": 0.0021131257369648715,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -77,7 +77,8 @@
   "curva_equity": [
     999.1670211716387,
     1001.0861499995667,
-    999.0574321305428
+    999.0574321305428,
+    998.9707290910835
   ],
   "operaciones": [
     {
@@ -131,5 +132,5 @@
       "realizado": null
     }
   ],
-  "guardado": 1789433678.4258478
+  "guardado": 1789452565.4762774
 }
