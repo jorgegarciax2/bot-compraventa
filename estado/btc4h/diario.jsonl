@@ -2,3 +2,4 @@
 {"ts": 1789257600, "tipo": "operacion", "simbolo": "BTC-EUR", "lado": "compra", "cantidad": 0.014253606830665979, "precio": 66683.1217734375, "comision": 0.950475, "motivo": "subir exposición 0%→95%", "realizado": null}
 {"ts": 1789286400, "tipo": "operacion", "simbolo": "BTC-EUR", "lado": "venta", "cantidad": 0.014253606830665979, "precio": 66216.33620703126, "comision": 0.9438216220622159, "motivo": "bajar exposición 95%→0%", "realizado": -7.597199559846446}
 {"ts": 1789387200, "tipo": "operacion", "simbolo": "BTC-EUR", "lado": "compra", "cantidad": 0.013971138942213603, "precio": 67444.83837890625, "comision": 0.9422812079268397, "motivo": "subir exposición 0%→95%", "realizado": null}
+{"ts": 1789502400, "tipo": "operacion", "simbolo": "BTC-EUR", "lado": "venta", "cantidad": 0.013971138942213603, "precio": 65798.178203125, "comision": 0.9192754898203901, "motivo": "bajar exposición 95%→0%", "realizado": -23.924993596270056}
