@@ -4,3 +4,5 @@
 {"ts": 1789133400, "tipo": "operacion", "simbolo": "COP", "lado": "compra", "cantidad": 0.9071104635525075, "precio": 137.41868110656736, "comision": 0.12465392351935252, "motivo": "subir exposición 0%→12%", "realizado": null}
 {"ts": 1789133400, "tipo": "operacion", "simbolo": "CRM", "lado": "compra", "cantidad": 0.21551524066326336, "precio": 247.84386122131346, "comision": 0.05341412939802382, "motivo": "subir exposición 0%→5%", "realizado": null}
 {"ts": 1789133400, "tipo": "operacion", "simbolo": "TGT", "lado": "compra", "cantidad": 0.7788841810530273, "precio": 155.9079168319702, "comision": 0.1214342101213526, "motivo": "subir exposición 0%→12%", "realizado": null}
+{"ts": 1789651800, "tipo": "operacion", "simbolo": "TGT", "lado": "venta", "cantidad": 0.7788841810530273, "precio": 158.58067366027834, "comision": 0.12351597813472326, "motivo": "bajar exposición 12%→0%", "realizado": 1.9582520352359474}
+{"ts": 1789651800, "tipo": "operacion", "simbolo": "IQV", "lado": "compra", "cantidad": 0.3063875912066773, "precio": 270.5351938934326, "comision": 0.08288862639364021, "motivo": "subir exposición 0%→8%", "realizado": null}

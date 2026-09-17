@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 480.16679320765974,
+    "caja": 520.5329458236665,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -53,22 +53,28 @@
       },
       "TGT": {
         "simbolo": "TGT",
-        "cantidad": 0.7788841810530273,
-        "precio_medio": 155.9079168319702,
-        "maximo_favorable": 159.47000122070312
+        "cantidad": 0.0,
+        "precio_medio": 0.0,
+        "maximo_favorable": 0.0
+      },
+      "IQV": {
+        "simbolo": "IQV",
+        "cantidad": 0.3063875912066773,
+        "precio_medio": 270.5351938934326,
+        "maximo_favorable": 270.5351938934326
       }
     },
-    "pnl_realizado": 0.0,
-    "comisiones_pagadas": 0.5188759746533034,
-    "coste_vida_pagado": 0.4383561643835616,
-    "operaciones": 5
+    "pnl_realizado": 1.9582520352359474,
+    "comisiones_pagadas": 0.7252805791816669,
+    "coste_vida_pagado": 0.4931506849315068,
+    "operaciones": 7
   },
   "vitales": {
     "vivo": true,
-    "ticks": 8,
-    "equity": 991.4595019235792,
+    "ticks": 9,
+    "equity": 990.8055773187209,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.010843414927936945,
+    "drawdown": 0.011495820626587605,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -82,7 +88,8 @@
     1002.3281620789578,
     998.8611400499876,
     1002.3040020195067,
-    991.4595019235792
+    991.4595019235792,
+    990.8055773187209
   ],
   "operaciones": [
     {
@@ -134,7 +141,27 @@
       "comision": 0.1214342101213526,
       "motivo": "subir exposición 0%→12%",
       "realizado": null
+    },
+    {
+      "ts": 1789651800,
+      "simbolo": "TGT",
+      "lado": "venta",
+      "cantidad": 0.7788841810530273,
+      "precio": 158.58067366027834,
+      "comision": 0.12351597813472326,
+      "motivo": "bajar exposición 12%→0%",
+      "realizado": 1.9582520352359474
+    },
+    {
+      "ts": 1789651800,
+      "simbolo": "IQV",
+      "lado": "compra",
+      "cantidad": 0.3063875912066773,
+      "precio": 270.5351938934326,
+      "comision": 0.08288862639364021,
+      "motivo": "subir exposición 0%→8%",
+      "realizado": null
     }
   ],
-  "guardado": 1789579018.0015566
+  "guardado": 1789666642.6626666
 }
