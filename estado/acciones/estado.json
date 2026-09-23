@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 519.9850006181871,
+    "caja": 519.9302060976391,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -61,20 +61,20 @@
         "simbolo": "IQV",
         "cantidad": 0.3063875912066773,
         "precio_medio": 270.5351938934326,
-        "maximo_favorable": 270.5351938934326
+        "maximo_favorable": 271.3575134277344
       }
     },
     "pnl_realizado": 1.9582520352359474,
     "comisiones_pagadas": 0.7252805791816669,
-    "coste_vida_pagado": 1.0410958904109588,
+    "coste_vida_pagado": 1.095890410958904,
     "operaciones": 7
   },
   "vitales": {
     "vivo": true,
-    "ticks": 19,
-    "equity": 976.3534669630669,
+    "ticks": 20,
+    "equity": 976.1884811207606,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.025914362280329395,
+    "drawdown": 0.0260789649010561,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -99,7 +99,8 @@
     986.6044081059803,
     976.4630560041628,
     973.5044362454424,
-    976.3534669630669
+    976.3534669630669,
+    976.1884811207606
   ],
   "operaciones": [
     {
@@ -173,5 +174,5 @@
       "realizado": null
     }
   ],
-  "guardado": 1790123429.7796657
+  "guardado": 1790175600.5795197
 }
