@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 519.7658225359953,
+    "caja": 644.7110053693552,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -41,15 +41,15 @@
       },
       "COP": {
         "simbolo": "COP",
-        "cantidad": 0.9071104635525075,
-        "precio_medio": 137.41868110656736,
-        "maximo_favorable": 141.22000122070312
+        "cantidad": 0.0,
+        "precio_medio": 0.0,
+        "maximo_favorable": 0.0
       },
       "CRM": {
         "simbolo": "CRM",
-        "cantidad": 0.21551524066326336,
-        "precio_medio": 247.84386122131346,
-        "maximo_favorable": 260.4599914550781
+        "cantidad": 0.0,
+        "precio_medio": 0.0,
+        "maximo_favorable": 0.0
       },
       "TGT": {
         "simbolo": "TGT",
@@ -62,19 +62,25 @@
         "cantidad": 0.3063875912066773,
         "precio_medio": 270.5351938934326,
         "maximo_favorable": 271.3575134277344
+      },
+      "DELL": {
+        "simbolo": "DELL",
+        "cantidad": 0.07465691358858521,
+        "precio_medio": 558.8792755737304,
+        "maximo_favorable": 558.8792755737304
       }
     },
-    "pnl_realizado": 1.9582520352359474,
-    "comisiones_pagadas": 0.7252805791816669,
-    "coste_vida_pagado": 1.2602739726027397,
-    "operaciones": 7
+    "pnl_realizado": -9.343897543490534,
+    "comisiones_pagadas": 0.9339376171394507,
+    "coste_vida_pagado": 1.3150684931506849,
+    "operaciones": 10
   },
   "vitales": {
     "vivo": true,
-    "ticks": 23,
-    "equity": 977.6707805318736,
+    "ticks": 24,
+    "equity": 973.6952436913907,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.024600108507319307,
+    "drawdown": 0.028566411152390225,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -103,7 +109,8 @@
     976.1884811207606,
     976.243877921971,
     976.0757110914242,
-    977.6707805318736
+    977.6707805318736,
+    973.6952436913907
   ],
   "operaciones": [
     {
@@ -175,7 +182,37 @@
       "comision": 0.08288862639364021,
       "motivo": "subir exposición 0%→8%",
       "realizado": null
+    },
+    {
+      "ts": 1790343000,
+      "simbolo": "COP",
+      "lado": "venta",
+      "cantidad": 0.9071104635525075,
+      "precio": 127.4912228050232,
+      "comision": 0.1156486222175406,
+      "motivo": "bajar exposición 12%→0%",
+      "realizado": -9.120949924029455
+    },
+    {
+      "ts": 1790343000,
+      "simbolo": "CRM",
+      "lado": "venta",
+      "cantidad": 0.21551524066326336,
+      "precio": 237.96096183013918,
+      "comision": 0.05128421395728408,
+      "motivo": "bajar exposición 5%→0%",
+      "realizado": -2.1811996546970267
+    },
+    {
+      "ts": 1790343000,
+      "simbolo": "DELL",
+      "lado": "compra",
+      "cantidad": 0.07465691358858521,
+      "precio": 558.8792755737304,
+      "comision": 0.04172420178295909,
+      "motivo": "subir exposición 0%→4%",
+      "realizado": null
     }
   ],
-  "guardado": 1790269671.4874566
+  "guardado": 1790343859.057278
 }
