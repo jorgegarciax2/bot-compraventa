@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 644.7110053693552,
+    "caja": 549.3691629993348,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -61,26 +61,32 @@
         "simbolo": "IQV",
         "cantidad": 0.3063875912066773,
         "precio_medio": 270.5351938934326,
-        "maximo_favorable": 271.3575134277344
+        "maximo_favorable": 275.0199890136719
       },
       "DELL": {
         "simbolo": "DELL",
         "cantidad": 0.07465691358858521,
         "precio_medio": 558.8792755737304,
         "maximo_favorable": 558.8792755737304
+      },
+      "MRK": {
+        "simbolo": "MRK",
+        "cantidad": 0.6429536869749138,
+        "precio_medio": 148.0539857254028,
+        "maximo_favorable": 148.0539857254028
       }
     },
     "pnl_realizado": -9.343897543490534,
-    "comisiones_pagadas": 0.9339376171394507,
-    "coste_vida_pagado": 1.3150684931506849,
-    "operaciones": 10
+    "comisiones_pagadas": 1.0291294731329297,
+    "coste_vida_pagado": 1.36986301369863,
+    "operaciones": 11
   },
   "vitales": {
     "vivo": true,
-    "ticks": 24,
-    "equity": 973.6952436913907,
+    "ticks": 25,
+    "equity": 973.6932698239165,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.028566411152390225,
+    "drawdown": 0.028568380435055163,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -110,7 +116,8 @@
     976.243877921971,
     976.0757110914242,
     977.6707805318736,
-    973.6952436913907
+    973.6952436913907,
+    973.6932698239165
   ],
   "operaciones": [
     {
@@ -212,7 +219,17 @@
       "comision": 0.04172420178295909,
       "motivo": "subir exposición 0%→4%",
       "realizado": null
+    },
+    {
+      "ts": 1790256600,
+      "simbolo": "MRK",
+      "lado": "compra",
+      "cantidad": 0.6429536869749138,
+      "precio": 148.0539857254028,
+      "comision": 0.095191855993479,
+      "motivo": "subir exposición 0%→10%",
+      "realizado": null
     }
   ],
-  "guardado": 1790343859.057278
+  "guardado": 1790383016.2690911
 }
