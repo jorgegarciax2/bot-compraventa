@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 549.3691629993348,
+    "caja": 644.8295770982385,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -67,26 +67,26 @@
         "simbolo": "DELL",
         "cantidad": 0.07465691358858521,
         "precio_medio": 558.8792755737304,
-        "maximo_favorable": 558.8792755737304
+        "maximo_favorable": 562.8900146484375
       },
       "MRK": {
         "simbolo": "MRK",
-        "cantidad": 0.6429536869749138,
-        "precio_medio": 148.0539857254028,
-        "maximo_favorable": 148.0539857254028
+        "cantidad": 0.0,
+        "precio_medio": 0.0,
+        "maximo_favorable": 0.0
       }
     },
-    "pnl_realizado": -9.343897543490534,
-    "comisiones_pagadas": 1.0291294731329297,
-    "coste_vida_pagado": 1.36986301369863,
-    "operaciones": 11
+    "pnl_realizado": -9.020544917517949,
+    "comisiones_pagadas": 1.1247402925718202,
+    "coste_vida_pagado": 1.4246575342465753,
+    "operaciones": 12
   },
   "vitales": {
     "vivo": true,
-    "ticks": 25,
-    "equity": 973.6932698239165,
+    "ticks": 26,
+    "equity": 974.0620534700333,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.028568380435055163,
+    "drawdown": 0.028200453382749346,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -117,7 +117,8 @@
     976.0757110914242,
     977.6707805318736,
     973.6952436913907,
-    973.6932698239165
+    973.6932698239165,
+    974.0620534700333
   ],
   "operaciones": [
     {
@@ -229,7 +230,17 @@
       "comision": 0.095191855993479,
       "motivo": "subir exposición 0%→10%",
       "realizado": null
+    },
+    {
+      "ts": 1790343000,
+      "simbolo": "MRK",
+      "lado": "venta",
+      "cantidad": 0.6429536869749138,
+      "precio": 148.70560877990724,
+      "comision": 0.09561081943889048,
+      "motivo": "bajar exposición 10%→0%",
+      "realizado": 0.32335262597258563
     }
   ],
-  "guardado": 1790383016.2690911
+  "guardado": 1790400560.8092175
 }

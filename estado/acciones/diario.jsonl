@@ -10,3 +10,4 @@
 {"ts": 1790343000, "tipo": "operacion", "simbolo": "CRM", "lado": "venta", "cantidad": 0.21551524066326336, "precio": 237.96096183013918, "comision": 0.05128421395728408, "motivo": "bajar exposición 5%→0%", "realizado": -2.1811996546970267}
 {"ts": 1790343000, "tipo": "operacion", "simbolo": "DELL", "lado": "compra", "cantidad": 0.07465691358858521, "precio": 558.8792755737304, "comision": 0.04172420178295909, "motivo": "subir exposición 0%→4%", "realizado": null}
 {"ts": 1790256600, "tipo": "operacion", "simbolo": "MRK", "lado": "compra", "cantidad": 0.6429536869749138, "precio": 148.0539857254028, "comision": 0.095191855993479, "motivo": "subir exposición 0%→10%", "realizado": null}
+{"ts": 1790343000, "tipo": "operacion", "simbolo": "MRK", "lado": "venta", "cantidad": 0.6429536869749138, "precio": 148.70560877990724, "comision": 0.09561081943889048, "motivo": "bajar exposición 10%→0%", "realizado": 0.32335262597258563}
