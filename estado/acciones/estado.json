@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 558.5879494204404,
+    "caja": 532.1709784087873,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -77,22 +77,22 @@
       },
       "DHR": {
         "simbolo": "DHR",
-        "cantidad": 0.3814460258975547,
-        "precio_medio": 225.18043556213377,
-        "maximo_favorable": 225.18043556213377
+        "cantidad": 0.4972366346987706,
+        "precio_medio": 225.70747019374545,
+        "maximo_favorable": 227.4436668319702
       }
     },
     "pnl_realizado": -9.145180807084063,
-    "comisiones_pagadas": 1.2651896874894628,
-    "coste_vida_pagado": 1.5342465753424657,
-    "operaciones": 14
+    "comisiones_pagadas": 1.2915255281399176,
+    "coste_vida_pagado": 1.5890410958904109,
+    "operaciones": 15
   },
   "vitales": {
     "vivo": true,
-    "ticks": 28,
-    "equity": 973.4512462413229,
+    "ticks": 29,
+    "equity": 974.5558506433556,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.02880984185632418,
+    "drawdown": 0.02770780317894972,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -126,7 +126,8 @@
     973.6932698239165,
     974.0620534700333,
     974.0893500207382,
-    973.4512462413229
+    973.4512462413229,
+    974.5558506433556
   ],
   "operaciones": [
     {
@@ -268,7 +269,17 @@
       "comision": 0.02722890283792907,
       "motivo": "bajar exposición 12%→9%",
       "realizado": -0.1246358895661146
+    },
+    {
+      "ts": 1790602200,
+      "simbolo": "DHR",
+      "lado": "compra",
+      "cantidad": 0.11579060880121587,
+      "precio": 227.4436668319702,
+      "comision": 0.02633584065045474,
+      "motivo": "subir exposición 9%→12%",
+      "realizado": null
     }
   ],
-  "guardado": 1790644559.9950714
+  "guardado": 1790667027.9705992
 }
