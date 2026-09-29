@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 532.1709784087873,
+    "caja": 623.8316130926727,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -35,9 +35,9 @@
       },
       "CVX": {
         "simbolo": "CVX",
-        "cantidad": 0.7008052148031804,
-        "precio_medio": 214.16702755737305,
-        "maximo_favorable": 217.77000427246094
+        "cantidad": 0.0,
+        "precio_medio": 0.0,
+        "maximo_favorable": 0.0
       },
       "COP": {
         "simbolo": "COP",
@@ -80,19 +80,25 @@
         "cantidad": 0.4972366346987706,
         "precio_medio": 225.70747019374545,
         "maximo_favorable": 227.4436668319702
+      },
+      "AMD": {
+        "simbolo": "AMD",
+        "cantidad": 0.08386173606966187,
+        "precio_medio": 614.4070255737304,
+        "maximo_favorable": 614.4070255737304
       }
     },
-    "pnl_realizado": -9.145180807084063,
-    "comisiones_pagadas": 1.2915255281399176,
-    "coste_vida_pagado": 1.5890410958904109,
-    "operaciones": 15
+    "pnl_realizado": -15.942356295925974,
+    "comisiones_pagadas": 1.4864863978500815,
+    "coste_vida_pagado": 1.643835616438356,
+    "operaciones": 17
   },
   "vitales": {
     "vivo": true,
-    "ticks": 29,
-    "equity": 974.5558506433556,
+    "ticks": 30,
+    "equity": 971.2609322797432,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.02770780317894972,
+    "drawdown": 0.03099506825666476,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -127,7 +133,8 @@
     974.0620534700333,
     974.0893500207382,
     973.4512462413229,
-    974.5558506433556
+    974.5558506433556,
+    971.2609322797432
   ],
   "operaciones": [
     {
@@ -279,7 +286,27 @@
       "comision": 0.02633584065045474,
       "motivo": "subir exposición 9%→12%",
       "realizado": null
+    },
+    {
+      "ts": 1790688600,
+      "simbolo": "CVX",
+      "lado": "venta",
+      "cantidad": 0.7008052148031804,
+      "precio": 204.67260639953614,
+      "comision": 0.1434356298921537,
+      "motivo": "bajar exposición 15%→0%",
+      "realizado": -6.79717548884191
+    },
+    {
+      "ts": 1790688600,
+      "simbolo": "AMD",
+      "lado": "compra",
+      "cantidad": 0.08386173606966187,
+      "precio": 614.4070255737304,
+      "comision": 0.05152523981801017,
+      "motivo": "subir exposición 0%→5%",
+      "realizado": null
     }
   ],
-  "guardado": 1790667027.9705992
+  "guardado": 1790691673.790967
 }
