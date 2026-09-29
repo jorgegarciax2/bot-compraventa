@@ -12,3 +12,4 @@
 {"ts": 1790256600, "tipo": "operacion", "simbolo": "MRK", "lado": "compra", "cantidad": 0.6429536869749138, "precio": 148.0539857254028, "comision": 0.095191855993479, "motivo": "subir exposición 0%→10%", "realizado": null}
 {"ts": 1790343000, "tipo": "operacion", "simbolo": "MRK", "lado": "venta", "cantidad": 0.6429536869749138, "precio": 148.70560877990724, "comision": 0.09561081943889048, "motivo": "bajar exposición 10%→0%", "realizado": 0.32335262597258563}
 {"ts": 1790602200, "tipo": "operacion", "simbolo": "DHR", "lado": "compra", "cantidad": 0.5027989745071472, "precio": 225.18043556213377, "comision": 0.11322049207971359, "motivo": "subir exposición 0%→12%", "realizado": null}
+{"ts": 1790343000, "tipo": "operacion", "simbolo": "DHR", "lado": "venta", "cantidad": 0.12135294860959242, "precio": 224.3777604904175, "comision": 0.02722890283792907, "motivo": "bajar exposición 12%→9%", "realizado": -0.1246358895661146}
