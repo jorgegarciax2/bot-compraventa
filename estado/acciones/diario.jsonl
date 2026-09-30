@@ -16,3 +16,4 @@
 {"ts": 1790602200, "tipo": "operacion", "simbolo": "DHR", "lado": "compra", "cantidad": 0.11579060880121587, "precio": 227.4436668319702, "comision": 0.02633584065045474, "motivo": "subir exposición 9%→12%", "realizado": null}
 {"ts": 1790688600, "tipo": "operacion", "simbolo": "CVX", "lado": "venta", "cantidad": 0.7008052148031804, "precio": 204.67260639953614, "comision": 0.1434356298921537, "motivo": "bajar exposición 15%→0%", "realizado": -6.79717548884191}
 {"ts": 1790688600, "tipo": "operacion", "simbolo": "AMD", "lado": "compra", "cantidad": 0.08386173606966187, "precio": 614.4070255737304, "comision": 0.05152523981801017, "motivo": "subir exposición 0%→5%", "realizado": null}
+{"ts": 1790775000, "tipo": "operacion", "simbolo": "DHR", "lado": "compra", "cantidad": 0.08991693309186041, "precio": 223.27158366394042, "comision": 0.020075896049624245, "motivo": "subir exposición 11%→14%", "realizado": null}
