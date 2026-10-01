@@ -18,3 +18,4 @@
 {"ts": 1790688600, "tipo": "operacion", "simbolo": "AMD", "lado": "compra", "cantidad": 0.08386173606966187, "precio": 614.4070255737304, "comision": 0.05152523981801017, "motivo": "subir exposición 0%→5%", "realizado": null}
 {"ts": 1790775000, "tipo": "operacion", "simbolo": "DHR", "lado": "compra", "cantidad": 0.08991693309186041, "precio": 223.27158366394042, "comision": 0.020075896049624245, "motivo": "subir exposición 11%→14%", "realizado": null}
 {"ts": 1790688600, "tipo": "operacion", "simbolo": "DHR", "lado": "venta", "cantidad": 0.09091806388272014, "precio": 225.9969456100464, "comision": 0.020547204738273827, "motivo": "bajar exposición 14%→12%", "realizado": 0.0396867451466445}
+{"ts": 1790775000, "tipo": "operacion", "simbolo": "DHR", "lado": "compra", "cantidad": 0.08806048573507753, "precio": 221.66077805328368, "comision": 0.019519555783787376, "motivo": "subir exposición 11%→13%", "realizado": null}
