@@ -24,14 +24,14 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 604.5588397793193,
+    "caja": 666.8434961623133,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
         "simbolo": "HPQ",
-        "cantidad": 1.95179588214289,
-        "precio_medio": 35.497739542007444,
-        "maximo_favorable": 35.497739542007444
+        "cantidad": 0.0,
+        "precio_medio": 0.0,
+        "maximo_favorable": 0.0
       },
       "CVX": {
         "simbolo": "CVX",
@@ -88,17 +88,17 @@
         "maximo_favorable": 614.4070255737304
       }
     },
-    "pnl_realizado": -15.90266955077933,
-    "comisiones_pagadas": 1.546629054421767,
-    "coste_vida_pagado": 1.8082191780821917,
-    "operaciones": 20
+    "pnl_realizado": -22.84756051070845,
+    "comisiones_pagadas": 1.609030907178065,
+    "coste_vida_pagado": 1.8630136986301369,
+    "operaciones": 21
   },
   "vitales": {
     "vivo": true,
-    "ticks": 33,
-    "equity": 968.8990444206886,
+    "ticks": 34,
+    "equity": 968.4357914605878,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.03335147003046679,
+    "drawdown": 0.03381364696774847,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -137,7 +137,8 @@
     971.2609322797432,
     970.1264632499962,
     969.9864030686191,
-    968.8990444206886
+    968.8990444206886,
+    968.4357914605878
   ],
   "operaciones": [
     {
@@ -339,7 +340,17 @@
       "comision": 0.019519555783787376,
       "motivo": "subir exposición 11%→13%",
       "realizado": null
+    },
+    {
+      "ts": 1790861400,
+      "simbolo": "HPQ",
+      "lado": "venta",
+      "cantidad": 1.95179588214289,
+      "precio": 31.97150548744202,
+      "comision": 0.06240185275629815,
+      "motivo": "bajar exposición 6%→0%",
+      "realizado": -6.944890959929122
     }
   ],
-  "guardado": 1790836372.8678045
+  "guardado": 1790862843.1873364
 }
