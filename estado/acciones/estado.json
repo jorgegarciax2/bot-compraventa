@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 666.8434961623133,
+    "caja": 525.441395663752,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -85,20 +85,26 @@
         "simbolo": "AMD",
         "cantidad": 0.08386173606966187,
         "precio_medio": 614.4070255737304,
-        "maximo_favorable": 614.4070255737304
+        "maximo_favorable": 634.9349975585938
+      },
+      "TMO": {
+        "simbolo": "TMO",
+        "cantidad": 0.2156271825079609,
+        "precio_medio": 654.8622406311035,
+        "maximo_favorable": 654.8622406311035
       }
     },
     "pnl_realizado": -22.84756051070845,
-    "comisiones_pagadas": 1.609030907178065,
-    "coste_vida_pagado": 1.8630136986301369,
-    "operaciones": 21
+    "comisiones_pagadas": 1.7502370070562003,
+    "coste_vida_pagado": 1.917808219178082,
+    "operaciones": 22
   },
   "vitales": {
     "vivo": true,
-    "ticks": 34,
-    "equity": 968.4357914605878,
+    "ticks": 35,
+    "equity": 966.9901988586857,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.03381364696774847,
+    "drawdown": 0.035255881813174406,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -138,7 +144,8 @@
     970.1264632499962,
     969.9864030686191,
     968.8990444206886,
-    968.4357914605878
+    968.4357914605878,
+    966.9901988586857
   ],
   "operaciones": [
     {
@@ -350,7 +357,17 @@
       "comision": 0.06240185275629815,
       "motivo": "bajar exposición 6%→0%",
       "realizado": -6.944890959929122
+    },
+    {
+      "ts": 1790947800,
+      "simbolo": "TMO",
+      "lado": "compra",
+      "cantidad": 0.2156271825079609,
+      "precio": 654.8622406311035,
+      "comision": 0.14120609987813518,
+      "motivo": "subir exposición 0%→15%",
+      "realizado": null
     }
   ],
-  "guardado": 1790862843.1873364
+  "guardado": 1790955983.8276262
 }
