@@ -21,3 +21,4 @@
 {"ts": 1790775000, "tipo": "operacion", "simbolo": "DHR", "lado": "compra", "cantidad": 0.08806048573507753, "precio": 221.66077805328368, "comision": 0.019519555783787376, "motivo": "subir exposición 11%→13%", "realizado": null}
 {"ts": 1790861400, "tipo": "operacion", "simbolo": "HPQ", "lado": "venta", "cantidad": 1.95179588214289, "precio": 31.97150548744202, "comision": 0.06240185275629815, "motivo": "bajar exposición 6%→0%", "realizado": -6.944890959929122}
 {"ts": 1790947800, "tipo": "operacion", "simbolo": "TMO", "lado": "compra", "cantidad": 0.2156271825079609, "precio": 654.8622406311035, "comision": 0.14120609987813518, "motivo": "subir exposición 0%→15%", "realizado": null}
+{"ts": 1791207000, "tipo": "operacion", "simbolo": "IQV", "lado": "compra", "cantidad": 0.16130898544129893, "precio": 263.8118326721191, "comision": 0.04255521907574925, "motivo": "subir exposición 8%→13%", "realizado": null}

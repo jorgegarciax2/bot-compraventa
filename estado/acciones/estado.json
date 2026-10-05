@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 525.3318066226561,
+    "caja": 482.6792378072832,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -59,8 +59,8 @@
       },
       "IQV": {
         "simbolo": "IQV",
-        "cantidad": 0.3063875912066773,
-        "precio_medio": 270.5351938934326,
+        "cantidad": 0.46769657664797626,
+        "precio_medio": 268.2163003382596,
         "maximo_favorable": 275.0199890136719
       },
       "DELL": {
@@ -91,20 +91,20 @@
         "simbolo": "TMO",
         "cantidad": 0.2156271825079609,
         "precio_medio": 654.8622406311035,
-        "maximo_favorable": 654.8622406311035
+        "maximo_favorable": 671.4749755859375
       }
     },
     "pnl_realizado": -22.84756051070845,
-    "comisiones_pagadas": 1.7502370070562003,
-    "coste_vida_pagado": 2.0273972602739727,
-    "operaciones": 22
+    "comisiones_pagadas": 1.7927922261319496,
+    "coste_vida_pagado": 2.082191780821918,
+    "operaciones": 23
   },
   "vitales": {
     "vivo": true,
-    "ticks": 37,
-    "equity": 965.8680178703604,
+    "ticks": 38,
+    "equity": 973.9554564122996,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.03637545625074956,
+    "drawdown": 0.028306802841705614,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -147,7 +147,8 @@
     968.4357914605878,
     966.9901988586857,
     961.7782055684436,
-    965.8680178703604
+    965.8680178703604,
+    973.9554564122996
   ],
   "operaciones": [
     {
@@ -369,7 +370,17 @@
       "comision": 0.14120609987813518,
       "motivo": "subir exposición 0%→15%",
       "realizado": null
+    },
+    {
+      "ts": 1791207000,
+      "simbolo": "IQV",
+      "lado": "compra",
+      "cantidad": 0.16130898544129893,
+      "precio": 263.8118326721191,
+      "comision": 0.04255521907574925,
+      "motivo": "subir exposición 8%→13%",
+      "realizado": null
     }
   ],
-  "guardado": 1791006257.7850256
+  "guardado": 1791226187.0509834
 }
