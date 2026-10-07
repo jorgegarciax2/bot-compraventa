@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 484.0214651678012,
+    "caja": 483.96667064725324,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -67,7 +67,7 @@
         "simbolo": "DELL",
         "cantidad": 0.07465691358858521,
         "precio_medio": 558.8792755737304,
-        "maximo_favorable": 579.6849975585938
+        "maximo_favorable": 580.89501953125
       },
       "MRK": {
         "simbolo": "MRK",
@@ -96,15 +96,15 @@
     },
     "pnl_realizado": -24.429668727558784,
     "comisiones_pagadas": 1.8697792918711085,
-    "coste_vida_pagado": 2.2465753424657544,
+    "coste_vida_pagado": 2.3013698630137,
     "operaciones": 25
   },
   "vitales": {
     "vivo": true,
-    "ticks": 41,
-    "equity": 973.0010696261764,
+    "ticks": 42,
+    "equity": 969.0292107695411,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.029258972821788465,
+    "drawdown": 0.03322160602606472,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -151,7 +151,8 @@
     973.9554564122996,
     964.7533084628233,
     975.0959367273257,
-    973.0010696261764
+    973.0010696261764,
+    969.0292107695411
   ],
   "operaciones": [
     {
@@ -405,5 +406,5 @@
       "realizado": null
     }
   ],
-  "guardado": 1791296875.3075602
+  "guardado": 1791401490.1213772
 }
