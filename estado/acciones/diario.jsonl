@@ -24,3 +24,5 @@
 {"ts": 1791207000, "tipo": "operacion", "simbolo": "IQV", "lado": "compra", "cantidad": 0.16130898544129893, "precio": 263.8118326721191, "comision": 0.04255521907574925, "motivo": "subir exposición 8%→13%", "realizado": null}
 {"ts": 1790947800, "tipo": "operacion", "simbolo": "IQV", "lado": "venta", "cantidad": 0.15222100482717318, "precio": 258.0808864593506, "comision": 0.03928533186352994, "motivo": "bajar exposición 13%→8%", "realizado": -1.582108216850333}
 {"ts": 1791207000, "tipo": "operacion", "simbolo": "IQV", "lado": "compra", "cantidad": 0.14161709552418933, "precio": 266.22304133605957, "comision": 0.03770173387562895, "motivo": "subir exposición 9%→12%", "realizado": null}
+{"ts": 1791552600, "tipo": "operacion", "simbolo": "IQV", "lado": "venta", "cantidad": 0.45709266734499243, "precio": 261.54415029907227, "comision": 0.11954991328868254, "motivo": "bajar exposición 12%→0%", "realizado": -2.887061221107814}
+{"ts": 1791552600, "tipo": "operacion", "simbolo": "MSFT", "lado": "compra", "cantidad": 0.28643463157701127, "precio": 536.7182372131348, "comision": 0.1537346905368072, "motivo": "subir exposición 0%→16%", "realizado": null}
