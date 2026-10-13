@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 449.34422523365924,
+    "caja": 429.3964825619033,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -83,8 +83,8 @@
       },
       "AMD": {
         "simbolo": "AMD",
-        "cantidad": 0.08386173606966187,
-        "precio_medio": 614.4070255737304,
+        "cantidad": 0.11715494722907824,
+        "precio_medio": 609.4349114812348,
         "maximo_favorable": 647.35009765625
       },
       "TMO": {
@@ -97,20 +97,20 @@
         "simbolo": "MSFT",
         "cantidad": 0.28643463157701127,
         "precio_medio": 536.7182372131348,
-        "maximo_favorable": 541.4000244140625
+        "maximo_favorable": 546.7899780273438
       }
     },
     "pnl_realizado": -27.316729948666598,
-    "comisiones_pagadas": 2.1430638956965984,
-    "coste_vida_pagado": 2.465753424657536,
-    "operaciones": 27
+    "comisiones_pagadas": 2.1629369707727304,
+    "coste_vida_pagado": 2.5205479452054815,
+    "operaciones": 28
   },
   "vitales": {
     "vivo": true,
-    "ticks": 45,
-    "equity": 966.3667449055326,
+    "ticks": 46,
+    "equity": 973.3477137195282,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.035877887635958006,
+    "drawdown": 0.028913133897505605,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -161,7 +161,8 @@
     969.0292107695411,
     962.9605865312569,
     968.7726476315283,
-    966.3667449055326
+    966.3667449055326,
+    973.3477137195282
   ],
   "operaciones": [
     {
@@ -433,7 +434,17 @@
       "comision": 0.1537346905368072,
       "motivo": "subir exposición 0%→16%",
       "realizado": null
+    },
+    {
+      "ts": 1791898200,
+      "simbolo": "AMD",
+      "lado": "compra",
+      "cantidad": 0.03329321115941637,
+      "precio": 596.9107329711914,
+      "comision": 0.019873075076131872,
+      "motivo": "subir exposición 5%→7%",
+      "realizado": null
     }
   ],
-  "guardado": 1791818241.4756336
+  "guardado": 1791913695.279801
 }
