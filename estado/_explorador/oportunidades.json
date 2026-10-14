@@ -1,7 +1,7 @@
 {
-  "generado": 1791860830.1801147,
+  "generado": 1791940791.6041937,
   "ejercicio": 2024,
-  "universo": 4464,
+  "universo": 4466,
   "grandes": 1138,
   "aptas": 663,
   "analizadas": 198,
@@ -24,7 +24,7 @@
       "rsi": 69.58720909305937,
       "impulso": 8.460312731744285,
       "volatilidad": 0.04091488278468926,
-      "volumen_relativo": 0.9508747891411754,
+      "volumen_relativo": 0.9519287810873233,
       "obv_acompana": true,
       "soporte": 63.84499931335449,
       "resistencia": null
@@ -70,7 +70,7 @@
       "rsi": 59.08497549553669,
       "impulso": 6.455941449092356,
       "volatilidad": 0.04465854544487722,
-      "volumen_relativo": 0.7001877877797603,
+      "volumen_relativo": 0.7023262963037217,
       "obv_acompana": true,
       "soporte": 517.0899963378906,
       "resistencia": null
@@ -93,7 +93,7 @@
       "rsi": 51.558986490469366,
       "impulso": 5.585039202900918,
       "volatilidad": 0.027276272336173562,
-      "volumen_relativo": 1.14480755265069,
+      "volumen_relativo": 1.147302048391373,
       "obv_acompana": true,
       "soporte": 729.3333333333334,
       "resistencia": 745.2200113932291
@@ -116,7 +116,7 @@
       "rsi": 40.129675765703944,
       "impulso": 5.5404558739011245,
       "volatilidad": 0.03294872495564287,
-      "volumen_relativo": 0.6923189842657856,
+      "volumen_relativo": 0.6946767451156636,
       "obv_acompana": true,
       "soporte": 562.22998046875,
       "resistencia": null
@@ -346,7 +346,7 @@
       "rsi": 44.4444384066191,
       "impulso": 2.262417499839195,
       "volatilidad": 0.04739234017737494,
-      "volumen_relativo": 0.6996277606353465,
+      "volumen_relativo": 0.7024467756070965,
       "obv_acompana": true,
       "soporte": 39.36000061035156,
       "resistencia": 41.1933339436849
