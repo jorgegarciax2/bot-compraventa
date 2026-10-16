@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 463.5721645835453,
+    "caja": 298.7587295120111,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -98,19 +98,25 @@
         "cantidad": 0.28643463157701127,
         "precio_medio": 536.7182372131348,
         "maximo_favorable": 546.7899780273438
+      },
+      "ABBV": {
+        "simbolo": "ABBV",
+        "cantidad": 0.5803294208885559,
+        "precio_medio": 283.6217509918213,
+        "maximo_favorable": 283.6217509918213
       }
     },
     "pnl_realizado": -34.64607162779194,
-    "comisiones_pagadas": 2.1973662601659574,
-    "coste_vida_pagado": 2.7397260273972632,
-    "operaciones": 29
+    "comisiones_pagadas": 2.361960306670439,
+    "coste_vida_pagado": 2.7945205479452087,
+    "operaciones": 30
   },
   "vitales": {
     "vivo": true,
-    "ticks": 50,
-    "equity": 961.5135405129845,
+    "ticks": 51,
+    "equity": 959.4578964181117,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.040719819226986975,
+    "drawdown": 0.042770688565636705,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -166,7 +172,8 @@
     963.7580030208787,
     971.8034358550556,
     963.3399608694293,
-    961.5135405129845
+    961.5135405129845,
+    959.4578964181117
   ],
   "operaciones": [
     {
@@ -458,7 +465,17 @@
       "comision": 0.03442928939322698,
       "motivo": "stop-loss: 461.3975 <= 475.0474",
       "realizado": -7.329341679125342
+    },
+    {
+      "ts": 1791984600,
+      "simbolo": "ABBV",
+      "lado": "compra",
+      "cantidad": 0.5803294208885559,
+      "precio": 283.6217509918213,
+      "comision": 0.16459404650448184,
+      "motivo": "subir exposición 0%→17%",
+      "realizado": null
     }
   ],
-  "guardado": 1792074274.8932316
+  "guardado": 1792110149.1753669
 }
