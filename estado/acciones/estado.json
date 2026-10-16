@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 298.7587295120111,
+    "caja": 298.70393499146314,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -79,7 +79,7 @@
         "simbolo": "DHR",
         "cantidad": 0.5842959896429883,
         "precio_medio": 224.78077255122545,
-        "maximo_favorable": 229.47000122070312
+        "maximo_favorable": 231.5
       },
       "AMD": {
         "simbolo": "AMD",
@@ -91,7 +91,7 @@
         "simbolo": "TMO",
         "cantidad": 0.2156271825079609,
         "precio_medio": 654.8622406311035,
-        "maximo_favorable": 686.1500244140625
+        "maximo_favorable": 696.489990234375
       },
       "MSFT": {
         "simbolo": "MSFT",
@@ -108,15 +108,15 @@
     },
     "pnl_realizado": -34.64607162779194,
     "comisiones_pagadas": 2.361960306670439,
-    "coste_vida_pagado": 2.7945205479452087,
+    "coste_vida_pagado": 2.849315068493154,
     "operaciones": 30
   },
   "vitales": {
     "vivo": true,
-    "ticks": 51,
-    "equity": 959.4578964181117,
+    "ticks": 52,
+    "equity": 968.9983072204458,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.042770688565636705,
+    "drawdown": 0.0332524377938076,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -173,7 +173,8 @@
     971.8034358550556,
     963.3399608694293,
     961.5135405129845,
-    959.4578964181117
+    959.4578964181117,
+    968.9983072204458
   ],
   "operaciones": [
     {
@@ -477,5 +478,5 @@
       "realizado": null
     }
   ],
-  "guardado": 1792110149.1753669
+  "guardado": 1792126753.8050747
 }
