@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 298.48475690927137,
+    "caja": 298.4299623887234,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -103,20 +103,20 @@
         "simbolo": "ABBV",
         "cantidad": 0.5803294208885559,
         "precio_medio": 283.6217509918213,
-        "maximo_favorable": 285.489990234375
+        "maximo_favorable": 288.0
       }
     },
     "pnl_realizado": -34.64607162779194,
     "comisiones_pagadas": 2.361960306670439,
-    "coste_vida_pagado": 3.0684931506849358,
+    "coste_vida_pagado": 3.123287671232881,
     "operaciones": 30
   },
   "vitales": {
     "vivo": true,
-    "ticks": 56,
-    "equity": 961.3198458176553,
+    "ticks": 57,
+    "equity": 960.801656549435,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.04091306401712391,
+    "drawdown": 0.04143004965897734,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -178,7 +178,8 @@
     964.0366791754467,
     968.8887181793499,
     960.2710046944541,
-    961.3198458176553
+    961.3198458176553,
+    960.801656549435
   ],
   "operaciones": [
     {
@@ -482,5 +483,5 @@
       "realizado": null
     }
   ],
-  "guardado": 1792420753.8803947
+  "guardado": 1792508566.6215305
 }
