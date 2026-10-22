@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 317.5317571793008,
+    "caja": 401.5577793215063,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -77,15 +77,15 @@
       },
       "DHR": {
         "simbolo": "DHR",
-        "cantidad": 0.5842959896429883,
+        "cantidad": 0.4780772941225114,
         "precio_medio": 224.78077255122545,
         "maximo_favorable": 231.5
       },
       "AMD": {
         "simbolo": "AMD",
-        "cantidad": 0.11715494722907824,
-        "precio_medio": 609.4349114812348,
-        "maximo_favorable": 647.35009765625
+        "cantidad": 0.0,
+        "precio_medio": 0.0,
+        "maximo_favorable": 0.0
       },
       "TMO": {
         "simbolo": "TMO",
@@ -106,17 +106,17 @@
         "maximo_favorable": 289.0799865722656
       }
     },
-    "pnl_realizado": -33.76248191905533,
-    "comisiones_pagadas": 2.3812457704864762,
-    "coste_vida_pagado": 3.2876712328767175,
-    "operaciones": 31
+    "pnl_realizado": -44.95590058892017,
+    "comisiones_pagadas": 2.465410752130874,
+    "coste_vida_pagado": 3.342465753424663,
+    "operaciones": 33
   },
   "vitales": {
     "vivo": true,
-    "ticks": 60,
-    "equity": 963.457663400622,
+    "ticks": 61,
+    "equity": 953.6912240810509,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.038780212059205676,
+    "drawdown": 0.04852396633955447,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -182,7 +182,8 @@
     960.801656549435,
     955.9028534555675,
     960.2846742763319,
-    963.457663400622
+    963.457663400622,
+    953.6912240810509
   ],
   "operaciones": [
     {
@@ -494,7 +495,27 @@
       "comision": 0.01928546381603727,
       "motivo": "bajar exposición 15%→13%",
       "realizado": 0.8835897087366078
+    },
+    {
+      "ts": 1792675800,
+      "simbolo": "DHR",
+      "lado": "venta",
+      "cantidad": 0.10621869552047698,
+      "precio": 229.78255796051027,
+      "comision": 0.024407203559923797,
+      "motivo": "bajar exposición 14%→12%",
+      "realizado": 0.5068759178876618
+    },
+    {
+      "ts": 1792675800,
+      "simbolo": "AMD",
+      "lado": "venta",
+      "cantidad": 0.11715494722907824,
+      "precio": 510.0747300720215,
+      "comision": 0.059757778084474,
+      "motivo": "stop-loss: 510.3299 <= 518.0197",
+      "realizado": -11.700294587752502
     }
   ],
-  "guardado": 1792602537.1049323
+  "guardado": 1792692590.0968733
 }
