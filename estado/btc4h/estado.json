@@ -24,27 +24,27 @@
   },
   "cartera": {
     "divisa": "EUR",
-    "caja": 49.966790374663816,
+    "caja": 996.726272200536,
     "capital_inicial": 1000.0,
     "posiciones": {
       "BTC-EUR": {
         "simbolo": "BTC-EUR",
-        "cantidad": 0.013020934138321961,
-        "precio_medio": 75143.05275,
-        "maximo_favorable": 75321.109375
+        "cantidad": 0.0,
+        "precio_medio": 0.0,
+        "maximo_favorable": 0.0
       }
     },
-    "pnl_realizado": 33.96088151349137,
-    "comisiones_pagadas": 6.637697839521181,
-    "coste_vida_pagado": 1.7716894977168858,
-    "operaciones": 7
+    "pnl_realizado": 2.296754949251877,
+    "comisiones_pagadas": 7.585414170097721,
+    "coste_vida_pagado": 1.7808219178082099,
+    "operaciones": 8
   },
   "vitales": {
     "vivo": true,
-    "ticks": 194,
-    "equity": 1002.0128368337131,
+    "ticks": 195,
+    "equity": 996.726272200536,
     "equity_maximo": 1087.7032127035504,
-    "drawdown": 0.07878102672589227,
+    "drawdown": 0.08364132737724106,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -243,7 +243,8 @@
     1027.9379565606778,
     1030.7362596120663,
     1018.1861365479076,
-    1002.0128368337131
+    1002.0128368337131,
+    996.726272200536
   ],
   "operaciones": [
     {
@@ -315,7 +316,17 @@
       "comision": 0.978432740810203,
       "motivo": "subir exposición 0%→95%",
       "realizado": null
+    },
+    {
+      "ts": 1792670400,
+      "simbolo": "BTC-EUR",
+      "lado": "venta",
+      "cantidad": 0.013020934138321961,
+      "precio": 72784.05070703126,
+      "comision": 0.94771633057654,
+      "motivo": "bajar exposición 95%→0%",
+      "realizado": -31.664126564239496
     }
   ],
-  "guardado": 1792654270.7312877
+  "guardado": 1792674697.0698137
 }
