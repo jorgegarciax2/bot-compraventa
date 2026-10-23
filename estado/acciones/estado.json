@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 401.5577793215063,
+    "caja": 222.3568204403989,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -79,7 +79,7 @@
         "simbolo": "DHR",
         "cantidad": 0.4780772941225114,
         "precio_medio": 224.78077255122545,
-        "maximo_favorable": 231.5
+        "maximo_favorable": 233.86000061035156
       },
       "AMD": {
         "simbolo": "AMD",
@@ -104,19 +104,25 @@
         "cantidad": 0.5803294208885559,
         "precio_medio": 283.6217509918213,
         "maximo_favorable": 289.0799865722656
+      },
+      "AES": {
+        "simbolo": "AES",
+        "cantidad": 11.949081836573471,
+        "precio_medio": 14.977485267162322,
+        "maximo_favorable": 14.977485267162322
       }
     },
     "pnl_realizado": -44.95590058892017,
-    "comisiones_pagadas": 2.465410752130874,
-    "coste_vida_pagado": 3.342465753424663,
-    "operaciones": 33
+    "comisiones_pagadas": 2.64437794929427,
+    "coste_vida_pagado": 3.3972602739726083,
+    "operaciones": 34
   },
   "vitales": {
     "vivo": true,
-    "ticks": 61,
-    "equity": 953.6912240810509,
+    "ticks": 62,
+    "equity": 961.1386851097463,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.04852396633955447,
+    "drawdown": 0.041093803933214046,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -183,7 +189,8 @@
     955.9028534555675,
     960.2846742763319,
     963.457663400622,
-    953.6912240810509
+    953.6912240810509,
+    961.1386851097463
   ],
   "operaciones": [
     {
@@ -515,7 +522,17 @@
       "comision": 0.059757778084474,
       "motivo": "stop-loss: 510.3299 <= 518.0197",
       "realizado": -11.700294587752502
+    },
+    {
+      "ts": 1792589400,
+      "simbolo": "AES",
+      "lado": "compra",
+      "cantidad": 11.949081836573471,
+      "precio": 14.977485267162322,
+      "comision": 0.17896719716339607,
+      "motivo": "subir exposición 0%→19%",
+      "realizado": null
     }
   ],
-  "guardado": 1792692590.0968733
+  "guardado": 1792714236.2450266
 }
