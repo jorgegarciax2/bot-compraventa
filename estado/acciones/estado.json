@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 222.02805331711124,
+    "caja": 221.9732587965633,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -109,20 +109,20 @@
         "simbolo": "AES",
         "cantidad": 11.949081836573471,
         "precio_medio": 14.977485267162322,
-        "maximo_favorable": 15.0
+        "maximo_favorable": 15.029999732971191
       }
     },
     "pnl_realizado": -44.95590058892017,
     "comisiones_pagadas": 2.64437794929427,
-    "coste_vida_pagado": 3.726027397260281,
+    "coste_vida_pagado": 3.7808219178082263,
     "operaciones": 34
   },
   "vitales": {
     "vivo": true,
-    "ticks": 68,
-    "equity": 953.8433918622196,
+    "ticks": 69,
+    "equity": 960.3597618277569,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.048372152006758484,
+    "drawdown": 0.0418709179677772,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -196,7 +196,8 @@
     952.5572717034594,
     953.9529809033155,
     957.86556526374,
-    953.8433918622196
+    953.8433918622196,
+    960.3597618277569
   ],
   "operaciones": [
     {
@@ -540,5 +541,5 @@
       "realizado": null
     }
   ],
-  "guardado": 1793059470.0133345
+  "guardado": 1793077152.4785676
 }
