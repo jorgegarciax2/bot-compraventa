@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 221.75408071437153,
+    "caja": 233.24014946574428,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -59,9 +59,9 @@
       },
       "IQV": {
         "simbolo": "IQV",
-        "cantidad": 0.0,
-        "precio_medio": 0.0,
-        "maximo_favorable": 0.0
+        "cantidad": 0.49685934070243987,
+        "precio_medio": 277.80884843444824,
+        "maximo_favorable": 277.80884843444824
       },
       "DELL": {
         "simbolo": "DELL",
@@ -79,7 +79,7 @@
         "simbolo": "DHR",
         "cantidad": 0.4780772941225114,
         "precio_medio": 224.78077255122545,
-        "maximo_favorable": 234.89500427246094
+        "maximo_favorable": 236.82000732421875
       },
       "AMD": {
         "simbolo": "AMD",
@@ -91,38 +91,38 @@
         "simbolo": "TMO",
         "cantidad": 0.18755625781123542,
         "precio_medio": 654.8622406311035,
-        "maximo_favorable": 704.02001953125
+        "maximo_favorable": 708.7849731445312
       },
       "MSFT": {
         "simbolo": "MSFT",
-        "cantidad": 0.28643463157701127,
-        "precio_medio": 536.7182372131348,
-        "maximo_favorable": 546.7899780273438
+        "cantidad": 0.0,
+        "precio_medio": 0.0,
+        "maximo_favorable": 0.0
       },
       "ABBV": {
         "simbolo": "ABBV",
         "cantidad": 0.5803294208885559,
         "precio_medio": 283.6217509918213,
-        "maximo_favorable": 289.0799865722656
+        "maximo_favorable": 289.92498779296875
       },
       "AES": {
         "simbolo": "AES",
         "cantidad": 11.949081836573471,
         "precio_medio": 14.977485267162322,
-        "maximo_favorable": 15.029999732971191
+        "maximo_favorable": 15.030099868774414
       }
     },
-    "pnl_realizado": -44.95590058892017,
-    "comisiones_pagadas": 2.64437794929427,
-    "coste_vida_pagado": 4.000000000000008,
-    "operaciones": 34
+    "pnl_realizado": -48.97977465808826,
+    "comisiones_pagadas": 2.9322705477134976,
+    "coste_vida_pagado": 4.054794520547953,
+    "operaciones": 36
   },
   "vitales": {
     "vivo": true,
-    "ticks": 73,
-    "equity": 963.2503364048306,
+    "ticks": 74,
+    "equity": 965.20630833262,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.03898705748531972,
+    "drawdown": 0.03703562879979583,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -201,7 +201,8 @@
     962.0686004225314,
     960.250172786661,
     960.6896147759721,
-    963.2503364048306
+    963.2503364048306,
+    965.20630833262
   ],
   "operaciones": [
     {
@@ -543,7 +544,27 @@
       "comision": 0.17896719716339607,
       "motivo": "subir exposición 0%→19%",
       "realizado": null
+    },
+    {
+      "ts": 1793280600,
+      "simbolo": "MSFT",
+      "lado": "venta",
+      "cantidad": 0.28643463157701127,
+      "precio": 523.1932895812988,
+      "comision": 0.1498606771447839,
+      "motivo": "bajar exposición 16%→0%",
+      "realizado": -4.023874069168087
+    },
+    {
+      "ts": 1793280600,
+      "simbolo": "IQV",
+      "lado": "compra",
+      "cantidad": 0.49685934070243987,
+      "precio": 277.80884843444824,
+      "comision": 0.138031921274444,
+      "motivo": "subir exposición 0%→14%",
+      "realizado": null
     }
   ],
-  "guardado": 1793208265.4868712
+  "guardado": 1793287981.0392287
 }
