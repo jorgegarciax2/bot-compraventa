@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 233.18535494519634,
+    "caja": 233.1305604246484,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -79,7 +79,7 @@
         "simbolo": "DHR",
         "cantidad": 0.4780772941225114,
         "precio_medio": 224.78077255122545,
-        "maximo_favorable": 236.82000732421875
+        "maximo_favorable": 236.97999572753906
       },
       "AMD": {
         "simbolo": "AMD",
@@ -91,7 +91,7 @@
         "simbolo": "TMO",
         "cantidad": 0.18755625781123542,
         "precio_medio": 654.8622406311035,
-        "maximo_favorable": 708.7849731445312
+        "maximo_favorable": 709.1799926757812
       },
       "MSFT": {
         "simbolo": "MSFT",
@@ -103,26 +103,26 @@
         "simbolo": "ABBV",
         "cantidad": 0.5803294208885559,
         "precio_medio": 283.6217509918213,
-        "maximo_favorable": 289.92498779296875
+        "maximo_favorable": 290.7900085449219
       },
       "AES": {
         "simbolo": "AES",
         "cantidad": 11.949081836573471,
         "precio_medio": 14.977485267162322,
-        "maximo_favorable": 15.030099868774414
+        "maximo_favorable": 15.050000190734863
       }
     },
     "pnl_realizado": -48.97977465808826,
     "comisiones_pagadas": 2.9322705477134976,
-    "coste_vida_pagado": 4.109589041095899,
+    "coste_vida_pagado": 4.164383561643844,
     "operaciones": 36
   },
   "vitales": {
     "vivo": true,
-    "ticks": 75,
-    "equity": 960.7659347286735,
+    "ticks": 76,
+    "equity": 964.690271303271,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.04146568850672505,
+    "drawdown": 0.03755046720190025,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -203,7 +203,8 @@
     960.6896147759721,
     963.2503364048306,
     965.20630833262,
-    960.7659347286735
+    960.7659347286735,
+    964.690271303271
   ],
   "operaciones": [
     {
@@ -567,5 +568,5 @@
       "realizado": null
     }
   ],
-  "guardado": 1793319729.0274036
+  "guardado": 1793341595.2901716
 }
