@@ -35,3 +35,5 @@
 {"ts": 1792589400, "tipo": "operacion", "simbolo": "AES", "lado": "compra", "cantidad": 11.949081836573471, "precio": 14.977485267162322, "comision": 0.17896719716339607, "motivo": "subir exposición 0%→19%", "realizado": null}
 {"ts": 1793280600, "tipo": "operacion", "simbolo": "MSFT", "lado": "venta", "cantidad": 0.28643463157701127, "precio": 523.1932895812988, "comision": 0.1498606771447839, "motivo": "bajar exposición 16%→0%", "realizado": -4.023874069168087}
 {"ts": 1793280600, "tipo": "operacion", "simbolo": "IQV", "lado": "compra", "cantidad": 0.49685934070243987, "precio": 277.80884843444824, "comision": 0.138031921274444, "motivo": "subir exposición 0%→14%", "realizado": null}
+{"ts": 1793889000, "tipo": "operacion", "simbolo": "TMO", "lado": "venta", "cantidad": 0.18755625781123542, "precio": 679.1852619018555, "comision": 0.12738544608285585, "motivo": "bajar exposición 13%→0%", "realizado": 4.434549402122457}
+{"ts": 1793889000, "tipo": "operacion", "simbolo": "V", "lado": "compra", "cantidad": 0.35363531308273627, "precio": 426.2329990081787, "comision": 0.1507310400504509, "motivo": "subir exposición 0%→16%", "realizado": null}

@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 232.80179330136073,
+    "caja": 209.12328832708445,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -89,9 +89,9 @@
       },
       "TMO": {
         "simbolo": "TMO",
-        "cantidad": 0.18755625781123542,
-        "precio_medio": 654.8622406311035,
-        "maximo_favorable": 709.1799926757812
+        "cantidad": 0.0,
+        "precio_medio": 0.0,
+        "maximo_favorable": 0.0
       },
       "MSFT": {
         "simbolo": "MSFT",
@@ -110,19 +110,25 @@
         "cantidad": 11.949081836573471,
         "precio_medio": 14.977485267162322,
         "maximo_favorable": 15.050000190734863
+      },
+      "V": {
+        "simbolo": "V",
+        "cantidad": 0.35363531308273627,
+        "precio_medio": 426.23299900817875,
+        "maximo_favorable": 426.2329990081787
       }
     },
-    "pnl_realizado": -48.97977465808826,
-    "comisiones_pagadas": 2.9322705477134976,
-    "coste_vida_pagado": 4.493150684931517,
-    "operaciones": 36
+    "pnl_realizado": -44.5452252559658,
+    "comisiones_pagadas": 3.2103870338468043,
+    "coste_vida_pagado": 4.547945205479462,
+    "operaciones": 38
   },
   "vitales": {
     "vivo": true,
-    "ticks": 82,
-    "equity": 950.4907898009046,
+    "ticks": 83,
+    "equity": 945.6627886213852,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.05171696679711746,
+    "drawdown": 0.0565337537159899,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -210,7 +216,8 @@
     946.8736159385145,
     944.0059394761325,
     948.5698051239905,
-    950.4907898009046
+    950.4907898009046,
+    945.6627886213852
   ],
   "operaciones": [
     {
@@ -572,7 +579,27 @@
       "comision": 0.138031921274444,
       "motivo": "subir exposición 0%→14%",
       "realizado": null
+    },
+    {
+      "ts": 1793889000,
+      "simbolo": "TMO",
+      "lado": "venta",
+      "cantidad": 0.18755625781123542,
+      "precio": 679.1852619018555,
+      "comision": 0.12738544608285585,
+      "motivo": "bajar exposición 13%→0%",
+      "realizado": 4.434549402122457
+    },
+    {
+      "ts": 1793889000,
+      "simbolo": "V",
+      "lado": "compra",
+      "cantidad": 0.35363531308273627,
+      "precio": 426.2329990081787,
+      "comision": 0.1507310400504509,
+      "motivo": "subir exposición 0%→16%",
+      "realizado": null
     }
   ],
-  "guardado": 1793808973.5761058
+  "guardado": 1793904152.4457002
 }
