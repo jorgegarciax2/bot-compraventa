@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 209.0684938065365,
+    "caja": 209.01369928598857,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -61,7 +61,7 @@
         "simbolo": "IQV",
         "cantidad": 0.49685934070243987,
         "precio_medio": 277.80884843444824,
-        "maximo_favorable": 279.0400085449219
+        "maximo_favorable": 279.0899963378906
       },
       "DELL": {
         "simbolo": "DELL",
@@ -120,15 +120,15 @@
     },
     "pnl_realizado": -44.5452252559658,
     "comisiones_pagadas": 3.2103870338468043,
-    "coste_vida_pagado": 4.602739726027408,
+    "coste_vida_pagado": 4.657534246575353,
     "operaciones": 38
   },
   "vitales": {
     "vivo": true,
-    "ticks": 84,
-    "equity": 946.3928227156781,
+    "ticks": 85,
+    "equity": 958.9927052578288,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.05580541531155081,
+    "drawdown": 0.0432347992011376,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -218,7 +218,8 @@
     948.5698051239905,
     950.4907898009046,
     945.6627886213852,
-    946.3928227156781
+    946.3928227156781,
+    958.9927052578288
   ],
   "operaciones": [
     {
@@ -602,5 +603,5 @@
       "realizado": null
     }
   ],
-  "guardado": 1793978584.361782
+  "guardado": 1794249857.0690506
 }
