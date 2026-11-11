@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 208.84931572434473,
+    "caja": 191.1926169876088,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -59,9 +59,9 @@
       },
       "IQV": {
         "simbolo": "IQV",
-        "cantidad": 0.49685934070243987,
-        "precio_medio": 277.80884843444824,
-        "maximo_favorable": 279.0899963378906
+        "cantidad": 0.0,
+        "precio_medio": 0.0,
+        "maximo_favorable": 0.0
       },
       "DELL": {
         "simbolo": "DELL",
@@ -116,19 +116,25 @@
         "cantidad": 0.35363531308273627,
         "precio_medio": 426.23299900817875,
         "maximo_favorable": 426.2329990081787
+      },
+      "MAR": {
+        "simbolo": "MAR",
+        "cantidad": 0.35985527701263437,
+        "precio_medio": 430.44512599182127,
+        "maximo_favorable": 430.44512599182127
       }
     },
-    "pnl_realizado": -44.5452252559658,
-    "comisiones_pagadas": 3.2103870338468043,
-    "coste_vida_pagado": 4.821917808219189,
-    "operaciones": 38
+    "pnl_realizado": -45.12620274402013,
+    "comisiones_pagadas": 3.5028735162180378,
+    "coste_vida_pagado": 4.876712328767135,
+    "operaciones": 40
   },
   "vitales": {
     "vivo": true,
-    "ticks": 88,
-    "equity": 957.6520060968992,
+    "ticks": 89,
+    "equity": 956.3803979590839,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.04457238424728538,
+    "drawdown": 0.04584103875179191,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -222,7 +228,8 @@
     958.9927052578288,
     950.3000402892065,
     957.3965099818358,
-    957.6520060968992
+    957.6520060968992,
+    956.3803979590839
   ],
   "operaciones": [
     {
@@ -604,7 +611,27 @@
       "comision": 0.1507310400504509,
       "motivo": "subir exposición 0%→16%",
       "realizado": null
+    },
+    {
+      "ts": 1794407400,
+      "simbolo": "IQV",
+      "lado": "venta",
+      "cantidad": 0.49685934070243987,
+      "precio": 276.9164651794434,
+      "comision": 0.1375885323187084,
+      "motivo": "bajar exposición 14%→0%",
+      "realizado": -0.580977488054323
+    },
+    {
+      "ts": 1794407400,
+      "simbolo": "MAR",
+      "lado": "compra",
+      "cantidad": 0.35985527701263437,
+      "precio": 430.44512599182127,
+      "comision": 0.15489795005252516,
+      "motivo": "subir exposición 0%→16%",
+      "realizado": null
     }
   ],
-  "guardado": 1794332831.847673
+  "guardado": 1794422407.9620779
 }
