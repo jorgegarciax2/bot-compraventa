@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 190.97343890541703,
+    "caja": 212.6896911796249,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -107,9 +107,9 @@
       },
       "AES": {
         "simbolo": "AES",
-        "cantidad": 11.949081836573471,
-        "precio_medio": 14.977485267162322,
-        "maximo_favorable": 15.050000190734863
+        "cantidad": 0.0,
+        "precio_medio": 0.0,
+        "maximo_favorable": 0.0
       },
       "V": {
         "simbolo": "V",
@@ -122,19 +122,25 @@
         "cantidad": 0.35985527701263437,
         "precio_medio": 430.44512599182127,
         "maximo_favorable": 430.44512599182127
+      },
+      "RSG": {
+        "simbolo": "RSG",
+        "cantidad": 0.6125334823508893,
+        "precio_medio": 254.91738828277587,
+        "maximo_favorable": 254.91738828277587
       }
     },
-    "pnl_realizado": -45.12620274402013,
-    "comisiones_pagadas": 3.5028735162180378,
-    "coste_vida_pagado": 5.0958904109589165,
-    "operaciones": 40
+    "pnl_realizado": -46.02077212046124,
+    "comisiones_pagadas": 3.8372698304403006,
+    "coste_vida_pagado": 5.150684931506862,
+    "operaciones": 42
   },
   "vitales": {
     "vivo": true,
-    "ticks": 93,
-    "equity": 954.1371634529537,
+    "ticks": 94,
+    "equity": 953.2850259527789,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.04807906277525886,
+    "drawdown": 0.04892922096936503,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -233,7 +239,8 @@
     956.5493384749379,
     957.9774640401592,
     958.5172728113037,
-    954.1371634529537
+    954.1371634529537,
+    953.2850259527789
   ],
   "operaciones": [
     {
@@ -635,7 +642,27 @@
       "comision": 0.15489795005252516,
       "motivo": "subir exposición 0%→16%",
       "realizado": null
+    },
+    {
+      "ts": 1794839400,
+      "simbolo": "AES",
+      "lado": "venta",
+      "cantidad": 11.949081836573471,
+      "precio": 14.917537690639497,
+      "comision": 0.1782508786656206,
+      "motivo": "bajar exposición 19%→0%",
+      "realizado": -0.8945693764411118
+    },
+    {
+      "ts": 1794839400,
+      "simbolo": "RSG",
+      "lado": "compra",
+      "cantidad": 0.6125334823508893,
+      "precio": 254.91738828277587,
+      "comision": 0.1561454355566425,
+      "motivo": "subir exposición 0%→16%",
+      "realizado": null
     }
   ],
-  "guardado": 1794595556.8753223
+  "guardado": 1794858682.9021251
 }
