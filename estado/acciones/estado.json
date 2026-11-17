@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 212.6896911796249,
+    "caja": 171.60523441395367,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -77,9 +77,9 @@
       },
       "DHR": {
         "simbolo": "DHR",
-        "cantidad": 0.4780772941225114,
-        "precio_medio": 224.78077255122545,
-        "maximo_favorable": 236.97999572753906
+        "cantidad": 0.0,
+        "precio_medio": 0.0,
+        "maximo_favorable": 0.0
       },
       "AMD": {
         "simbolo": "AMD",
@@ -128,19 +128,25 @@
         "cantidad": 0.6125334823508893,
         "precio_medio": 254.91738828277587,
         "maximo_favorable": 254.91738828277587
+      },
+      "EG": {
+        "simbolo": "EG",
+        "cantidad": 0.3493005470757311,
+        "precio_medio": 425.6327234344482,
+        "maximo_favorable": 425.6327234344482
       }
     },
-    "pnl_realizado": -46.02077212046124,
-    "comisiones_pagadas": 3.8372698304403006,
-    "coste_vida_pagado": 5.150684931506862,
-    "operaciones": 42
+    "pnl_realizado": -45.690600985507,
+    "comisiones_pagadas": 4.093844228891601,
+    "coste_vida_pagado": 5.205479452054807,
+    "operaciones": 44
   },
   "vitales": {
     "vivo": true,
-    "ticks": 94,
-    "equity": 953.2850259527789,
+    "ticks": 95,
+    "equity": 945.3946568891785,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.04892922096936503,
+    "drawdown": 0.056801262644054495,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -240,7 +246,8 @@
     957.9774640401592,
     958.5172728113037,
     954.1371634529537,
-    953.2850259527789
+    953.2850259527789,
+    945.3946568891785
   ],
   "operaciones": [
     {
@@ -662,7 +669,27 @@
       "comision": 0.1561454355566425,
       "motivo": "subir exposición 0%→16%",
       "realizado": null
+    },
+    {
+      "ts": 1794925800,
+      "simbolo": "DHR",
+      "lado": "venta",
+      "cantidad": 0.4780772941225114,
+      "precio": 225.69709255981448,
+      "comision": 0.10790065530231412,
+      "motivo": "bajar exposición 11%→0%",
+      "realizado": 0.33017113495424155
+    },
+    {
+      "ts": 1794925800,
+      "simbolo": "EG",
+      "lado": "compra",
+      "cantidad": 0.3493005470757311,
+      "precio": 425.6327234344482,
+      "comision": 0.14867374314898613,
+      "motivo": "subir exposición 0%→16%",
+      "realizado": null
     }
   ],
-  "guardado": 1794858682.9021251
+  "guardado": 1794948699.2860463
 }
