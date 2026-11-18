@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 171.60523441395367,
+    "caja": 171.55043989340572,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -138,15 +138,15 @@
     },
     "pnl_realizado": -45.690600985507,
     "comisiones_pagadas": 4.093844228891601,
-    "coste_vida_pagado": 5.205479452054807,
+    "coste_vida_pagado": 5.260273972602753,
     "operaciones": 44
   },
   "vitales": {
     "vivo": true,
-    "ticks": 95,
-    "equity": 945.3946568891785,
+    "ticks": 96,
+    "equity": 937.3302760583441,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.056801262644054495,
+    "drawdown": 0.06484691189939196,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -247,7 +247,8 @@
     958.5172728113037,
     954.1371634529537,
     953.2850259527789,
-    945.3946568891785
+    945.3946568891785,
+    937.3302760583441
   ],
   "operaciones": [
     {
@@ -691,5 +692,5 @@
       "realizado": null
     }
   ],
-  "guardado": 1794948699.2860463
+  "guardado": 1795030513.5576272
 }
