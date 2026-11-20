@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 171.3860563317619,
+    "caja": 171.33126181121395,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -133,20 +133,20 @@
         "simbolo": "EG",
         "cantidad": 0.3493005470757311,
         "precio_medio": 425.6327234344482,
-        "maximo_favorable": 425.6327234344482
+        "maximo_favorable": 429.864990234375
       }
     },
     "pnl_realizado": -45.690600985507,
     "comisiones_pagadas": 4.093844228891601,
-    "coste_vida_pagado": 5.424657534246589,
+    "coste_vida_pagado": 5.4794520547945345,
     "operaciones": 44
   },
   "vitales": {
     "vivo": true,
-    "ticks": 99,
-    "equity": 927.1591851132928,
+    "ticks": 100,
+    "equity": 934.1449116945151,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.07499437789890573,
+    "drawdown": 0.06802487744435093,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -251,7 +251,8 @@
     937.3302760583441,
     944.1332053346612,
     936.8587390852696,
-    927.1591851132928
+    927.1591851132928,
+    934.1449116945151
   ],
   "operaciones": [
     {
@@ -695,5 +696,5 @@
       "realizado": null
     }
   ],
-  "guardado": 1795113590.7071724
+  "guardado": 1795195017.8780816
 }
