@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "EUR",
-    "caja": 995.6577790498533,
+    "caja": 995.648646629762,
     "capital_inicial": 1000.0,
     "posiciones": {
       "BTC-EUR": {
@@ -36,15 +36,15 @@
     },
     "pnl_realizado": 2.296754949251877,
     "comisiones_pagadas": 7.585414170097721,
-    "coste_vida_pagado": 2.8493150684931283,
+    "coste_vida_pagado": 2.8584474885844524,
     "operaciones": 8
   },
   "vitales": {
     "vivo": true,
-    "ticks": 312,
-    "equity": 995.6577790498533,
+    "ticks": 313,
+    "equity": 995.648646629762,
     "equity_maximo": 1087.7032127035504,
-    "drawdown": 0.08462366625259188,
+    "drawdown": 0.08463206231135556,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -361,7 +361,8 @@
     995.6851763101272,
     995.6760438900359,
     995.6669114699446,
-    995.6577790498533
+    995.6577790498533,
+    995.648646629762
   ],
   "operaciones": [
     {
@@ -445,5 +446,5 @@
       "realizado": -31.664126564239496
     }
   ],
-  "guardado": 1795136151.7124507
+  "guardado": 1795163401.6702034
 }
