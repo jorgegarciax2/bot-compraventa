@@ -43,3 +43,4 @@
 {"ts": 1794839400, "tipo": "operacion", "simbolo": "RSG", "lado": "compra", "cantidad": 0.6125334823508893, "precio": 254.91738828277587, "comision": 0.1561454355566425, "motivo": "subir exposición 0%→16%", "realizado": null}
 {"ts": 1794925800, "tipo": "operacion", "simbolo": "DHR", "lado": "venta", "cantidad": 0.4780772941225114, "precio": 225.69709255981448, "comision": 0.10790065530231412, "motivo": "bajar exposición 11%→0%", "realizado": 0.33017113495424155}
 {"ts": 1794925800, "tipo": "operacion", "simbolo": "EG", "lado": "compra", "cantidad": 0.3493005470757311, "precio": 425.6327234344482, "comision": 0.14867374314898613, "motivo": "subir exposición 0%→16%", "realizado": null}
+{"ts": 1795617000, "tipo": "operacion", "simbolo": "ABBV", "lado": "venta", "cantidad": 0.06546170689405241, "precio": 294.332770980835, "comision": 0.019267525583261676, "motivo": "bajar exposición 18%→16%", "realizado": 0.6818941254738888}

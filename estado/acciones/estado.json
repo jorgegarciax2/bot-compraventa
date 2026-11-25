@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 171.22167277011806,
+    "caja": 190.41513630724853,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -101,7 +101,7 @@
       },
       "ABBV": {
         "simbolo": "ABBV",
-        "cantidad": 0.5803294208885559,
+        "cantidad": 0.5148677139945035,
         "precio_medio": 283.6217509918213,
         "maximo_favorable": 299.92999267578125
       },
@@ -133,20 +133,20 @@
         "simbolo": "EG",
         "cantidad": 0.3493005470757311,
         "precio_medio": 425.6327234344482,
-        "maximo_favorable": 429.864990234375
+        "maximo_favorable": 433.6400146484375
       }
     },
-    "pnl_realizado": -45.690600985507,
-    "comisiones_pagadas": 4.093844228891601,
-    "coste_vida_pagado": 5.589041095890425,
-    "operaciones": 44
+    "pnl_realizado": -45.00870686003311,
+    "comisiones_pagadas": 4.113111754474862,
+    "coste_vida_pagado": 5.643835616438371,
+    "operaciones": 45
   },
   "vitales": {
     "vivo": true,
-    "ticks": 102,
-    "equity": 944.4892778928371,
+    "ticks": 103,
+    "equity": 948.8819131183915,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.05770453866741143,
+    "drawdown": 0.053322106454349205,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -254,7 +254,8 @@
     927.1591851132928,
     934.1449116945151,
     932.5284104850301,
-    944.4892778928371
+    944.4892778928371,
+    948.8819131183915
   ],
   "operaciones": [
     {
@@ -696,7 +697,17 @@
       "comision": 0.14867374314898613,
       "motivo": "subir exposición 0%→16%",
       "realizado": null
+    },
+    {
+      "ts": 1795617000,
+      "simbolo": "ABBV",
+      "lado": "venta",
+      "cantidad": 0.06546170689405241,
+      "precio": 294.332770980835,
+      "comision": 0.019267525583261676,
+      "motivo": "bajar exposición 18%→16%",
+      "realizado": 0.6818941254738888
     }
   ],
-  "guardado": 1795544377.182726
+  "guardado": 1795645716.2654185
 }
