@@ -24,7 +24,7 @@
   },
   "cartera": {
     "divisa": "USD",
-    "caja": 190.41513630724853,
+    "caja": 190.3603417867006,
     "capital_inicial": 1000.0,
     "posiciones": {
       "HPQ": {
@@ -115,7 +115,7 @@
         "simbolo": "V",
         "cantidad": 0.35363531308273627,
         "precio_medio": 426.23299900817875,
-        "maximo_favorable": 426.32000732421875
+        "maximo_favorable": 431.3999938964844
       },
       "MAR": {
         "simbolo": "MAR",
@@ -133,20 +133,20 @@
         "simbolo": "EG",
         "cantidad": 0.3493005470757311,
         "precio_medio": 425.6327234344482,
-        "maximo_favorable": 433.6400146484375
+        "maximo_favorable": 436.6300048828125
       }
     },
     "pnl_realizado": -45.00870686003311,
     "comisiones_pagadas": 4.113111754474862,
-    "coste_vida_pagado": 5.643835616438371,
+    "coste_vida_pagado": 5.698630136986316,
     "operaciones": 45
   },
   "vitales": {
     "vivo": true,
-    "ticks": 103,
-    "equity": 948.8819131183915,
+    "ticks": 104,
+    "equity": 951.1523321405233,
     "equity_maximo": 1002.3281620789578,
-    "drawdown": 0.053322106454349205,
+    "drawdown": 0.05105696105783286,
     "causa_muerte": null,
     "detalle_muerte": null,
     "ts_muerte": null
@@ -255,7 +255,8 @@
     934.1449116945151,
     932.5284104850301,
     944.4892778928371,
-    948.8819131183915
+    948.8819131183915,
+    951.1523321405233
   ],
   "operaciones": [
     {
@@ -709,5 +710,5 @@
       "realizado": 0.6818941254738888
     }
   ],
-  "guardado": 1795645716.2654185
+  "guardado": 1795793720.2059462
 }
