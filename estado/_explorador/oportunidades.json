@@ -1,5 +1,5 @@
 {
-  "generado": 1795666523.9556851,
+  "generado": 1795753449.8322024,
   "ejercicio": 2024,
   "universo": 4411,
   "grandes": 1129,
@@ -24,7 +24,7 @@
       "rsi": 66.77342122921272,
       "impulso": 9.57096872246315,
       "volatilidad": 0.01529556040267846,
-      "volumen_relativo": 1.594173566958967,
+      "volumen_relativo": 1.5952269598350075,
       "obv_acompana": true,
       "soporte": 124.04500198364258,
       "resistencia": null
@@ -208,7 +208,7 @@
       "rsi": 58.23003854523309,
       "impulso": 7.041808496562548,
       "volatilidad": 0.011970487736928073,
-      "volumen_relativo": 1.2472355590617403,
+      "volumen_relativo": 1.2482680346801542,
       "obv_acompana": true,
       "soporte": 92.74499893188477,
       "resistencia": null
